@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Transcendence</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <a href="/" data-template="home.html">Home</a>
+        <a href="/login" data-template="login.html">Login</a>
+        <a href="/dale" data-template="dale.html">dale</a>
+        <!-- Add more links as needed -->
+    </nav>
+    
+    <div id="content">
+        <!-- Content will be loaded here -->
+    </div>
+
+    <script type="module" src="{% static 'js/spa.js' %}" defer></script>
+</body>
+</html>
