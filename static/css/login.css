@@ -1,0 +1,18 @@
+.loginImageContainer {
+    max-width: 55%;
+    overflow: hidden;
+}
+
+.loginImageContainer img {
+    width: 100%;
+    max-height: 100vh;
+}
+
+.loginTextContainer {
+    max-width: 45%;
+}
+
+.wrapperLogin {
+    height: 100%;
+    overflow: hidden;
+}
