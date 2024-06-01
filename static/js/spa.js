@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', async function () {
+    const templateMap = {
+        '/': 'home.html',
+        '/authentication/login': 'authentication/login.html',
+        '/dale': 'dale.html',
+        '/game': 'game/game.html'
+        // Adicione outras rotas conforme necessário
+    };
+
     const loadContent = async (templateName) => {
         try {
             const response = await fetch(`/templates/${templateName}`);
@@ -32,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Load the initial content based on authentication status
     const isAuthenticated = await checkAuthentication();
-    const initialTemplate = isAuthenticated ? 'home.html' : 'login.html';
+    const initialTemplate = isAuthenticated ? 'home.html' : 'authentication/login.html';
     loadContent(initialTemplate);
 
     // Adding event listeners for navigation links
@@ -49,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Handling browser navigation (back/forward)
     window.onpopstate = () => {
         const path = window.location.pathname;
-        const templateName = path === '/' ? 'home.html' : `${path.slice(1)}.html`;
+        const templateName = templateMap[path] || '404.html';
         loadContent(templateName);
     };
 });
