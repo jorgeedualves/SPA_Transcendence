@@ -12,7 +12,18 @@
     max-width: 45%;
 }
 
+.loginTextContainer p {
+	font-size: 2.5rem;
+	margin-bottom: 0.2rem;
+}
+
+.internalLoginText {
+	margin-bottom: 4rem;
+	margin-top: -4rem;
+}
+
 .wrapperLogin {
     height: 100%;
     overflow: hidden;
 }
+
