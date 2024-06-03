@@ -17,6 +17,13 @@
 	margin-bottom: 0.2rem;
 }
 
+.loginTextContainer button {
+	font-size: 2rem;
+	width: 47%;
+	border-radius: 0.7rem;
+	padding: 0.1rem;
+}
+
 .internalLoginText {
 	margin-bottom: 4rem;
 	margin-top: -4rem;
