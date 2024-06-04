@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', async function () {
     const templateMap = {
         '/': 'home.html',
-        '/login': 'authentication/login.html',
-        '/game': 'game/game.html',
+        '/login': 'login.html',
+        '/game': 'game.html',
         '/account': 'account.html',
+		'/pong': 'pong.html',
         // Adicione outras rotas conforme necessário
     };
 

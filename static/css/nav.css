@@ -1,4 +1,4 @@
-.navAccountBar {
+.navBar {
     display: flex;
     justify-content: flex-end;
     align-items: end;
@@ -8,9 +8,10 @@
     border-style: solid;
     border-color: white;
     border-radius: 12px;
+	width: 100vw;
 }
 
-.navAccountList {
+.navList {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -18,17 +19,17 @@
     gap: 20px;
 }
 
-.navAccountList a {
+.navList a {
     text-decoration: none;
     color: white;
 }
 
-.navAccountItem {
+.navItem {
     display: inline;
 
 }
 
-.navAccountLink {
+.navLink {
     text-decoration: none;
     color: white;
     padding: 0.1rem 0.4rem;
@@ -36,12 +37,12 @@
     transition: background-color 0.3s ease;
 }
 
-.navAccountLink:hover {
+.navLink:hover {
     background-color: #575757;
     color: white;
 }
 
-.navAccountItem:hover {
+.navItem:hover {
     transition: background-color 0.3s ease;
 }
 
@@ -51,15 +52,22 @@
 }
 
 footer {
-    width: 99%;
+	width: 100vw;
     background-color: #121212;
     padding: 0.5rem 1rem;
     text-align: center;
-    position: fixed;
-    bottom: 0;
-    right: 0.5rem;
     border: 1px;
     border-style: solid;
     border-color: white;
     border-radius: 12px;
+}
+
+.wrapperNav {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100vw;
+	overflow: hidden;
 }
