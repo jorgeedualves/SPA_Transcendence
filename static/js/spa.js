@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const templateMap = {
         '/': 'home.html',
         '/login': 'authentication/login.html',
-        '/dale': 'dale.html',
-        '/game': 'game/game.html'
+        '/game': 'game/game.html',
+        '/account': 'account.html',
         // Adicione outras rotas conforme necessário
     };
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // Load the initial content based on authentication status
     const isAuthenticated = await checkAuthentication();
-    const initialTemplate = isAuthenticated ? 'home.html' : 'login.html';
+    const initialTemplate = isAuthenticated ? 'home.html' : 'account.html';
     loadContent(initialTemplate);
 
     // Adding event listeners for navigation links

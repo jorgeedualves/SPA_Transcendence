@@ -1,0 +1,10 @@
+.gameImageContainer {
+    max-width: 55%;
+    overflow: hidden;
+}
+
+.wrapperGame {
+    height: 70%;
+    overflow: hidden;
+    max-height: 70vh;
+}

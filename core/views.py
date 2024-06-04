@@ -21,5 +21,4 @@ def check_authentication(request):
     Retorna uma resposta JSON indicando o status de autenticação do usuário.
     """
     is_authenticated = request.user.is_authenticated  # Verifica se o usuário está autenticado
-    print(is_authenticated)  # Imprime o status de autenticação no console
     return JsonResponse({'is_authenticated': is_authenticated})  # Retorna o status como resposta JSON

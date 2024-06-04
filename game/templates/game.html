@@ -1,1 +1,26 @@
-<h1>pong</h1>
+{% load static %}
+<div class="wrapperGame">
+    <header>
+        <nav class="navAccountBar">
+            <ul class="navAccountList">
+                <li class="navAccountItem"><a href="/account" data-template="account.html">Account</a></li>
+                <li class="navAccountItem"><a href="/game" data-template="game.html">Game</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- <div class="wrapperMain"> -->
+    <div class="outterDiv d-flex justify-content-between align-items-center vh-90">
+        <div class="col-6">
+            <div class="d-flex flex-column justify-content-around align-items-center text-center">
+                <button>Play</button>
+                <button>Tournament</button>
+            </div>
+        </div>
+        <div class="col-6 gameImageContainer">
+            <img src="{% static 'images/game.png' %}" style="height: 580px;">
+        </div>
+    </div>
+    <!-- </div> -->
+    <footer>Made by pong</footer>
+</div>
