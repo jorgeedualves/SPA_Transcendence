@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         '/login': 'login.html',
         '/options': 'options.html',
         '/account': 'account.html',
-		'/pong': 'pong.html',
+        '/pong': 'pong.html',
         // Adicione outras rotas conforme necessário
     };
 
@@ -17,6 +17,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             const html = await response.text();
             const handler = document.getElementById('content');
             handler.innerHTML = html;
+
+            // Executar scripts incluídos no conteúdo carregado
+            const scripts = handler.querySelectorAll('script');
+            scripts.forEach((script) => {
+                const newScript = document.createElement('script');
+                newScript.src = script.src;
+                newScript.defer = script.defer;
+                document.body.appendChild(newScript);
+            });
         } catch (error) {
             console.error('Error loading content:', error);
             const handler = document.getElementById('content');
