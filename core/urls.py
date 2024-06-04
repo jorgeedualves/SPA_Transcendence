@@ -1,7 +1,6 @@
-# urls.py
-
 from django.urls import path
 from . import views  # Importa as views do módulo atual
+from game import views as game_views
 
 # Lista de padrões de URL para o aplicativo
 urlpatterns = [
@@ -14,4 +13,6 @@ urlpatterns = [
     
     # Define a URL para a API de verificação de autenticação, mapeada para a view 'check_authentication'
     path('api/check-authentication/', views.check_authentication, name='check_authentication'),
+
+	path('singleGame/', game_views.singleGame, name='singleGame'),
 ]
