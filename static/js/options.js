@@ -2,17 +2,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event delegation for buttons inside modals
     document.body.addEventListener('click', function(event) {
         if (event.target.id === 'submitSingleGame') {
-            handleSingleGameSubmit();
-        } else if (event.target.closest('#tournamentModal form')) {
-            event.preventDefault(); // Prevent the default form submission
-            handleTournamentSubmit();
+            handleSingleGameSubmit(event);
+        }
+    });
+
+    // Event listener for the tournament form submission
+    document.body.addEventListener('click', function(event) {
+        if (event.target.id === 'submitTournament') {
+            handleTournamentSubmit(event);
         }
     });
 
     // Handle Single Game submit button click
-    function handleSingleGameSubmit() {
-        let playerName = document.getElementById('playerName').value;
+    function handleSingleGameSubmit(event) {
+        let playerName = document.getElementById('playerName').value.trim();
         let difficulty = document.getElementById('difficulty').value;
+
+        // Client-side validation
+        if (!playerName) {
+            alert('Player Name cannot be empty.');
+            return;
+        }
 
         // Process form data here
         console.log('Player Name:', playerName);
@@ -40,9 +50,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle Tournament form submit button click
-    function handleTournamentSubmit() {
-        let teamName = document.getElementById('teamName').value;
-        let numberOfTeams = document.getElementById('numberOfTeams').value;
+    function handleTournamentSubmit(event) {
+        let teamName = document.getElementById('teamName').value.trim();
+        let numberOfTeams = document.getElementById('numberOfTeams').value.trim();
+
+        // Client-side validation
+        if (!teamName) {
+            alert('Team Name cannot be empty.');
+            return;
+        }
+        if (!numberOfTeams || isNaN(numberOfTeams) || numberOfTeams <= 0) {
+            alert('Number of Teams must be a positive number.');
+            return;
+        }
 
         // Process form data here
         console.log('Team Name:', teamName);

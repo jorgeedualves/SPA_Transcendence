@@ -12,8 +12,8 @@
 		<div class="outterDiv d-flex justify-content-between align-items-center">
 			<div class="col-6">
 				<div class="d-flex flex-column justify-content-around align-items-center text-center">
-					<button id="singleGameButton" class="gameScreenButton btn btn-primary" data-toggle="modal" data-target="#singleGameModal">Single Game</button>
-					<button id="tournamentButton" class="gameScreenButton btn btn-primary" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
+					<button id="singleGameButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#singleGameModal">Single Game</button>
+					<button id="tournamentButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
 				</div>
 			</div>
 			<div class="col-6 gameImageContainer">
@@ -39,14 +39,14 @@
 				<form>
 					<div class="form-group">
 						<label for="playerName">Player Name:</label>
-						<input type="text" class="form-control bg-dark text-white mb-2" id="playerName" name="playerName">
+						<input type="text" class="form-control bg-dark text-white mb-2" id="playerName" name="playerName" required>
 					</div>
 					<div class="form-group">
-						<label for="difficulty">Difficulty:</label>
+						<label for="difficulty">Choose map skin:</label>
 						<select class="form-control bg-dark text-white mb-4" id="difficulty" name="difficulty">
-							<option value="easy">Easy</option>
-							<option value="medium">Medium</option>
-							<option value="hard">Hard</option>
+							<option value="easy">Skin 1</option>
+							<option value="medium">Skin 2</option>
+							<option value="hard">Skin 3</option>
 						</select>
 					</div>
 					<button id="submitSingleGame" type="button" class="btn btn-outline-light">Start Game</button>
@@ -71,13 +71,13 @@
 				<form>
 					<div class="form-group">
 						<label for="teamName">Team Name:</label>
-						<input type="text" class="form-control bg-dark text-white mb-2" id="teamName" name="teamName">
+						<input type="text" class="form-control bg-dark text-white mb-2" id="teamName" name="teamName" required>
 					</div>
 					<div class="form-group">
 						<label for="numberOfTeams">Number of Teams:</label>
-						<input type="number" class="form-control bg-dark text-white mb-4" id="numberOfTeams" name="numberOfTeams">
+						<input type="number" class="form-control bg-dark text-white mb-4" id="numberOfTeams" name="numberOfTeams" required>
 					</div>
-					<button type="submit" class="btn btn-outline-light">Start Tournament</button>
+					<button id="submitTournament" type="button" class="btn btn-outline-light">Start Tournament</button>
 				</form>
 			</div>
 		</div>
