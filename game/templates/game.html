@@ -1,26 +1,85 @@
 {% load static %}
-<div class="wrapperGame">
-    <header>
-        <nav class="navAccountBar">
-            <ul class="navAccountList">
-                <li class="navAccountItem"><a href="/account" data-template="account.html">Account</a></li>
-                <li class="navAccountItem"><a href="/game" data-template="game.html">Game</a></li>
-            </ul>
-        </nav>
-    </header>
+<div class="wrapperNav">
+	<header>
+		<nav class="navBar">
+			<ul class="navList">
+				<li class="navItem"><a href="/account" data-template="account.html">Account</a></li>
+				<li class="navItem"><a href="/game" data-template="game.html">Game</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div>
+		<div class="outterDiv d-flex justify-content-between align-items-center">
+			<div class="col-6">
+				<div class="d-flex flex-column justify-content-around align-items-center text-center">
+					<button id="singleGameButton" class="gameScreenButton btn btn-primary" data-toggle="modal" data-target="#singleGameModal">Single Game</button>
+					<button id="tournamentButton" class="gameScreenButton btn btn-primary" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
+				</div>
+			</div>
+			<div class="col-6 gameImageContainer">
+				<img src="{% static 'images/game.png' %}" alt="Fun pong image">
+			</div>
+		</div>
+	</div>
+	<footer>Made by pong</footer>
+</div>
 
-    <!-- <div class="wrapperMain"> -->
-    <div class="outterDiv d-flex justify-content-between align-items-center vh-90">
-        <div class="col-6">
-            <div class="d-flex flex-column justify-content-around align-items-center text-center">
-                <button>Play</button>
-                <button>Tournament</button>
-            </div>
-        </div>
-        <div class="col-6 gameImageContainer">
-            <img src="{% static 'images/game.png' %}" style="height: 580px;">
-        </div>
-    </div>
-    <!-- </div> -->
-    <footer>Made by pong</footer>
+<!-- Single Game Modal -->
+<div id="singleGameModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="singleGameModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content bg-dark text-white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="singleGameModalLabel">Single Game Configuration</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- Add your form or configuration inputs here -->
+				<form>
+					<div class="form-group">
+						<label for="playerName">Player Name:</label>
+						<input type="text" class="form-control bg-dark text-white mb-2" id="playerName" name="playerName">
+					</div>
+					<div class="form-group">
+						<label for="difficulty">Difficulty:</label>
+						<select class="form-control bg-dark text-white mb-4" id="difficulty" name="difficulty">
+							<option value="easy">Easy</option>
+							<option value="medium">Medium</option>
+							<option value="hard">Hard</option>
+						</select>
+					</div>
+					<button id="submitSingleGame" type="button" class="btn btn-outline-light">Start Game</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Tournament Modal -->
+<div id="tournamentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="tournamentModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content bg-dark text-white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="tournamentModalLabel">Tournament Configuration</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- Add your form or configuration inputs here -->
+				<form>
+					<div class="form-group">
+						<label for="teamName">Team Name:</label>
+						<input type="text" class="form-control bg-dark text-white mb-2" id="teamName" name="teamName">
+					</div>
+					<div class="form-group">
+						<label for="numberOfTeams">Number of Teams:</label>
+						<input type="number" class="form-control bg-dark text-white mb-4" id="numberOfTeams" name="numberOfTeams">
+					</div>
+					<button type="submit" class="btn btn-outline-light">Start Tournament</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
