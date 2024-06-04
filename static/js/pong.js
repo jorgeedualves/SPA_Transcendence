@@ -1,11 +1,10 @@
-console.log("Rodou pong")
 let ctx, p1_y, p2_y, p1_points, p2_points
 let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9
 let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10
 let ev_pause, ev_gameStart, ev_Timer
-let current_frame = 0, update_interval = 1
+let current_frame = 0, update_interval = 8
 let ia = true, predict_ball_y = 0, last_predicted_frame = 0
-const h = 500, w = 800, p_w = 20, p_h = 200, p1_x = 10, p2_x = w - p_w - 10
+const h = 600, w = 1066, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
 
 function setup() {
     const canvas = document.getElementById('canvas')
@@ -104,7 +103,7 @@ function keyEv() {
             p2_y += p_speed
         }
     } else {
-        p2_y = ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, p2_x, p2_y, p_speed, h, 0, 0.1)
+        p2_y = ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, p2_x, p2_y, p_speed, h, 150, 0.1)
     }
 }
 
@@ -189,14 +188,17 @@ function ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, paddle_
 
     let hafHeight = p_h / 2
 
-    if (current_frame - last_predicted_frame >= update_interval) {
-        predict_ball_y = predict_ball(ball_x, ball_y, ball_x_orientation, ball_y_orientation, paddle_x, height)
+	if(ball_x >= w / 2) {
+		if (current_frame - last_predicted_frame >= update_interval) {
+			predict_ball_y = predict_ball(ball_x, ball_y, ball_x_orientation, ball_y_orientation, paddle_x, height)
+	
+			let error = (Math.random() * 2 - 1) * error_margin
+			predict_ball_y += error
+	
+			last_predicted_frame = current_frame
+		}
+	}
 
-        let error = (Math.random() * 2 - 1) * error_margin
-        predict_ball_y += error
-
-        last_predicted_frame = current_frame
-    }
 
     current_frame++
 

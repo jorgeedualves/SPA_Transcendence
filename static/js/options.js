@@ -1,3 +1,5 @@
+import { loadContent } from './spa.js';
+
 document.addEventListener('DOMContentLoaded', function() {
     // Event delegation for buttons inside modals
     document.body.addEventListener('click', function(event) {
@@ -15,34 +17,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle Single Game submit button click
     function handleSingleGameSubmit(event) {
-        let playerName = document.getElementById('playerName').value.trim();
-        let difficulty = document.getElementById('difficulty').value;
+        let playerOneName = document.getElementById('playerOneName').value.trim();
+		let playerTwoName = document.getElementById('playerTwoName').value.trim();
+        let skin = document.getElementById('skin').value;
 
         // Client-side validation
-        if (!playerName) {
+        if (!playerOneName || !playerTwoName) {
             alert('Player Name cannot be empty.');
             return;
         }
 
-        // Process form data here
-        console.log('Player Name:', playerName);
-        console.log('Difficulty:', difficulty);
-
-        // Example: Sending data to your server using fetch
-        fetch('/your-endpoint/', {
+        fetch('/singleGame/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')  // Assuming you have a function to get the CSRF token
+                'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify({
-                playerName: playerName,
-                difficulty: difficulty
+                playerOneName: playerOneName,
+				playerTwoName: playerTwoName,
+                skin: skin
             })
         })
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            loadContent('pong.html');
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')  // Assuming you have a function to get the CSRF token
+                'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify({
                 teamName: teamName,
@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+			loadContent('pong.html');
         })
         .catch((error) => {
             console.error('Error:', error);
