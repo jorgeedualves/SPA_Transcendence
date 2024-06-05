@@ -1,24 +1,55 @@
-from django.http import JsonResponse  # Importa JsonResponse para retornar respostas JSON
-from django.shortcuts import render  # Importa render para renderizar templates HTML
+from django.http import JsonResponse
+import json
+from django.shortcuts import render
+from django.views.decorators.csrf import ensure_csrf_cookie
 
+@ensure_csrf_cookie
 def index(request):
-    """
-    View para a página inicial.
-    Renderiza o template 'index.html'.
-    """
     return render(request, 'index.html')
 
-def load_template(request, template_name):
-    """
-    View para carregar e renderizar um template específico.
-    O nome do template é passado como argumento na URL.
-    """
-    return render(request, template_name)
+@ensure_csrf_cookie
+def initial_content(request):
+    is_authenticated = request.user.is_authenticated
+    is_authenticated = True
+    template = 'account.html' if is_authenticated else 'login.html'
+    return render(request, template)
 
-def check_authentication(request):
-    """
-    View para verificar se o usuário está autenticado.
-    Retorna uma resposta JSON indicando o status de autenticação do usuário.
-    """
-    is_authenticated = request.user.is_authenticated  # Verifica se o usuário está autenticado
-    return JsonResponse({'is_authenticated': is_authenticated})  # Retorna o status como resposta JSON
+@ensure_csrf_cookie
+def options(request):
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        return render(request, 'options.html')
+    return render(request, 'index.html')
+
+@ensure_csrf_cookie
+def singleGame(request):
+    is_authenticated = request.user.is_authenticated
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        body = json.loads(request.body.decode('utf-8'))  # Decode and load the JSON directly
+
+        context = {
+            'playerOneName': body.get('playerOneName'),
+            'playerTwoName': body.get('playerTwoName'),
+            'skin': body.get('skin'),
+            'is_authenticated': is_authenticated
+        }
+
+        return JsonResponse(context)
+    return render(request, 'index.html')
+
+@ensure_csrf_cookie
+def login(request):
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        return render(request, 'login.html')
+    return render(request, 'index.html')
+
+@ensure_csrf_cookie
+def account(request):
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        return render(request, 'account.html')
+    return render(request, 'index.html')
+
+@ensure_csrf_cookie
+def pong(request):
+	if request.headers.get('X-Requested-With') == 'Fetch':
+		return render(request, 'pong.html')
+	return render(request, 'index.html')

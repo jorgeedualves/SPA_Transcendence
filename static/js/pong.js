@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleGameData(event) {
         const key = event.detail;
         gameData = JSON.parse(localStorage.getItem(key));
+		console.log(gameData);
         if (gameData) {
             console.log('game Data:', gameData);
             // Use gameData in your game logic
@@ -268,6 +269,3 @@ document.addEventListener("keyup", function (ev) {
         p2_keyDown = false
     }
 })
-
-
-setup();
