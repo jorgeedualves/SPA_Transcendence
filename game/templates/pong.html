@@ -1,4 +1,15 @@
 {% load static %}
-<div class="d-flex align-items-center justify-content-center canvasDiv">
-    <canvas id="canvas" width="1300" height="800"></canvas>
+<div class="d-flex flex-column align-items-center justify-content-center canvasDiv">
+	<div class="d-flex align-items-center justify-content-around namePlayersDiv mb-5 w-90">
+		{% if playerOneName%}
+			<h3>{{playerOneName}}</h3>
+		{% endif %}
+		<h3>VS</h3>
+		{% if playerTwoName %}
+			<h3>{{ playerTwoName}}</h3>
+		{% endif %}
+	</div>
+	<div class="d-flex align-items-center justify-content-center">
+		<canvas id="canvas" width="1300" height="800"></canvas>
+	</div>
 </div>

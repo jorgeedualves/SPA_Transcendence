@@ -2,7 +2,7 @@ let ctx, p1_y, p2_y, p1_points, p2_points
 let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9
 let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10
 let ev_pause, ev_gameStart, ev_Timer
-let current_frame = 0, update_interval = 8
+let current_frame = 0, update_interval = 60
 let ia = true, predict_ball_y = 0, last_predicted_frame = 0
 const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
 
@@ -103,7 +103,7 @@ function keyEv() {
             p2_y += p_speed
         }
     } else {
-        p2_y = ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, p2_x, p2_y, p_speed, h, 150, 0.1)
+        p2_y = ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, p2_x, p2_y, p_speed, h, 0, 0.1)
     }
 }
 
@@ -197,6 +197,9 @@ function ia_move(ball_x, ball_y, ball_x_orientation, ball_y_orientation, paddle_
 	
 			last_predicted_frame = current_frame
 		}
+	}
+	else {
+		predict_ball_y = height / 2
 	}
 
 
