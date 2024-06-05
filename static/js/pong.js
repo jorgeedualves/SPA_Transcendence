@@ -1,4 +1,3 @@
-let gameData;
 let ctx, p1_y, p2_y, p1_points, p2_points
 let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9
 let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10
@@ -6,36 +5,6 @@ let ev_pause, ev_gameStart, ev_Timer
 let current_frame = 0, update_interval = 8
 let ia = true, predict_ball_y = 0, last_predicted_frame = 0
 const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    function handleGameData(event) {
-        const key = event.detail;
-        gameData = JSON.parse(localStorage.getItem(key));
-		console.log(gameData);
-        if (gameData) {
-            console.log('game Data:', gameData);
-            // Use gameData in your game logic
-            localStorage.removeItem(key); // Remove data after using it
-        }
-
-        setup();
-    }
-
-    // Set up the event listener for future events
-    document.addEventListener('gameDataReady', handleGameData);
-
-    // Check if gameData is already available (for immediate use)
-    const singleGameData = JSON.parse(localStorage.getItem('singleGameData'));
-    if (singleGameData) {
-        handleGameData({ detail: 'singleGameData' });
-    }
-
-    const tournamentData = JSON.parse(localStorage.getItem('tournamentData'));
-    if (tournamentData) {
-        handleGameData({ detail: 'tournamentData' });
-    }
-});
 
 function setup() {
     const canvas = document.getElementById('canvas')
@@ -80,7 +49,7 @@ function loop() {
 }
 
 function predict_ball(ball_x, ball_y, ball_x_orientation, ball_y_orientation, paddle_x, height) {
-    time_to_hit = (paddle_x - ball_x) / ball_x_orientation
+    let time_to_hit = (paddle_x - ball_x) / ball_x_orientation
 
     predict_ball_y = ball_y + ball_y_orientation * time_to_hit
 
@@ -269,3 +238,33 @@ document.addEventListener("keyup", function (ev) {
         p2_keyDown = false
     }
 })
+
+document.addEventListener("DOMContentLoaded", function() {
+    const targetNode = document.getElementById('content');
+    if (!targetNode) {
+        console.error('Target node #content not found');
+        return;
+    }
+
+    const observerOptions = {
+        childList: true,
+        subtree: true
+    };
+
+    const observer = new MutationObserver((mutationsList, observer) => {
+        mutationsList.forEach(mutation => {
+            if (mutation.type === 'childList') {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE) {
+                        if (node.querySelector('#canvas')) {
+                            setup();
+                            observer.disconnect();
+                        }
+                    }
+                });
+            }
+        });
+    });
+
+    observer.observe(targetNode, observerOptions);
+});

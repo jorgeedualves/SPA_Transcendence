@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
             playerTwoName: playerTwoName,
             skin: skin
         };
-
         loadContent('/game/pong/', data);
     }
 
@@ -50,6 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
             numberOfTeams: numberOfTeams
         };
 
-        loadContent('/tournament/', data);
+        loadContent('/game/tournament/', data);
     }
 });
