@@ -9,31 +9,17 @@ def index(request):
 
 @ensure_csrf_cookie
 def initial_content(request):
-    is_authenticated = request.user.is_authenticated
-    is_authenticated = True
-    template = 'account.html' if is_authenticated else 'login.html'
-    return render(request, template)
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        is_authenticated = request.user.is_authenticated
+        is_authenticated = True
+        template = 'account.html' if is_authenticated else 'login.html'
+        return render(request, template)
+    return render(request, 'index.html')
 
 @ensure_csrf_cookie
 def options(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         return render(request, 'options.html')
-    return render(request, 'index.html')
-
-@ensure_csrf_cookie
-def singleGame(request):
-    is_authenticated = request.user.is_authenticated
-    if request.headers.get('X-Requested-With') == 'Fetch':
-        body = json.loads(request.body.decode('utf-8'))  # Decode and load the JSON directly
-
-        context = {
-            'playerOneName': body.get('playerOneName'),
-            'playerTwoName': body.get('playerTwoName'),
-            'skin': body.get('skin'),
-            'is_authenticated': is_authenticated
-        }
-
-        return JsonResponse(context)
     return render(request, 'index.html')
 
 @ensure_csrf_cookie
@@ -52,4 +38,10 @@ def account(request):
 def pong(request):
 	if request.headers.get('X-Requested-With') == 'Fetch':
 		return render(request, 'pong.html')
+	return render(request, 'index.html')
+
+@ensure_csrf_cookie
+def tournament(request):
+	if request.headers.get('X-Requested-With') == 'Fetch':
+		return render(request, 'tournament.html')
 	return render(request, 'index.html')
