@@ -1,10 +1,40 @@
+let gameData;
 let ctx, p1_y, p2_y, p1_points, p2_points
 let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9
 let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10
 let ev_pause, ev_gameStart, ev_Timer
 let current_frame = 0, update_interval = 8
 let ia = true, predict_ball_y = 0, last_predicted_frame = 0
-const h = 600, w = 1066, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
+const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    function handleGameData(event) {
+        const key = event.detail;
+        gameData = JSON.parse(localStorage.getItem(key));
+        if (gameData) {
+            console.log('game Data:', gameData);
+            // Use gameData in your game logic
+            localStorage.removeItem(key); // Remove data after using it
+        }
+
+        setup();
+    }
+
+    // Set up the event listener for future events
+    document.addEventListener('gameDataReady', handleGameData);
+
+    // Check if gameData is already available (for immediate use)
+    const singleGameData = JSON.parse(localStorage.getItem('singleGameData'));
+    if (singleGameData) {
+        handleGameData({ detail: 'singleGameData' });
+    }
+
+    const tournamentData = JSON.parse(localStorage.getItem('tournamentData'));
+    if (tournamentData) {
+        handleGameData({ detail: 'tournamentData' });
+    }
+});
 
 function setup() {
     const canvas = document.getElementById('canvas')
@@ -238,5 +268,6 @@ document.addEventListener("keyup", function (ev) {
         p2_keyDown = false
     }
 })
+
 
 setup();

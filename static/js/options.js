@@ -17,78 +17,76 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Handle Single Game submit button click
     function handleSingleGameSubmit(event) {
-        let playerOneName = document.getElementById('playerOneName').value.trim();
+		let playerOneName = document.getElementById('playerOneName').value.trim();
 		let playerTwoName = document.getElementById('playerTwoName').value.trim();
-        let skin = document.getElementById('skin').value;
-
-        // Client-side validation
-        if (!playerOneName || !playerTwoName) {
-            alert('Player Name cannot be empty.');
-            return;
-        }
-
-        fetch('/singleGame/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({
-                playerOneName: playerOneName,
+		let skin = document.getElementById('skin').value;
+	
+		if (!playerOneName || !playerTwoName) {
+			alert('Player Name cannot be empty.');
+			return;
+		}
+	
+		fetch('/singleGame/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken')
+			},
+			body: JSON.stringify({
+				playerOneName: playerOneName,
 				playerTwoName: playerTwoName,
-                skin: skin
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            loadContent('pong.html');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
-
-    // Handle Tournament form submit button click
-    function handleTournamentSubmit(event) {
-        let teamName = document.getElementById('teamName').value.trim();
-        let numberOfTeams = document.getElementById('numberOfTeams').value.trim();
-
-        // Client-side validation
-        if (!teamName) {
-            alert('Team Name cannot be empty.');
-            return;
-        }
-        if (!numberOfTeams || isNaN(numberOfTeams) || numberOfTeams <= 0) {
-            alert('Number of Teams must be a positive number.');
-            return;
-        }
-
-        // Process form data here
-        console.log('Team Name:', teamName);
-        console.log('Number of Teams:', numberOfTeams);
-
-        // Example: Sending data to your server using fetch
-        fetch('/your-endpoint/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCookie('csrftoken')
-            },
-            body: JSON.stringify({
-                teamName: teamName,
-                numberOfTeams: numberOfTeams
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
+				skin: skin
+			})
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('Success:', data);
+			localStorage.setItem('singleGameData', JSON.stringify(data)); // Store data with a unique key
+			const event = new CustomEvent('playerDataReady', { detail: 'singleGameData' });
+			document.dispatchEvent(event);
 			loadContent('pong.html');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-    }
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+	}
+	
+	function handleTournamentSubmit(event) {
+		let teamName = document.getElementById('teamName').value.trim();
+		let numberOfTeams = document.getElementById('numberOfTeams').value.trim();
+	
+		if (!teamName) {
+			alert('Team Name cannot be empty.');
+			return;
+		}
+		if (!numberOfTeams || isNaN(numberOfTeams) || numberOfTeams <= 0) {
+			alert('Number of Teams must be a positive number.');
+			return;
+		}
+	
+		fetch('/tournament/', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-CSRFToken': getCookie('csrftoken')
+			},
+			body: JSON.stringify({
+				teamName: teamName,
+				numberOfTeams: numberOfTeams
+			})
+		})
+		.then(response => response.json())
+		.then(data => {
+			console.log('Success:', data);
+			localStorage.setItem('tournamentData', JSON.stringify(data)); // Store data with a unique key
+			const event = new CustomEvent('playerDataReady', { detail: 'tournamentData' });
+			document.dispatchEvent(event);
+			loadContent('pong.html');
+		})
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+	}
 
     // Function to get CSRF token
     function getCookie(name) {
