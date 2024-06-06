@@ -4,11 +4,6 @@
 	align-items: center;
 	width: 100vw;
 	height: 90vh;
-	border: 1px;
-	border-radius: 1rem;
-	border-style: solid;
-	background-color: #142a3b;
-	border-color: #274864;
 }
 
 .gameImageContainer img {

@@ -1,0 +1,90 @@
+.wrapperMain {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.customContainer {
+    padding: 20px;
+    width: 100vw;
+	height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+	justify-content: center;
+}
+
+.customTitle {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.customCircle {
+    width: 30vh; /* Adjusted size */
+    height: 30vh; /* Adjusted size */
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.greenCircle {
+    background-color: #004d00; /* Green color */
+}
+
+.customButtonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(255, 255, 255, 0.1); /* Background for visual separation */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+	width: 58vw;
+	height: 15vh;
+}
+
+.buttonCircle {
+    width: 12vh; /* Size of the small circles */
+    height: 12vh; /* Size of the small circles */
+    border-radius: 50%;
+    background-color: #444; /* Gray color */
+}
+
+.customNotifications {
+    text-align: right;
+    color: white;
+    margin-top: 20px; /* Added margin */
+}
+
+.customHistory, .customStatistics {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.7); /* Black color */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40vh;
+	width: 35vw;
+    margin: 10px;
+}
+
+.customHistory {
+    background-color: rgba(148, 100, 100, 0.7); /* Red color */
+}
+
+.customHistory a, .customStatistics a {
+    color: #aaa;
+}
+
+h2 {
+    color: white;
+}
+
+.paddingAccount {
+	height: 5vh;
+}

@@ -1,40 +1,65 @@
-let ctx, p1_y, p2_y, p1_points, p2_points
-let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9
-let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10
-let ev_pause, ev_gameStart, ev_Timer
-let current_frame = 0, update_interval = 60
-let ia = true, predict_ball_y = 0, last_predicted_frame = 0
-const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10
+let ctx, p1_y, p2_y, p1_points, p2_points;
+let ball_y_orientation, ball_x_orientation, ball_x, ball_y, b_size = 10, b_speed = 9;
+let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10;
+let ev_pause, ev_gameStart, ev_Timer;
+let current_frame = 0, update_interval = 60;
+let ia = true, predict_ball_y = 0, last_predicted_frame = 0;
+const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10;
+
+// Global variable to store game data
+let gameData = null;
+let gameType = '';
 
 function setup() {
-    const canvas = document.getElementById('canvas')
-    ctx = canvas.getContext('2d')
+    const canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
 
-    // inicializa posY dos jogadores para metade da tela
-    p1_y = p2_y = (h / 2) - (p_h / 2)
+    // Retrieve stored data from sessionStorage
+    const singleGameData = sessionStorage.getItem('singleGameData');
+    const tournamentData = sessionStorage.getItem('TournamentData');
 
-    // inicializa os pontos dos jogadores como 0
-    p1_points = 0
-    p2_points = 0
+    if (singleGameData) {
+        gameData = JSON.parse(singleGameData);
+        gameType = 'single';
+    } else if (tournamentData) {
+        gameData = JSON.parse(tournamentData);
+        gameType = 'tournament';
+    }
 
-    ev_pause = false
-    ev_gameStart = false
-    ev_Timer = false
-    initBall()
-    let cout = 5
+    if (gameData) {
+        console.log('Game Data:', gameData);
+        if (gameType === 'single') {
+			if (gameData.gameMode === 'pvp') {
+				ia = false
+			} 
+		}
+    }
+
+    // Initialize player positions
+    p1_y = p2_y = (h / 2) - (p_h / 2);
+
+    // Initialize player points
+    p1_points = 0;
+    p2_points = 0;
+
+    ev_pause = false;
+    ev_gameStart = false;
+    ev_Timer = false;
+    initBall();
+    let cout = 5;
     let timer = setInterval(function () {
-        draw()
+        draw();
         ctx.font = "50px monospace";
         ctx.fillStyle = "#fff";
         ctx.fillText(cout, w / 2, h / 2);
-        cout--
+        cout--;
         if (cout == 0) {
-            clearInterval(timer)
-            ev_gameStart = true
-            setInterval(loop, 1000 / 60)
+            clearInterval(timer);
+            ev_gameStart = true;
+            setInterval(loop, 1000 / 60);
         }
-    }, 1000)
-    //define um intervalo de 60 fps para o loop
+    }, 1000);
+    // Define an interval of 60 fps for the loop
 }
 
 function loop() {

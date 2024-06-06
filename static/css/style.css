@@ -2,9 +2,10 @@
 @import url("nav.css");
 @import url("options.css");
 @import url("pong.css");
+@import url("account.css");
 
 body {
-    background-color: #121212;
+    background-color: #181818;
     color: #bcbcbc;
     font-family: "Virgil 3 YOFF", sans-serif;
 }

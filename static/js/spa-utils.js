@@ -1,3 +1,5 @@
+var game_data = null
+
 export function loadContent(url, data = null, replaceState = false) {
     let fetchOptions = {
         headers: {
@@ -6,7 +8,7 @@ export function loadContent(url, data = null, replaceState = false) {
             'X-CSRFToken': getCookie('csrftoken')
         }
     };
-
+	game_data = data
     if (data) {
         fetchOptions.method = 'POST';
         fetchOptions.body = JSON.stringify(data);

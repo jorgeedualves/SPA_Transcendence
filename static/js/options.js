@@ -9,23 +9,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Function to attach event listeners to radio buttons
+    function attachEventListeners() {
+        const pvpRadio = document.getElementById('pvp');
+        const pveRadio = document.getElementById('pve');
+
+        if (pvpRadio && pveRadio) {
+            pvpRadio.addEventListener('change', function() {
+                console.log("PVP Radio button selected");
+                togglePlayerTwoInput();
+            });
+
+            pveRadio.addEventListener('change', function() {
+                console.log("PVE Radio button selected");
+                togglePlayerTwoInput();
+            });
+        }
+    }
+
+    // Function to toggle the display of player two input field
+    function togglePlayerTwoInput() {
+        const pvpSelected = document.getElementById('pvp').checked;
+        const playerTwoContainer = document.getElementById('playerTwoNameContainer');
+        console.log("PVP Selected: ", pvpSelected);
+        if (pvpSelected) {
+            playerTwoContainer.style.display = 'block';
+        } else {
+            playerTwoContainer.style.display = 'none';
+        }
+    }
+
     function handleSingleGameSubmit(event) {
         event.preventDefault();
 
         let playerOneName = document.getElementById('playerOneName').value.trim();
         let playerTwoName = document.getElementById('playerTwoName').value.trim();
         let skin = document.getElementById('skin').value;
+        const gameMode = document.querySelector('input[name="gameMode"]:checked').value;
 
-        if (!playerOneName || !playerTwoName) {
+        if (!playerOneName || (gameMode === 'PVP' && !playerTwoName)) {
             alert('Player Name cannot be empty.');
             return;
         }
 
+        // Clear previous data
+        sessionStorage.removeItem('singleGameData');
+        sessionStorage.removeItem('TournamentData');
+
         let data = {
             playerOneName: playerOneName,
-            playerTwoName: playerTwoName,
-            skin: skin
+            playerTwoName: gameMode === 'PVP' ? playerTwoName : null,
+            skin: skin,
+            mode: gameMode
         };
+        sessionStorage.setItem('singleGameData', JSON.stringify(data)); // Store data with a unique key
+        const eventPlayer = new CustomEvent('playerDataReady', { detail: 'singleGameData' });
+        document.dispatchEvent(eventPlayer);
         loadContent('/game/pong/', data);
     }
 
@@ -44,11 +83,37 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Clear previous data
+        sessionStorage.removeItem('singleGameData');
+        sessionStorage.removeItem('TournamentData');
+
         let data = {
             teamName: teamName,
             numberOfTeams: numberOfTeams
         };
 
+        sessionStorage.setItem('TournamentData', JSON.stringify(data));
+        const eventPlayer = new CustomEvent('playerDataReady', { detail: 'TournamentData' });
+        document.dispatchEvent(eventPlayer);
+
         loadContent('/game/tournament/', data);
     }
+
+    // MutationObserver to detect when the modal is added to the DOM
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.addedNodes.length) {
+                const singleGameModal = document.getElementById('singleGameModal');
+                if (singleGameModal) {
+                    attachEventListeners();
+                    togglePlayerTwoInput(); // Initial call to set the correct state of player two input field
+                }
+            }
+        });
+    });
+
+    // Configure the observer
+    const config = { childList: true, subtree: true };
+    observer.observe(document.body, config);
 });
+
