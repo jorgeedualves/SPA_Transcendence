@@ -25,11 +25,11 @@ function setup() {
         gameData = JSON.parse(tournamentData);
         gameType = 'tournament';
     }
-
+	console.log('Game Data:', gameData);
     if (gameData) {
         console.log('Game Data:', gameData);
         if (gameType === 'single') {
-			if (gameData.gameMode === 'pvp') {
+			if (gameData.mode === 'PVP') {
 				ia = false
 			} 
 		}
