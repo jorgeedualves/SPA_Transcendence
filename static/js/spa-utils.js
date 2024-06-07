@@ -24,20 +24,20 @@ export function loadContent(url, data = null, replaceState = false) {
                 history.pushState(null, '', url);
             }
             setupNavigationLinks();
-            loadScriptsDynamically();
+            //loadScriptsDynamically();
         })
         .catch(error => console.error('Error loading content:', error));
 }
 
-function loadScriptsDynamically() {
-    const scripts = document.querySelectorAll('script[data-src]');
-    scripts.forEach(script => {
-        const newScript = document.createElement('script');
-        newScript.src = script.getAttribute('data-src');
-        newScript.defer = true;
-        document.body.appendChild(newScript);
-    });
-}
+// function loadScriptsDynamically() {
+//     const scripts = document.querySelectorAll('script[data-src]');
+//     scripts.forEach(script => {
+//         const newScript = document.createElement('script');
+//         newScript.src = script.getAttribute('data-src');
+//         newScript.defer = true;
+//         document.body.appendChild(newScript);
+//     });
+// }
 
 function setupNavigationLinks() {
     document.querySelectorAll('a[data-template]').forEach(link => {

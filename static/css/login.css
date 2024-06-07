@@ -33,3 +33,8 @@
 	height: 100%;
 	overflow: hidden;
 }
+
+#loginButton a{
+	text-decoration: none;
+	color: white;
+}
