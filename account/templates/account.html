@@ -1,10 +1,12 @@
 {% load static %}
+{% load i18n %}
 <div class="wrapperNav">
     <header>
         <nav class="navBar">
             <ul class="navList">
-                <li class="navItem"><a href="/game/options" data-template="options.html">Play</a></li>
-                <li class="navItem"><a href="/account" data-template="account.html">Profile</a></li>
+                <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Language" %}</a></li>
+                <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Play" %}</a></li>
+                <li class="navItem"><a href="/account" data-template="account.html">{% trans "Profile" %}</a></li>
             </ul>
         </nav>
     </header>
@@ -20,26 +22,30 @@
                         <div class="buttonCircle"></div>
                         <div class="buttonCircle"></div>
                         <div class="buttonCircle"></div>
-                        <button class="btn btn-secondary">Add</button>
+                        <button class="btn btn-secondary">{% trans "Add" %}</button>
                     </div>
                 </div>
             </div>
-			<div class="row paddingAccount"></div>
+            <div class="row paddingAccount"></div>
             <div class="row mt-4">
                 <div class="col-4 d-flex align-items-center justify-content-center">
                     <div class="customHistory">
-                        <h2>Histórico de partidas</h2>
-                        <a href="#">Ver mais</a>
+                        <h2>{% trans "Histórico de partidas" %}</h2>
+                        <a href="#">{% trans "Ver mais" %}</a>
                     </div>
                 </div>
                 <div class="col-8 d-flex align-items-center justify-content-center">
                     <div class="customStatistics">
-                        <h2>Estatísticas</h2>
-                        <a href="#">Ver mais</a>
+                        <h2>{% trans "Estatísticas" %}</h2>
+                        <a href="#">{% trans "Ver mais" %}</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer>Made by pong</footer>
+    <!-- templates/index.html -->
+    <h1>{% trans "Hello, world!" %}</h1>
+
+    <p>{% blocktrans %}This is a paragraph with a {{ variable }}.{% endblocktrans %}</p>
+    <footer>{% trans "Made by pong" %}</footer>
 </div>

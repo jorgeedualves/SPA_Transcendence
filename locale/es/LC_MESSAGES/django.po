@@ -1,0 +1,64 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-07 01:36+0000\n"
+"Language: es\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/templates/account.html:7
+msgid "Language"
+msgstr "Idioma"
+
+#: account/templates/account.html:8
+msgid "Play"
+msgstr "Jugar"
+
+#: account/templates/account.html:9
+msgid "Profile"
+msgstr "Perfil"
+
+#: account/templates/account.html:25
+msgid "Add"
+msgstr "Añadir"
+
+#: account/templates/account.html:33
+msgid "Histórico de partidas"
+msgstr "Historial de partidas"
+
+#: account/templates/account.html:34 account/templates/account.html:40
+msgid "Ver mais"
+msgstr "Ver más"
+
+#: account/templates/account.html:39
+msgid "Estatísticas"
+msgstr "Estadísticas"
+
+#: account/templates/account.html:47
+msgid "Hello, world!"
+msgstr "¡Hola, mundo!"
+
+#: account/templates/account.html:49
+#, python-format
+msgid "This is a paragraph with a %(variable)s."
+msgstr "Este es un párrafo con una %(variable)s."
+
+#: account/templates/account.html:50
+msgid "Made by pong"
+msgstr "hecho por pong"
+
+#: authentication/templates/login.html:11
+msgid "Hey, Traveler!"
+msgstr "¡Hola, Viajero!"
+
+#: authentication/templates/login.html:12
+msgid "Embark on an"
+msgstr "Embárcate en una"
+
+#: authentication/templates/login.html:13
+msgid "Unforgettable Adventure!"
+msgstr "¡Aventura Inolvidable!"
+
+#: authentication/templates/login.html:15
+msgid "Login 42"
+msgstr "Iniciar Sesión 42"

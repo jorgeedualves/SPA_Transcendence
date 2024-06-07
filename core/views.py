@@ -2,6 +2,8 @@ from django.http import JsonResponse
 import json
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils.translation import activate
+
 
 @ensure_csrf_cookie
 def index(request):
@@ -12,7 +14,8 @@ def initial_content(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         is_authenticated = request.user.is_authenticated
         is_authenticated = True
-        template = 'account.html' if is_authenticated else 'login.html'
+        activate('es')
+        template = 'login.html' if is_authenticated else 'login.html'
         return render(request, template)
     return render(request, 'index.html')
 

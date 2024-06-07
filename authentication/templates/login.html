@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <div class="wrapperLogin">
     <div class="row d-flex justify-content-between align-items-center vh-100">
         <div class="col-8 loginImageContainer">
@@ -7,11 +8,11 @@
         <div class="col-6 loginTextContainer">
             <div class="d-flex flex-column justify-content-around align-items-center text-center">
                 <div class="internalLoginText">
-					<p>Ei, Viajante!</p>
-					<p>Embarque em uma</p>
-					<p>Aventura Inesquecível!</p>
-				</div>
-                <button type="button" class="btn btn-outline-light" id="loginButton">Login 42</button>
+                    <p>{% trans "Hey, Traveler!" %}</p>
+                    <p>{% trans "Embark on an" %}</p>
+                    <p>{% trans "Unforgettable Adventure!" %}</p>
+                </div>
+                <button type="button" class="btn btn-outline-light" id="loginButton">{% trans "Login 42" %}</button>
             </div>
         </div>
     </div>
