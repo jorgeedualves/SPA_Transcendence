@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .services import exchange_code, generate_jwt_token
 from .auth import IntraAuthenticationBackend
 import os
+from django.utils import translation
 
 @ensure_csrf_cookie
 def index(request):
@@ -13,6 +14,8 @@ def index(request):
 
 @ensure_csrf_cookie
 def initial_content(request):
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
     if request.headers.get('X-Requested-With') == 'Fetch':
         is_authenticated = request.user.is_authenticated
         template = 'account.html' if is_authenticated else 'login.html'
@@ -20,6 +23,8 @@ def initial_content(request):
     return render(request, 'index.html')
 
 def login_view(request):
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
     if request.user.is_authenticated:
         return redirect('initial_content')
 
@@ -56,6 +61,8 @@ def intra_login_redirect(request):
 
 @login_required
 def account(request):
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
     if request.headers.get('X-Requested-With') == 'Fetch':
         return render(request, 'account.html')
     return render(request, 'index.html')
