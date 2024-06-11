@@ -1,16 +1,24 @@
 {% load static %}
-
+{% load i18n %}
 <div class="wrapperLogin">
+    <div class="languageSetter">
+        <select class="language-dropdown">
+            <option value="en" {% if language == 'en' %}selected{% endif %}><img src="{% static 'images/flags/en.svg' %}" alt="English" width="20"> English</option>
+            <option value="br" {% if language == 'br' %}selected{% endif %}><img src="{% static 'images/flags/br.svg' %}" alt="Português" width="20"> Português</option>
+            <option value="es" {% if language == 'es' %}selected{% endif %}><img src="{% static 'images/flags/es.svg' %}" alt="Español" width="20"> Español</option>
+            <option value="fr" {% if language == 'fr' %}selected{% endif %}><img src="{% static 'images/flags/fr.svg' %}" alt="Français" width="20"> Français</option>
+        </select>
+    </div>
     <div class="row d-flex justify-content-between align-items-center vh-100">
         <div class="col-8 loginImageContainer">
             <img src="{% static 'images/login.svg' %}" alt="astronaut image" class="img-fluid">
         </div>
-        <div class="col-6 loginTextContainer">
+        <div class="d-flex flex-column justify-content-between col-6 loginTextContainer">
             <div class="d-flex flex-column justify-content-around align-items-center text-center">
                 <div class="internalLoginText">
-                    <p>Ei, Viajante!</p>
-                    <p>Embarque em uma</p>
-                    <p>Aventura Inesquecível!</p>
+                    <p>Hey, Traveler!</p>
+                    <p>Get on board for an</p>
+                    <p>Unforgettable Adventure!</p>
                 </div>
                 <button type="button" class="btn btn-outline-light" id="loginButton">
                     <a href="{% url 'authentication:intra_login' %}">Login 42</a>

@@ -11,8 +11,8 @@ export function loadContent(url, data = null, replaceState = false) {
         }
     };
 
-    // Adiciona o idioma do localStorage ao fetchOptions
-    const language = localStorage.getItem('language') || 'en';
+    // Add the language from localStorage to fetchOptions
+    const language = localStorage.getItem('language');
     fetchOptions.headers['Content-Language'] = language;
 
     game_data = data;
@@ -76,8 +76,8 @@ function observeLanguageDropdown() {
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
-                if (node.nodeType === 1 && node.querySelector('#language-dropdown')) {
-                    const dropdown = node.querySelector('#language-dropdown');
+                if (node.nodeType === 1 && node.querySelector('.language-dropdown')) {
+                    const dropdown = node.querySelector('.language-dropdown');
                     const currentLanguage = localStorage.getItem('language') || 'en';
                     dropdown.value = currentLanguage;
                     setupLanguageDropdown(dropdown);
@@ -96,7 +96,7 @@ function setupLanguageDropdown(dropdown) {
         if (selectedLanguage !== currentLanguage) {
             localStorage.setItem('language', selectedLanguage);
             const currentUrl = window.location.pathname;
-            loadContent(currentUrl, null, true); // Recarrega a página atual
+            loadContent(currentUrl, null, true);
         }
-    }, 300)); // Ajuste o tempo de debounce conforme necessário
+    }, 300));
 }

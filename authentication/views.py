@@ -37,7 +37,6 @@ def intra_login(request):
 
 def intra_login_redirect(request):
     code = request.GET.get("code")
-
     try:
         user_intra = exchange_code(code)
         jwt_token = generate_jwt_token(user_intra)
