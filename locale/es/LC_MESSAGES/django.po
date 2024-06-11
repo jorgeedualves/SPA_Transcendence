@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-07 03:34+0000\n"
+"Language: es\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: account/templates/account.html:16
+msgid "Play"
+msgstr "Jugar"
+
+#: account/templates/account.html:17
+msgid "Profile"
+msgstr "Perfil"
+
+#: account/templates/account.html:33
+msgid "Add"
+msgstr "Añadir"
+
+#: account/templates/account.html:41
+msgid "Match history"
+msgstr "Historial de partidas"
+
+#: account/templates/account.html:42 account/templates/account.html:48
+msgid "See more"
+msgstr "Ver más"
+
+#: account/templates/account.html:47
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: account/templates/account.html:54
+msgid "Made by pong"
+msgstr "hecho por pong"
+
+#~ msgid "Hey, Traveler!"
+#~ msgstr "¡Hola, Viajero!"
+
+#~ msgid "Embark on an"
+#~ msgstr "Embárcate en una"
+
+#~ msgid "Unforgettable Adventure!"
+#~ msgstr "¡Aventura Inolvidable!"
+
+#~ msgid "Login 42"
+#~ msgstr "Iniciar Sesión 42"
