@@ -14,7 +14,7 @@ def initial_content(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         is_authenticated = request.user.is_authenticated
         is_authenticated = True
-        activate('es')
+        activate('fr')
         template = 'login.html' if is_authenticated else 'login.html'
         return render(request, template)
     return render(request, 'index.html')

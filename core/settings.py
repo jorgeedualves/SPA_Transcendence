@@ -114,6 +114,8 @@ LOCALE_PATHS = [
 LANGUAGES = [
     ('en', 'English'),
     ('es', 'Español'),
+    ('pt-br', 'Portuguese (Brazil)'),
+    ('fr', 'French'),
     # Adicione mais idiomas conforme necessário
 ]
 
