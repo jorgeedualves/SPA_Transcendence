@@ -33,3 +33,17 @@
 	height: 100%;
 	overflow: hidden;
 }
+
+#loginButton a{
+	text-decoration: none;
+	color: white;
+}
+
+.languageSetter {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 1rem;
+	margin-right: 1rem;
+	text-decoration: none;
+}

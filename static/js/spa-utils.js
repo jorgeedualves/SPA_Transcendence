@@ -1,4 +1,6 @@
-var game_data = null
+import { debounce } from './debounce.js';
+
+var game_data = null;
 
 export function loadContent(url, data = null, replaceState = false) {
     let fetchOptions = {
@@ -8,7 +10,12 @@ export function loadContent(url, data = null, replaceState = false) {
             'X-CSRFToken': getCookie('csrftoken')
         }
     };
-	game_data = data
+
+    // Add the language from localStorage to fetchOptions
+    const language = localStorage.getItem('language');
+    fetchOptions.headers['Content-Language'] = language;
+
+    game_data = data;
     if (data) {
         fetchOptions.method = 'POST';
         fetchOptions.body = JSON.stringify(data);
@@ -24,19 +31,9 @@ export function loadContent(url, data = null, replaceState = false) {
                 history.pushState(null, '', url);
             }
             setupNavigationLinks();
-            loadScriptsDynamically();
+            observeLanguageDropdown();
         })
         .catch(error => console.error('Error loading content:', error));
-}
-
-function loadScriptsDynamically() {
-    const scripts = document.querySelectorAll('script[data-src]');
-    scripts.forEach(script => {
-        const newScript = document.createElement('script');
-        newScript.src = script.getAttribute('data-src');
-        newScript.defer = true;
-        document.body.appendChild(newScript);
-    });
 }
 
 function setupNavigationLinks() {
@@ -57,13 +54,14 @@ export function initializeSPA() {
     });
 
     setupNavigationLinks();
+    observeLanguageDropdown();
 }
 
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
-        for (let i = 0; cookies.length; i++) {
+        for (let i = 0; i < cookies.length; i++) {
             const cookie = cookies[i].trim();
             if (cookie.substring(0, name.length + 1) === (name + '=')) {
                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
@@ -72,4 +70,33 @@ function getCookie(name) {
         }
     }
     return cookieValue;
+}
+
+function observeLanguageDropdown() {
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1 && node.querySelector('.language-dropdown')) {
+                    const dropdown = node.querySelector('.language-dropdown');
+                    const currentLanguage = localStorage.getItem('language') || 'en';
+                    dropdown.value = currentLanguage;
+                    setupLanguageDropdown(dropdown);
+                }
+            });
+        });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+}
+
+function setupLanguageDropdown(dropdown) {
+    dropdown.addEventListener('change', debounce(function() {
+        const selectedLanguage = this.value;
+        const currentLanguage = localStorage.getItem('language');
+        if (selectedLanguage !== currentLanguage) {
+            localStorage.setItem('language', selectedLanguage);
+            const currentUrl = window.location.pathname;
+            loadContent(currentUrl, null, true);
+        }
+    }, 300));
 }

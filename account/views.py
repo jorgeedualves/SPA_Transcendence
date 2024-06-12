@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from django.utils.translation import activate
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.utils import translation
 
-def initial_content(request):
-    # Ative o idioma espanhol
-    return render(request, 'account/account.html')
+@ensure_csrf_cookie
+def account(request):
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        return render(request, 'account.html')
+    return render(request, 'index.html')

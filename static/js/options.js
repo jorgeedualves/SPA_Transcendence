@@ -31,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function togglePlayerTwoInput() {
         const pvpSelected = document.getElementById('pvp').checked;
         const playerTwoContainer = document.getElementById('playerTwoNameContainer');
-        console.log("PVP Selected: ", pvpSelected);
         if (pvpSelected) {
             playerTwoContainer.style.display = 'block';
         } else {

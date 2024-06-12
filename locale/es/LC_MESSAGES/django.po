@@ -6,6 +6,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+<<<<<<< HEAD
 #: account/templates/account.html:7
 msgid "Language"
 msgstr "Idioma"
@@ -62,3 +63,96 @@ msgstr "¡Aventura Inolvidable!"
 #: authentication/templates/login.html:15
 msgid "Login 42"
 msgstr "Iniciar Sesión 42"
+=======
+#: account/templates/account.html:16 game/templates/options.html:16
+msgid "Play"
+msgstr "Jugar"
+
+#: account/templates/account.html:17 game/templates/options.html:17
+msgid "Profile"
+msgstr "Perfil"
+
+#: account/templates/account.html:33
+msgid "Add"
+msgstr "Añadir"
+
+#: account/templates/account.html:41
+msgid "History Match"
+msgstr "Historial de partidas"
+
+#: account/templates/account.html:42 account/templates/account.html:48
+msgid "See More"
+msgstr "Ver más"
+
+#: account/templates/account.html:47
+msgid "Statistics"
+msgstr "Estadísticas"
+
+#: account/templates/account.html:54 game/templates/options.html:34
+msgid "Made by pong"
+msgstr "hecho por pong"
+
+#: authentication/templates/login.html:19
+msgid "Hey, Traveler!"
+msgstr "¡Hola, Viajero!"
+
+#: authentication/templates/login.html:20
+msgid "Get on board for an"
+msgstr "Embárcate en una"
+
+#: authentication/templates/login.html:21
+msgid "Unforgettable Adventure!"
+msgstr "¡Aventura Inolvidable!"
+
+#: authentication/templates/login.html:24
+msgid "Login 42"
+msgstr "Iniciar Sesión 42"
+
+#: game/templates/options.html:25
+msgid "Single Game"
+msgstr "Partido Individual"
+
+#: game/templates/options.html:26
+msgid "Tournament"
+msgstr "Torneo"
+
+#: game/templates/options.html:42
+msgid "Single Game Configuration"
+msgstr "Configuración de Juego Único"
+
+#: game/templates/options.html:50
+msgid "Game Mode:"
+msgstr "Modo de Juego:"
+
+#: game/templates/options.html:62
+msgid "Player 1:"
+msgstr "Jugador(a) 1:"
+
+#: game/templates/options.html:66
+msgid "Player 2:"
+msgstr "Jugador(a) 2:"
+
+#: game/templates/options.html:70
+msgid "Choose Map Skin:"
+msgstr "Elija la máscara del mapa:"
+
+#: game/templates/options.html:72
+msgid "Map 1"
+msgstr "Mapa 1"
+
+#: game/templates/options.html:73
+msgid "Map 2"
+msgstr "Mapa 2"
+
+#: game/templates/options.html:74
+msgid "Map 3"
+msgstr "Mapa 3"
+
+#: game/templates/options.html:77
+msgid "Start Game"
+msgstr "Empezar Juego"
+
+#: game/templates/options.html:104
+msgid "Start Tournament"
+msgstr "Iniciar Torneo"
+>>>>>>> 67819e1ab39471fdbfcc1df09f7c140b4f2cb393

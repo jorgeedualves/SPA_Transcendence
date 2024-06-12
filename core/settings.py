@@ -12,17 +12,32 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Construindo caminhos dentro do projeto como: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Configurações de desenvolvimento rápido - inadequadas para produção
+
+load_dotenv()
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+CLIENT_ID = os.environ.get('CLIENT_ID')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+REDIRECT_URI = os.environ.get('REDIRECT_URI')
+AUTH_URL_INTRA = os.environ.get('AUTH_URL_INTRA')
+
+# Verifique se todas as variáveis estão definidas
+if not all([SECRET_KEY, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, AUTH_URL_INTRA]):
+    raise ValueError("One or more environment variables are not set.")
+
+
+
 # Veja https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # AVISO DE SEGURANÇA: mantenha a chave secreta usada em produção em segredo!
 SECRET_KEY = 'django-insecure-abyqy2^-=wja(v8it%7u)47b!(go7g7+_1odx*7lmz=-7yb#=8'
 
-# AVISO DE SEGURANÇA: não execute com o debug ativado em produção!
+
 DEBUG = True
 
 ALLOWED_HOSTS = []  # Lista de hosts/nomes de domínio permitidos
@@ -135,3 +150,26 @@ STATIC_URL = 'static/'  # URL para servir arquivos estáticos
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
+
+LOGIN_URL = 'authentication:login'
+LOGIN_REDIRECT_URL = 'authentication:account'
+LOGOUT_REDIRECT_URL = 'authentication:login'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'authentication.auth.IntraAuthenticationBackend',  # Adjust this if needed
+]
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('es', 'Español'),
+    ('br', 'Portuguese (Brazil)'),
+    ('fr', 'French'),
+]

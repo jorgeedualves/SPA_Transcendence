@@ -1,10 +1,20 @@
 {% load static %}
+{% load i18n %}
 <div class="wrapperNav">
     <header>
         <nav class="navBar">
             <ul class="navList">
-                <li class="navItem"><a href="/game/options" data-template="options.html">Play</a></li>
-                <li class="navItem"><a href="/account" data-template="account.html">Profile</a></li>
+				<div class="language-selector">
+                    <select class="language-dropdown">
+                        <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+                        <option value="br" {% if language == 'br' %}selected{% endif %}>Português</option>
+                        <option value="es" {% if language == 'es' %}selected{% endif %}>Español</option>
+                        <option value="fr" {% if language == 'fr' %}selected{% endif %}>Français</option>
+                        <!-- More languages here -->
+                    </select>
+                </div>
+                <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Play" %}</a></li>
+                <li class="navItem"><a href="/account" data-template="account.html">{% trans "Profile" %}</a></li>
             </ul>
         </nav>
     </header>
@@ -12,8 +22,8 @@
         <div class="outterDiv d-flex justify-content-between align-items-center">
             <div class="col-6">
                 <div class="d-flex flex-column justify-content-around align-items-center text-center">
-                    <button id="singleGameButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#singleGameModal">Single Game</button>
-                    <button id="tournamentButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#tournamentModal">Tournament</button>
+                    <button id="singleGameButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#singleGameModal">{% trans "Single Game" %}</button>
+                    <button id="tournamentButton" class="gameScreenButton btn btn-light" data-toggle="modal" data-target="#tournamentModal">{% trans "Tournament" %}</button>
                 </div>
             </div>
             <div class="col-6 gameImageContainer">
@@ -29,7 +39,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
-                <h5 class="modal-title" id="singleGameModalLabel">Single Game Configuration</h5>
+                <h5 class="modal-title" id="singleGameModalLabel">{% trans "Single Game Configuration" %}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -37,7 +47,7 @@
             <div class="modal-body">
                 <form>
 					<div class="form-group d-flex align-items-center justify-content-between mb-2">
-						<label for="gameMode">Game Mode:</label>
+						<label for="gameMode">{% trans "Game Mode:" %}</label>
 						<div>
 							<input type="radio" id="pve" name="gameMode" value="PVE" checked>
                             <label for="pve">PVE</label>
@@ -49,22 +59,22 @@
 						<div>&#9</div>
                     </div>
                     <div class="form-group">
-                        <label for="playerOneName">Player 1:</label>
+                        <label for="playerOneName">{% trans "Player 1:" %}</label>
                         <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" required>
                     </div>
                     <div class="form-group" id="playerTwoNameContainer" style="display: none;">
-                        <label for="playerTwoName">Player 2:</label>
+                        <label for="playerTwoName">{% trans "Player 2:" %}</label>
                         <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName">
                     </div>
                     <div class="form-group">
-                        <label for="skin">Choose map skin:</label>
+                        <label for="skin">{% trans "Choose Map Skin:" %}</label>
                         <select class="form-control bg-dark text-white mb-4" id="skin" name="skin">
-                            <option value="easy">Skin 1</option>
-                            <option value="medium">Skin 2</option>
-                            <option value="hard">Skin 3</option>
+                            <option value="map1">{% trans "Map 1" %}</option>
+                            <option value="map2">{% trans "Map 2" %}</option>
+                            <option value="map3">{% trans "Map 3" %}</option>
                         </select>
                     </div>
-                    <button id="submitSingleGame" type="button" data-dismiss="modal" class="btn btn-outline-light">Start Game</button>
+                    <button id="submitSingleGame" type="button" data-dismiss="modal" class="btn btn-outline-light">{% trans "Start Game" %}</button>
                 </form>
             </div>
         </div>
@@ -91,7 +101,7 @@
                         <label for="numberOfTeams">Number of Teams:</label>
                         <input type="number" class="form-control bg-dark text-white mb-4" id="numberOfTeams" name="numberOfTeams" required>
                     </div>
-                    <button id="submitTournament" type="button" class="btn btn-outline-light" data-dismiss="modal">Start Tournament</button>
+                    <button id="submitTournament" type="button" class="btn btn-outline-light" data-dismiss="modal">{% trans "Start Tournament" %}</button>
                 </form>
             </div>
         </div>

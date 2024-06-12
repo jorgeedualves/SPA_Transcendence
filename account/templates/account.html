@@ -4,7 +4,15 @@
     <header>
         <nav class="navBar">
             <ul class="navList">
-                <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Language" %}</a></li>
+                <div class="language-selector">
+                    <select class="language-dropdown">
+                        <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+                        <option value="br" {% if language == 'br' %}selected{% endif %}>Português</option>
+                        <option value="es" {% if language == 'es' %}selected{% endif %}>Español</option>
+                        <option value="fr" {% if language == 'fr' %}selected{% endif %}>Français</option>
+                        <!-- More languages here -->
+                    </select>
+                </div>
                 <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Play" %}</a></li>
                 <li class="navItem"><a href="/account" data-template="account.html">{% trans "Profile" %}</a></li>
             </ul>
@@ -31,13 +39,13 @@
                 <div class="col-4 d-flex align-items-center justify-content-center">
                     <div class="customHistory">
                         <h2>{% trans "Match history" %}</h2>
-                        <a href="#">{% trans "View more" %}</a>
+                        <a href="#">{% trans "See More" %}</a>
                     </div>
                 </div>
                 <div class="col-8 d-flex align-items-center justify-content-center">
                     <div class="customStatistics">
                         <h2>{% trans "Statistics" %}</h2>
-                        <a href="#">{% trans "View more" %}</a>
+                        <a href="#">{% trans "See More" %}</a>
                     </div>
                 </div>
             </div>

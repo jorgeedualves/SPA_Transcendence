@@ -1,8 +1,14 @@
 from django.urls import path  # Importa a função path do módulo django.urls
-from core import views  # Importa o módulo views do diretório atual
+from . import views  # Importa o módulo views do diretório atual
 
-# Lista de padrões de URL para o aplicativo
+app_name = 'authentication'
+
 urlpatterns = [
-    # Define a URL login/ que mapeia para a view 'login'
-    path('', views.login, name='login'),
+    path('', views.index, name='index'),
+    path('initial_content/', views.initial_content, name='initial_content'),
+    path('login/', views.login_view, name='login'),
+    path('account/', views.account, name='account'),
+    path('logout/', views.logout_view, name='logout'),
+    path('oauth2/login/', views.intra_login, name='intra_login'),
+    path('oauth2/login/redirect/', views.intra_login_redirect, name='intra_login_redirect'),
 ]
