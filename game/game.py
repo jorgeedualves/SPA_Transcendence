@@ -99,6 +99,8 @@ def update_event(event: str, state: bool, send_game_state=None):
 	if event == 'game_started':
 		if (send_game_state):
 			asyncio.create_task(start_game(send_game_state))
+	if (event == 'ai'):
+		game.ai = state
 
 def predict_ball():
 	future_x = ball.x_pos
@@ -148,7 +150,6 @@ def get_game_data():
 		'ball_y': ball.y_pos,
 		'isPaused' : game.paused,
 		'game_started': game.started,
-		'ai': game.ai
     }
 	return game_state
 

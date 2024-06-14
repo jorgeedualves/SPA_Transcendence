@@ -6,9 +6,11 @@ let ball_x, ball_y;
 let p1_points, p2_points;
 let p1X, p2X, p1_y, p2_y;
 let isPaused, game_started, ev_timer = false;
-let ai;
+let ai = true;
 let start_draw = false;
 let menuItems = [];
+let gameData = null;
+let gameType = '';
 
 socket.onmessage = function(e) {
 	const data = JSON.parse(e.data);
@@ -34,27 +36,34 @@ socket.onmessage = function(e) {
 		p2_points = game_state.p2_score;
 		isPaused = game_state.isPaused;
 		game_started = game_state.game_started;
-		ai = game_state.ai;
 		if (isPaused == false && start_draw == true){
-			console.log("começou a desenhar");
 			draw();
-		}
-		if (game_started == false && start_draw == true){
-		createMenu([{
-			text: 'Start Game', action: () => {
-				countdown(3, () => {
-					socket.send(JSON.stringify({ event: 'game_started', state: true }));
-				}); 
-			}
-		}]);
-			drawMenu();
 		}
 	}
 };
 
-function run() {
+function setup() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
+	const singleGameData = sessionStorage.getItem('singleGameData');
+    const tournamentData = sessionStorage.getItem('TournamentData');
+
+    if (singleGameData) {
+        gameData = JSON.parse(singleGameData);
+        gameType = 'single';
+    } else if (tournamentData) {
+        gameData = JSON.parse(tournamentData);
+        gameType = 'tournament';
+    }
+    if (gameData) {
+        if (gameType === 'single') {
+			if (gameData.mode === 'PVP') {
+				ai = false
+				console.log();
+				socket.send(JSON.stringify({ event: 'ai', state: false }));
+			} 
+		}
+    }
 	canvas.addEventListener('click', function(event) {
 		if (isPaused || game_started == false) {
 			const rect = canvas.getBoundingClientRect();
@@ -235,7 +244,19 @@ document.addEventListener("DOMContentLoaded", function() {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         if (node.querySelector('#canvas')) {
 							console.log("antes do run");
-                            run();
+                            setup();
+							draw();
+							if (game_started == false){
+								createMenu([{
+									text: 'Start Game', action: () => {
+										countdown(3, () => {
+											start_draw = true;
+											socket.send(JSON.stringify({ event: 'game_started', state: true }));
+										}); 
+									}
+								}]);
+									drawMenu();
+								}
                             observer.disconnect();
                         }
                     }

@@ -1,4 +1,4 @@
-CAN_HEIGHT = 500
+CAN_HEIGHT = 800
 
 
 class Player:

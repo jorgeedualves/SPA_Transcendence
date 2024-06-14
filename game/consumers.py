@@ -23,7 +23,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 		await self.send(text_data=json.dumps({"game_state": initial_state}))
 		self.game_task = None
 
-	async def disconnect(self):
+	async def disconnect(self, close_code):
 		if (self.game_task):
 			self.game_task.cancel()
 
@@ -32,7 +32,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 		event = data.get('event')
 		state = data.get('state')
 
-		if event == 'game_started' or event == 'IsPaused':
+		if event == 'game_started' or event == 'IsPaused' or event == 'ai':
 			update_event(event, state, self.send_game_state)
 		else: 
 			update_event(event, state)
