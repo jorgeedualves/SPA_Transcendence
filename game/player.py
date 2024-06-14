@@ -12,6 +12,7 @@ class Player:
 		self.y_pos = y_pos
 		self.x_pos = x_pos
 		self.score = 0
+		self.hits = 0
 
 	def move(self):
 		if self.go_up and self.y_pos > 0:
