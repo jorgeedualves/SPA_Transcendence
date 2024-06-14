@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.contrib.auth import login, logout
+from django.contrib.auth import login #, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from .services import exchange_code, generate_jwt_token
@@ -66,15 +66,15 @@ def account(request):
         return render(request, 'account.html')
     return render(request, 'index.html')
 
-def logout_view(request):
-    logout(request)
-    response = redirect('login')
-    response.delete_cookie('jwt_token')
-    response.delete_cookie('sessionid')
-    request.session.flush()
+# def logout_view(request):
+#     logout(request)
+#     response = redirect('login')
+#     response.delete_cookie('jwt_token')
+#     response.delete_cookie('sessionid')
+#     request.session.flush()
 
-    cookies_to_delete = ['_intra_42_session_production', '_mkra_stck', 'intra', 'locale', 'user.id']
-    for cookie in cookies_to_delete:
-        response.delete_cookie(cookie)
+#     cookies_to_delete = ['_intra_42_session_production', '_mkra_stck', 'intra', 'locale', 'user.id']
+#     for cookie in cookies_to_delete:
+#         response.delete_cookie(cookie)
 
-    return response
+#     return response

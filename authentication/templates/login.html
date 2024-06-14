@@ -16,12 +16,12 @@
         <div class="d-flex flex-column justify-content-between col-6 loginTextContainer">
             <div class="d-flex flex-column justify-content-around align-items-center text-center">
                 <div class="internalLoginText">
-                    <p>Hey, Traveler!</p>
-                    <p>Get on board for an</p>
-                    <p>Unforgettable Adventure!</p>
+                    <p>{% trans "Hey, Traveler!" %}</p>
+                    <p>{% trans "Get on board for an" %}</p>
+                    <p>{% trans "Unforgettable Adventure!" %}</p>
                 </div>
                 <button type="button" class="btn btn-outline-light" id="loginButton">
-                    <a href="{% url 'authentication:intra_login' %}">Login 42</a>
+                    <a href="{% url 'authentication:intra_login' %}">{% trans "Login 42" %}</a>
                 </button>
             </div>
         </div>
