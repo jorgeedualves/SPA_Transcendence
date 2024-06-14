@@ -46,6 +46,7 @@ ALLOWED_HOSTS = []  # Lista de hosts/nomes de domínio permitidos
 
 INSTALLED_APPS = [
     # Aplicações Django incluídas por padrão
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +57,8 @@ INSTALLED_APPS = [
     'game',
     'account'
 ]
+
+ASGI_APPLICATION = 'core.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
