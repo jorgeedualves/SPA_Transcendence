@@ -23,8 +23,8 @@
 }
 
 .customCircle {
-    width: 30vh; /* Adjusted size */
-    height: 30vh; /* Adjusted size */
+    width: 20vh; /* Adjusted size */
+    height: 20vh; /* Adjusted size */
     border-radius: 50%;
     margin: 0 auto;
 }
@@ -58,7 +58,7 @@
     margin-top: 20px; /* Added margin */
 }
 
-.customHistory, .customStatistics {
+.customStatistics {
     flex: 1;
     background-color: rgba(0, 0, 0, 0.7); /* Black color */
     padding: 20px;
@@ -68,23 +68,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 40vh;
+    height: 60vh;
 	width: 35vw;
     margin: 10px;
 }
 
-.customHistory {
-    background-color: rgba(148, 100, 100, 0.7); /* Red color */
-}
-
-.customHistory a, .customStatistics a {
-    color: #aaa;
+.customStatistics a {
+	color: rgb(200, 200, 200);
 }
 
 h2 {
     color: white;
-}
-
-.paddingAccount {
-	height: 5vh;
 }
