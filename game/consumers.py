@@ -8,13 +8,16 @@ from .game import (
 	get_static_game_data, 
 	game_loop_logic,
 	update_event,
-	setup
+	setup,
+	save_db
 )
 
 class PongConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
+		self.user = self.scope['user']
+		print(f'XXXXXXXXXXXXXXXXXXXXX {self.user}')
 		await self.accept()
-		setup()
+		setup(self.user)
 
 		static_game_data = get_static_game_data()
 		await self.send(text_data=json.dumps({"static_data": static_game_data}))
@@ -24,17 +27,16 @@ class PongConsumer(AsyncWebsocketConsumer):
 		self.game_task = None
 
 	async def disconnect(self, close_code):
-		if (self.game_task):
-			self.game_task.cancel()
+		save_db()
 
 	async def receive(self, text_data):
 		data = json.loads(text_data)
 		event = data.get('event')
 		state = data.get('state')
 
-		if event == 'game_started' or event == 'IsPaused' or event == 'ai':
+		if event == 'game_started' or event == 'IsPaused' or event == 'ai' or event == 'guest':
 			update_event(event, state, self.send_game_state)
-		else: 
+		else:
 			update_event(event, state)
 
 	async def game_loop(self):

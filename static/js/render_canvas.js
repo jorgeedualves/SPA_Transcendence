@@ -5,7 +5,7 @@ let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown;
 let ball_x, ball_y;
 let p1_points, p2_points;
 let p1X, p2X, p1_y, p2_y;
-let isPaused, game_started, ev_timer = false;
+let isPaused, game_started, ev_timer = false, game_ended;
 let ai = true;
 let start_draw = false;
 let menuItems = [];
@@ -36,8 +36,17 @@ socket.onmessage = function(e) {
 		p2_points = game_state.p2_score;
 		isPaused = game_state.isPaused;
 		game_started = game_state.game_started;
+		game_ended = game_state.game_ended;
 		if (isPaused == false && start_draw == true){
 			draw();
+		}
+		if (game_ended == true){
+			createMenu([{
+				text: 'Back to Home', action: () => {
+					window.location.href = '/';
+				}
+			}]);
+			drawMenu();
 		}
 	}
 };
@@ -56,10 +65,10 @@ function setup() {
         gameType = 'tournament';
     }
     if (gameData) {
+		socket.send(JSON.stringify({ event: 'guest', name: gameData.playerTwoName }));
         if (gameType === 'single') {
 			if (gameData.mode === 'PVP') {
 				ai = false
-				console.log();
 				socket.send(JSON.stringify({ event: 'ai', state: false }));
 			} 
 		}

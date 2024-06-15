@@ -3,12 +3,13 @@ from .player import Player
 import asyncio
 import time
 from datetime import timedelta
-from game.models import Game
+from game.models import GameDB
 import random
 
 CAN_WIDTH = 1300
 CAN_HEIGHT = 800
 FPS = 60
+WIN_SCORE = 5
 
 class Game:
 	WIDTH = CAN_WIDTH
@@ -19,12 +20,18 @@ class Game:
 	last_ai_prediction = 0
 	predicted_y = 0
 	start_time = 0
+	guest = None
+	ended = False
 
-def setup():
+	def __init__(self, user):
+		self.user = user
+
+def setup(user):
 	global player_1, player_2, game, ball
 	player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
 	player_2 = Player(CAN_WIDTH - Player.WIDTH - 10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
-	game = Game()
+	game = Game(user)
+	print(game.user)
 	ball = Ball(CAN_WIDTH / 2 - Ball.SIZE, CAN_HEIGHT / 2 - Ball.SIZE)
 
 async def game_loop_logic(send_game_state):
@@ -53,6 +60,9 @@ async def game_loop_logic(send_game_state):
 			await send_game_state(game_state)
 			frames += 1
 			delta -= 1
+			if (player_1.score == WIN_SCORE or player_2.score == WIN_SCORE):
+				await end_game(send_game_state)
+				break
 
         # Dormir pelo tempo restante do frame
 		await asyncio.sleep(max(0, (last_time + ns_per_tick - time.time_ns()) / 1_000_000_000))
@@ -104,6 +114,8 @@ def update_event(event: str, state: bool, send_game_state=None):
 			asyncio.create_task(start_game(send_game_state))
 	if (event == 'ai'):
 		game.ai = state
+	if (event == 'guest'):
+		game.guest = state
 
 def predict_ball():
 	future_x = ball.x_pos
@@ -143,15 +155,25 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 
 	return paddle_y
 
+async def end_game(send_game_state):
+	save_db()
+	game.ended = True
+	game_state = get_game_data()
+	await send_game_state(game_state)
+
+
 def save_db():
 	end_time = time.time()
 	duration = timedelta(seconds=end_time - game.start_time)
-	game = Game(
-		score_player_1 = player_1.score,
-		score_player_2 = player_2.score,
-		hits_player_1 = player_1.hits,
+	gameDB = GameDB(
+		player1 = game.user,
+		player2 = game.guest,
+		score_player1 = player_1.score,
+		score_player2 = player_2.score,
+		hits_player1 = player_1.hits,
 		duration = duration
 	)
+	gameDB.save()
 
 def get_game_data():
 	game_state = {
@@ -163,7 +185,8 @@ def get_game_data():
 		'ball_y': ball.y_pos,
 		'isPaused' : game.paused,
 		'game_started': game.started,
-    }
+		'game_ended': game.ended
+	}
 	return game_state
 
 def get_static_game_data():
