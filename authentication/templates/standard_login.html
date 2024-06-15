@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="d-flex flex-column justify-content-around align-items-center text-center">
+        <form action="{% url 'authentication:std_login' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-outline-light">{% trans "Login" %}</button>
+        </form>
+        <div class="register">
+            <a href="{% url 'authentication:register' %}">{% trans "Don't have an account? Register" %}</a>
+        </div>
+    </div>
+
+{% endblock %}

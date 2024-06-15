@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <div class="d-flex flex-column justify-content-around align-items-center text-center">
+        <div class="internalLoginText">
+            <p>{% trans "Hey, Traveler!" %}</p>
+            <p>{% trans "Get on board for an" %}</p>
+            <p>{% trans "Unforgettable Adventure!" %}</p>
+        </div>
+        <button type="button" class="btn btn-outline-light" id="loginButton">
+            <a href="{% url 'authentication:intra_login' %}">{% trans "Login 42" %}</a>
+        </button>
+        <br><br>
+        <button type="button" class="btn btn-outline-light" id="loginButton">
+            <a href="{% url 'authentication:std_login' %}">{% trans "Login with username and password" %}</a>
+        </button>
+    </div>
+{% endblock %}
