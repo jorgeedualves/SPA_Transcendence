@@ -9,13 +9,15 @@ from .game import (
 	game_loop_logic,
 	update_event,
 	setup,
-	save_db
 )
 
 class PongConsumer(AsyncWebsocketConsumer):
 	async def connect(self):
 		self.user = self.scope['user']
-		print(f'XXXXXXXXXXXXXXXXXXXXX {self.user}')
+		print(self.user)
+		if self.user.is_anonymous:
+			await self.close()
+			return
 		await self.accept()
 		setup(self.user)
 
@@ -27,7 +29,8 @@ class PongConsumer(AsyncWebsocketConsumer):
 		self.game_task = None
 
 	async def disconnect(self, close_code):
-		save_db()
+		if self.game_task:
+			self.game_task.cancel()
 
 	async def receive(self, text_data):
 		data = json.loads(text_data)
