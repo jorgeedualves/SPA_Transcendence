@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>OTP Setup</h1>
+    <p>Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy, andOTP).</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data={{ totp_url|urlencode }}&amp;size=200x200" alt="QR Code">
+    <p>Alternatively, you can enter the following key manually: {{ totp_url }}</p>
+{% endblock %}
