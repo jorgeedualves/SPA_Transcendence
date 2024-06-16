@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.utils import translation
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django_otp.plugins.otp_totp.models import TOTPDevice
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .auth import IntraAuthenticationBackend
 from .forms import CreateUserForm, LoginForm
@@ -52,10 +53,17 @@ def std_login_view(request):
                                 password=form.cleaned_data.get('password'))
             if user:
                 login(request, user)
-                return render(request, 'index.html')
 
-    auth_url = os.environ.get("AUTH_URL_INTRA")
-    return render(request, 'standard_login.html', {'auth_url': auth_url, 'form': form})
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+                refresh_token = str(refresh)
+
+                response = redirect("account:initial_content")
+                response.set_cookie("access_token", access_token, httponly=True)
+                response.set_cookie("refresh_token", refresh_token, httponly=True)
+                return response
+
+    return render(request, 'standard_login.html', {'form': form})
 
 
 def intra_login(request):
