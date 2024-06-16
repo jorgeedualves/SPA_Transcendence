@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urlencode
 
 from django.contrib.auth import login, authenticate  # , logout
 from django.contrib.auth.decorators import login_required
@@ -6,6 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import translation
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django_otp.plugins.otp_totp.models import TOTPDevice
 
 from .auth import IntraAuthenticationBackend
 from .forms import CreateUserForm, LoginForm
@@ -46,12 +48,11 @@ def std_login_view(request):
     if request.method == 'POST':
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(username=form.cleaned_data.get('username'),
+                                password=form.cleaned_data.get('password'))
             if user:
                 login(request, user)
-                return redirect('initial_content')
+                return render(request, 'index.html')
 
     auth_url = os.environ.get("AUTH_URL_INTRA")
     return render(request, 'standard_login.html', {'auth_url': auth_url, 'form': form})
@@ -113,8 +114,12 @@ def register(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('account:initial_content')
+            user = form.save()
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            device = TOTPDevice.objects.create(user=user, name='default')
+            totp_url = device.config_url + '&' + urlencode({'issuer': 'ft_transcendence', 'label': user.email})
+            context = {'totp_url': totp_url}
+            return render(request, 'otp_setup.html', context)
 
     context = {'form': form}
     return render(request, 'register.html', context)
