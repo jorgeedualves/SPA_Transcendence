@@ -1,15 +1,12 @@
 .wrapperMain {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
 
 .customContainer {
     padding: 20px;
     width: 100vw;
-	height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,24 +30,12 @@
     background-size: cover; /* Ensures the image covers the container without distortion */
     background-position: center; /* Centers the image within the container */
     background-repeat: no-repeat; /* Ensures the image does not repeat */
-    background-color: #ccc; /* Optional: for better visibility during loading */
 }
 
 .greenCircle {
     background-color: #004d00; /* Green color */
 }
 
-.customButtonGroup {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: rgba(255, 255, 255, 0.1); /* Background for visual separation */
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px 0;
-	width: 58vw;
-	height: 15vh;
-}
 
 .buttonCircle {
     width: 12vh; /* Size of the small circles */
