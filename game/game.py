@@ -31,36 +31,34 @@ def setup():
 	ball = Ball(CAN_WIDTH / 2 - Ball.SIZE, CAN_HEIGHT / 2 - Ball.SIZE)
 
 async def game_loop_logic(send_game_state):
-	ns_per_tick = 1_000_000_000 / FPS
-	last_time = time.time_ns()
-	delta = 0
-	frames = 0
+	frame_duration = 1 / FPS
+	next_frame_time = time.time() + frame_duration
 	while game.started:
-		now = time.time_ns()
-		delta += (now - last_time) / ns_per_tick
-		last_time = now
+		start_time = time.time()
 
-		if delta >= 1:
-			if not game.paused:
-				collision()
-				player_1.move()
-				if not game.ai:
-					player_2.move()
-				else:
-					player_2.y_pos = ai_move(0.1, player_2.y_pos)
+		if not game.paused:
+			collision()
+			player_1.move()
+			if not game.ai:
+				player_2.move()
+			else:
+				player_2.y_pos = ai_move(0.1, player_2.y_pos)
 
-				ball.x_pos += ball.ball_speed * ball.ball_orientation[0]
-				ball.y_pos += ball.ball_speed * ball.ball_orientation[1]
+			ball.x_pos += ball.ball_speed * ball.ball_orientation[0]
+			ball.y_pos += ball.ball_speed * ball.ball_orientation[1]
 
-			frames += 1
-			delta -= 1
 			if player_1.score == WIN_GAME or player_2.score == WIN_GAME:
 				game.started = False
 				game.ended = True
 			game_state = get_game_data()
 			await send_game_state(game_state)
 		# Dormir pelo tempo restante do frame
-		await asyncio.sleep(max(0, (last_time + ns_per_tick - time.time_ns()) / 1_000_000_000))
+		next_frame_time += frame_duration
+		sleep_time = next_frame_time - time.time()
+		if sleep_time > 0:
+			await asyncio.sleep(sleep_time)
+		else:
+			next_frame_time = time.time() + frame_duration
 
 async def start_game(send_game_state):
 	game.started = True
