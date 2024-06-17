@@ -19,7 +19,15 @@ def initial_content(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         is_authenticated = request.user.is_authenticated
         template = 'account.html' if is_authenticated else 'login.html'
-        return render(request, template)
+        if is_authenticated:
+            user = request.user
+            profile_picture_url = user.profile_picture_url if user.profile_picture_url else 'static/images/default_picture.png'
+            context = {
+                'profile_picture_url': profile_picture_url,
+            }
+        else:
+            context = {}
+        return render(request, template, context)
     return render(request, 'index.html')
 
 def login_view(request):
@@ -57,14 +65,6 @@ def intra_login_redirect(request):
     except Exception as e:
         print(f"Error during authentication: {e}")
         return JsonResponse({"error": "Authentication failed"}, status=401)
-
-@login_required
-def account(request):
-    language = request.headers.get('Content-Language', 'en')
-    translation.activate(language)
-    if request.headers.get('X-Requested-With') == 'Fetch':
-        return render(request, 'account.html')
-    return render(request, 'index.html')
 
 # def logout_view(request):
 #     logout(request)
