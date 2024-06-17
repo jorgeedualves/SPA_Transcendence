@@ -7,7 +7,6 @@ export function loadContent(url, data = null, replaceState = false) {
     if (!url.endsWith('/')) {
         url += '/';
     }
-    console.log(`Loading content from URL: ${url}`); // Debug log
 
     let fetchOptions = {
         headers: {
