@@ -3,6 +3,12 @@ import { debounce } from './debounce.js';
 var game_data = null;
 
 export function loadContent(url, data = null, replaceState = false) {
+    // Ensure URL ends with a slash
+    if (!url.endsWith('/')) {
+        url += '/';
+    }
+    console.log(`Loading content from URL: ${url}`); // Debug log
+
     let fetchOptions = {
         headers: {
             'X-Requested-With': 'Fetch',
@@ -19,10 +25,18 @@ export function loadContent(url, data = null, replaceState = false) {
     if (data) {
         fetchOptions.method = 'POST';
         fetchOptions.body = JSON.stringify(data);
+		if (!url.endsWith('/')) {
+			url += '/';
+		}
     }
 
     fetch(url, fetchOptions)
-        .then(response => response.text())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.text();
+        })
         .then(html => {
             document.getElementById('content').innerHTML = html;
             if (replaceState) {
@@ -47,10 +61,10 @@ function setupNavigationLinks() {
 }
 
 export function initializeSPA() {
-    loadContent('/initial_content/', true);
+    loadContent('/initial_content/', null, true);
 
     window.addEventListener('popstate', function() {
-        loadContent(location.pathname, true);
+        loadContent(location.pathname, null, true);
     });
 
     setupNavigationLinks();

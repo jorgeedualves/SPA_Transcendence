@@ -26,7 +26,14 @@
     width: 20vh; /* Adjusted size */
     height: 20vh; /* Adjusted size */
     border-radius: 50%;
-    margin: 0 auto;
+    overflow: hidden; /* Ensures the image does not overflow the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover; /* Ensures the image covers the container without distortion */
+    background-position: center; /* Centers the image within the container */
+    background-repeat: no-repeat; /* Ensures the image does not repeat */
+    background-color: #ccc; /* Optional: for better visibility during loading */
 }
 
 .greenCircle {
