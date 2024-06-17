@@ -10,7 +10,6 @@ from django.utils import timezone
 CAN_WIDTH = 1300
 CAN_HEIGHT = 800
 FPS = 60
-WIN_SCORE = 5
 
 class Game:
 	WIDTH = CAN_WIDTH
@@ -21,18 +20,12 @@ class Game:
 	last_ai_prediction = 0
 	predicted_y = 0
 	start_time = 0
-	guest = None
-	ended = False
 
-	def __init__(self, user):
-		self.user = user
-
-def setup(user):
+def setup():
 	global player_1, player_2, game, ball
 	player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
 	player_2 = Player(CAN_WIDTH - Player.WIDTH - 10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
-	game = Game(user)
-	print(game.user)
+	game = Game()
 	ball = Ball(CAN_WIDTH / 2 - Ball.SIZE, CAN_HEIGHT / 2 - Ball.SIZE)
 
 async def game_loop_logic(send_game_state):
@@ -61,9 +54,6 @@ async def game_loop_logic(send_game_state):
 			await send_game_state(game_state)
 			frames += 1
 			delta -= 1
-			if (player_1.score == WIN_SCORE or player_2.score == WIN_SCORE):
-				await end_game(send_game_state)
-				break
 
         # Dormir pelo tempo restante do frame
 		await asyncio.sleep(max(0, (last_time + ns_per_tick - time.time_ns()) / 1_000_000_000))
@@ -115,8 +105,6 @@ def update_event(event: str, state: bool, send_game_state=None):
 			asyncio.create_task(start_game(send_game_state))
 	if (event == 'ai'):
 		game.ai = state
-	if (event == 'guest'):
-		game.guest = state
 
 def predict_ball():
 	future_x = ball.x_pos
@@ -183,8 +171,7 @@ def get_game_data():
 		'ball_y': ball.y_pos,
 		'isPaused' : game.paused,
 		'game_started': game.started,
-		'game_ended': game.ended
-	}
+    }
 	return game_state
 
 def get_static_game_data():
