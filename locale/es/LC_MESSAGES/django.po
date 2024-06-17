@@ -14,23 +14,15 @@ msgstr "Jugar"
 msgid "Profile"
 msgstr "Perfil"
 
-#: account/templates/account.html:33
-msgid "Add"
-msgstr "Añadir"
-
-#: account/templates/account.html:41
-msgid "History Match"
-msgstr "Historial de partidas"
-
-#: account/templates/account.html:42 account/templates/account.html:48
+#: account/templates/account.html:31
 msgid "See More"
 msgstr "Ver más"
 
-#: account/templates/account.html:47
+#: account/templates/account.html:30
 msgid "Statistics"
 msgstr "Estadísticas"
 
-#: account/templates/account.html:54 game/templates/options.html:34
+#: account/templates/account.html:36 game/templates/options.html:34
 msgid "Made by pong"
 msgstr "hecho por pong"
 
