@@ -27,7 +27,6 @@ socket.onmessage = function(e) {
 	}
 	if (data.game_state){
 		const game_state = data.game_state;
-
 		p1_y = game_state.p1_y;
 		p2_y = game_state.p2_y;
 		ball_x = game_state.ball_x;
@@ -37,10 +36,12 @@ socket.onmessage = function(e) {
 		isPaused = game_state.isPaused;
 		game_started = game_state.game_started;
 		game_ended = game_state.game_ended;
+		console.log("game_ended: " + game_ended)
 		if (isPaused == false && start_draw == true){
 			draw();
 		}
 		if (game_ended == true){
+			console.log("########" + game_ended)
 			createMenu([{
 				text: 'Back to Home', action: () => {
 					window.location.href = '/';
@@ -252,15 +253,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 mutation.addedNodes.forEach(async node => {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         if (node.querySelector('#canvas')) {
-                            console.log("Canvas element found");
-
-                            const userId = await fetchUserId(); // Fetch user ID here
+                            const userId = await fetchUserId();
                             if (userId) {
-                                console.log(`User ID: ${userId}`); // Log the user ID to verify
-
-                                setup(); // Set up the game
-                                draw(); // Initial draw call
-
+                                setup();
+                                draw();
                                 if (game_started == false) {
                                     createMenu([{
                                         text: 'Start Game', action: () => {
@@ -275,7 +271,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             } else {
                                 console.error('User not authenticated');
                             }
-
                             observer.disconnect();
                         }
                     }

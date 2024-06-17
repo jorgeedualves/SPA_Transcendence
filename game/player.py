@@ -7,6 +7,7 @@ class Player:
 	vel = 10
 	go_up = False
 	go_down = False
+	user_id = None
 
 	def __init__(self, x_pos, y_pos):
 		self.y_pos = y_pos

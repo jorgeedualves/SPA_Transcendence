@@ -52,10 +52,6 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
         if self.game_task:
             self.game_task.cancel()
-        if self.user:
-            print(f"SELF USER È ##### {self.user}")
-            # Make sure to pass the required parameters to save_db
-            await database_sync_to_async(save_db)(self.user, player_1_score, player_2_score, player_1_hits, ai, time.time())
 
     @database_sync_to_async
     def get_user(self, user_id):
@@ -68,4 +64,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         await game_loop_logic(self.send_game_state)
 
     async def send_game_state(self, game_state):
+        if game_state.get('game_ended'):
+            if self.user:
+                await database_sync_to_async(save_db)(self.user)   
         await self.send(text_data=json.dumps({"game_state": game_state}))

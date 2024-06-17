@@ -10,6 +10,7 @@ from django.utils import timezone
 CAN_WIDTH = 1300
 CAN_HEIGHT = 800
 FPS = 60
+WIN_GAME = 5
 
 class Game:
 	WIDTH = CAN_WIDTH
@@ -20,6 +21,7 @@ class Game:
 	last_ai_prediction = 0
 	predicted_y = 0
 	start_time = 0
+	ended = False
 
 def setup():
 	global player_1, player_2, game, ball
@@ -50,12 +52,14 @@ async def game_loop_logic(send_game_state):
 				ball.x_pos += ball.ball_speed * ball.ball_orientation[0]
 				ball.y_pos += ball.ball_speed * ball.ball_orientation[1]
 
-			game_state = get_game_data()
-			await send_game_state(game_state)
 			frames += 1
 			delta -= 1
-
-        # Dormir pelo tempo restante do frame
+			if player_1.score == WIN_GAME or player_2.score == WIN_GAME:
+				game.started = False
+				game.ended = True
+			game_state = get_game_data()
+			await send_game_state(game_state)
+		# Dormir pelo tempo restante do frame
 		await asyncio.sleep(max(0, (last_time + ns_per_tick - time.time_ns()) / 1_000_000_000))
 
 async def start_game(send_game_state):
@@ -144,18 +148,18 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 
 	return paddle_y
 
-def save_db(user, player_1_score, player_2_score, player_1_hits, ai, start_time):
+def save_db(user):
     end_time = time.time()
-    duration = timedelta(seconds=end_time - start_time)
+    duration = timedelta(microseconds=end_time - game.start_time)
 
-    player2_name = "AI" if ai else player_2.username
+    player2_name = "AI" if game.ai else "Guest"
 
     game_instance = GameDB(
         player1=user,
         player2=player2_name,
-        score_player1=player_1_score,
-        score_player2=player_2_score,
-        hits_player1=player_1_hits,
+        score_player1=player_1.score,
+        score_player2=player_2.score,
+        hits_player1=player_1.hits,
         duration=duration,
         date=timezone.now()
     )
@@ -171,6 +175,10 @@ def get_game_data():
 		'ball_y': ball.y_pos,
 		'isPaused' : game.paused,
 		'game_started': game.started,
+		'game_ended': game.ended,
+		'p1_hits': player_1.hits,
+		'ai': game.ai,
+		'start_time': game.start_time,
     }
 	return game_state
 
