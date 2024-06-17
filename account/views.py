@@ -11,7 +11,7 @@ def account(request):
     translation.activate(language)
     
     user = request.user
-    profile_picture_url = user.profile_picture_url if user.profile_picture_url else 'static/images/default_picture.png'
+    profile_picture_url = user.profile_picture_url if user.profile_picture_url else '/static/images/default_picture.png'
     context = {
         'profile_picture_url': profile_picture_url,
     }

@@ -21,7 +21,7 @@ def initial_content(request):
         template = 'account.html' if is_authenticated else 'login.html'
         if is_authenticated:
             user = request.user
-            profile_picture_url = user.profile_picture_url if user.profile_picture_url else 'static/images/default_picture.png'
+            profile_picture_url = user.profile_picture_url if user.profile_picture_url else '/static/images/default_picture.png'
             context = {
                 'profile_picture_url': profile_picture_url,
             }
