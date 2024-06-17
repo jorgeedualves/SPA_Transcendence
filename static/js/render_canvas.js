@@ -36,12 +36,10 @@ socket.onmessage = function(e) {
 		isPaused = game_state.isPaused;
 		game_started = game_state.game_started;
 		game_ended = game_state.game_ended;
-		console.log("game_ended: " + game_ended)
 		if (isPaused == false && start_draw == true){
 			draw();
 		}
 		if (game_ended == true){
-			console.log("########" + game_ended)
 			createMenu([{
 				text: 'Back to Home', action: () => {
 					window.location.href = '/';
@@ -248,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const observer = new MutationObserver((mutationsList, observer) => {
         mutationsList.forEach(async mutation => {
-            console.log("Mutation observed");
             if (mutation.type === 'childList') {
                 mutation.addedNodes.forEach(async node => {
                     if (node.nodeType === Node.ELEMENT_NODE) {

@@ -16,12 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (pvpRadio && pveRadio) {
             pvpRadio.addEventListener('change', function() {
-                console.log("PVP Radio button selected");
                 togglePlayerTwoInput();
             });
 
             pveRadio.addEventListener('change', function() {
-                console.log("PVE Radio button selected");
                 togglePlayerTwoInput();
             });
         }
