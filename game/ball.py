@@ -1,8 +1,8 @@
 import random
 import math
 
-CAN_WIDTH = 800
-CAN_HEIGHT = 500
+CAN_WIDTH = 1300
+CAN_HEIGHT = 800
 
 class Ball:
 	SIZE = 20
