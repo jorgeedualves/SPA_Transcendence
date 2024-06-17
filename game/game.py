@@ -5,6 +5,7 @@ import time
 from datetime import timedelta
 from game.models import GameDB
 import random
+from django.utils import timezone
 
 CAN_WIDTH = 1300
 CAN_HEIGHT = 800
@@ -155,25 +156,22 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 
 	return paddle_y
 
-async def end_game(send_game_state):
-	save_db()
-	game.ended = True
-	game_state = get_game_data()
-	await send_game_state(game_state)
+def save_db(user, player_1_score, player_2_score, player_1_hits, ai, start_time):
+    end_time = time.time()
+    duration = timedelta(seconds=end_time - start_time)
 
+    player2_name = "AI" if ai else player_2.username
 
-def save_db():
-	end_time = time.time()
-	duration = timedelta(seconds=end_time - game.start_time)
-	gameDB = GameDB(
-		player1 = game.user,
-		player2 = game.guest,
-		score_player1 = player_1.score,
-		score_player2 = player_2.score,
-		hits_player1 = player_1.hits,
-		duration = duration
-	)
-	gameDB.save()
+    game_instance = GameDB(
+        player1=user,
+        player2=player2_name,
+        score_player1=player_1_score,
+        score_player2=player_2_score,
+        hits_player1=player_1_hits,
+        duration=duration,
+        date=timezone.now()
+    )
+    game_instance.save()
 
 def get_game_data():
 	game_state = {

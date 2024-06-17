@@ -1,5 +1,8 @@
+#game/views.py
 from django.shortcuts import render
 from django.utils import translation
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
@@ -34,3 +37,8 @@ def tournament(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         return render(request, 'tournament.html')
     return render(request, 'index.html')
+
+@login_required
+def get_current_user(request):
+    user = request.user
+    return JsonResponse({'id': user.id})

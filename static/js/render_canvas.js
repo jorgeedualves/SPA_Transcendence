@@ -246,26 +246,36 @@ document.addEventListener("DOMContentLoaded", function() {
     };
 
     const observer = new MutationObserver((mutationsList, observer) => {
-        mutationsList.forEach(mutation => {
-			console.log("depois do mutation");
+        mutationsList.forEach(async mutation => {
+            console.log("Mutation observed");
             if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(node => {
+                mutation.addedNodes.forEach(async node => {
                     if (node.nodeType === Node.ELEMENT_NODE) {
                         if (node.querySelector('#canvas')) {
-							console.log("antes do run");
-                            setup();
-							draw();
-							if (game_started == false){
-								createMenu([{
-									text: 'Start Game', action: () => {
-										countdown(3, () => {
-											start_draw = true;
-											socket.send(JSON.stringify({ event: 'game_started', state: true }));
-										}); 
-									}
-								}]);
-									drawMenu();
-								}
+                            console.log("Canvas element found");
+
+                            const userId = await fetchUserId(); // Fetch user ID here
+                            if (userId) {
+                                console.log(`User ID: ${userId}`); // Log the user ID to verify
+
+                                setup(); // Set up the game
+                                draw(); // Initial draw call
+
+                                if (game_started == false) {
+                                    createMenu([{
+                                        text: 'Start Game', action: () => {
+                                            countdown(3, () => {
+                                                start_draw = true;
+                                                socket.send(JSON.stringify({ event: 'game_started', state: true, user_id: userId }));
+                                            });
+                                        }
+                                    }]);
+                                    drawMenu();
+                                }
+                            } else {
+                                console.error('User not authenticated');
+                            }
+
                             observer.disconnect();
                         }
                     }
@@ -276,3 +286,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
     observer.observe(targetNode, observerOptions);
 });
+
+async function fetchUserId() {
+    const response = await fetch('/game/get_current_user/', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    });
+
+    if (response.ok) {
+        const userInfo = await response.json();
+        return userInfo.id; // Return the user ID
+    } else {
+        console.error('Failed to fetch user info');
+        return null;
+    }
+}
