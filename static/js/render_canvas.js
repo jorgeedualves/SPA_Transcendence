@@ -41,7 +41,7 @@ socket.onmessage = function(e) {
         }
         if (game_ended) {
             createMenu([{
-                text: 'Back to Home', action: () => {
+                text: 'Back Home', action: () => {
                     window.location.href = '/';
                 }
             }]);
