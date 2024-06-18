@@ -48,8 +48,8 @@ async def game_loop_logic(send_game_state):
 			if player_1.score == WIN_GAME or player_2.score == WIN_GAME:
 				game.started = False
 				game.ended = True
-			game_state = get_game_data()
-			await send_game_state(game_state)
+		game_state = get_game_data()
+		await send_game_state(game_state)
 		# Dormir pelo tempo restante do frame
 		next_frame_time += frame_duration
 		sleep_time = next_frame_time - time.perf_counter()
