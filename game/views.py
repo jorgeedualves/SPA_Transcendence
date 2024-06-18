@@ -11,7 +11,8 @@ def options(request):
     language = request.headers.get('Content-Language', 'en')
     translation.activate(language)
     if request.headers.get('X-Requested-With') == 'Fetch':
-        return render(request, 'options.html')
+        context = {'username': request.user.username}
+        return render(request, 'options.html', context)
     return render(request, 'index.html')
 
 @ensure_csrf_cookie
@@ -30,7 +31,7 @@ def pong(request):
         return render(request, 'pong.html', context)
     return render(request, 'index.html')
 
-@ensure_csrf_cookie
+@login_required
 def tournament(request):
     language = request.headers.get('Content-Language', 'en')
     translation.activate(language)
