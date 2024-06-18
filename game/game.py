@@ -32,10 +32,8 @@ def setup():
 
 async def game_loop_logic(send_game_state):
 	frame_duration = 1 / FPS
-	next_frame_time = time.time() + frame_duration
+	next_frame_time = time.perf_counter() + frame_duration
 	while game.started:
-		start_time = time.time()
-
 		if not game.paused:
 			collision()
 			player_1.move()
@@ -54,11 +52,11 @@ async def game_loop_logic(send_game_state):
 			await send_game_state(game_state)
 		# Dormir pelo tempo restante do frame
 		next_frame_time += frame_duration
-		sleep_time = next_frame_time - time.time()
+		sleep_time = next_frame_time - time.perf_counter()
 		if sleep_time > 0:
 			await asyncio.sleep(sleep_time)
 		else:
-			next_frame_time = time.time() + frame_duration
+			next_frame_time = time.perf_counter() + frame_duration
 
 async def start_game(send_game_state):
 	game.started = True
