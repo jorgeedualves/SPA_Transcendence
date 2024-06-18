@@ -124,6 +124,19 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'  # Código de idioma
 
+# Diretório para os arquivos de tradução
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('es', 'Español'),
+    ('pt-br', 'Portuguese (Brazil)'),
+    ('fr', 'French'),
+    # Adicione mais idiomas conforme necessário
+]
+
 TIME_ZONE = 'UTC'  # Fuso horário
 
 USE_I18N = True  # Habilita tradução
