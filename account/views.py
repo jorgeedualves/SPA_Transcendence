@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils import translation
-from django.http import HttpResponse
 
 from django.shortcuts import render
 from django.utils import translation
