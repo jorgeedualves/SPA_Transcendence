@@ -6,6 +6,7 @@ let ball_x, ball_y;
 let p1_points, p2_points;
 let p1X, p2X, p1_y, p2_y;
 let isPaused, game_started, ev_timer = false, game_ended;
+let skin_map = null;
 let ai = true;
 let start_draw = false;
 let menuItems = [];
@@ -13,41 +14,40 @@ let gameData = null;
 let gameType = '';
 
 socket.onmessage = function(e) {
-	const data = JSON.parse(e.data);
+    const data = JSON.parse(e.data);
 
-	if (data.static_data){
-		const static_data = data.static_data;
-
-		width = static_data.width;
-		height = static_data.height;
-		p_width = static_data.p_width;
-		p_height = static_data.p_height;
-		p1X = static_data.p1_x;
-		p2X = static_data.p2_x;
-	}
-	if (data.game_state){
-		const game_state = data.game_state;
-		p1_y = game_state.p1_y;
-		p2_y = game_state.p2_y;
-		ball_x = game_state.ball_x;
-		ball_y = game_state.ball_y;
-		p1_points = game_state.p1_score;
-		p2_points = game_state.p2_score;
-		isPaused = game_state.isPaused;
-		game_started = game_state.game_started;
-		game_ended = game_state.game_ended;
-		if (isPaused == false && start_draw == true){
-			draw();
-		}
-		if (game_ended == true){
-			createMenu([{
-				text: 'Back to Home', action: () => {
-					window.location.href = '/';
-				}
-			}]);
-			drawMenu();
-		}
-	}
+    if (data.static_data) {
+        const static_data = data.static_data;
+        width = static_data.width;
+        height = static_data.height;
+        p_width = static_data.p_width;
+        p_height = static_data.p_height;
+        p1X = static_data.p1_x;
+        p2X = static_data.p2_x;
+    }
+    if (data.game_state) {
+        const game_state = data.game_state;
+        p1_y = game_state.p1_y;
+        p2_y = game_state.p2_y;
+        ball_x = game_state.ball_x;
+        ball_y = game_state.ball_y;
+        p1_points = game_state.p1_score;
+        p2_points = game_state.p2_score;
+        isPaused = game_state.isPaused;
+        game_started = game_state.game_started;
+        game_ended = game_state.game_ended;
+        if (!isPaused && start_draw) {
+            draw();
+        }
+        if (game_ended) {
+            createMenu([{
+                text: 'Back to Home', action: () => {
+                    window.location.href = '/';
+                }
+            }]);
+            drawMenu();
+        }
+    }
 };
 
 function setup() {
@@ -58,7 +58,9 @@ function setup() {
 
     if (singleGameData) {
         gameData = JSON.parse(singleGameData);
+		console.log(gameData)
         gameType = 'single';
+		skin_map = gameData.skin;
     } else if (tournamentData) {
         gameData = JSON.parse(tournamentData);
         gameType = 'tournament';
@@ -99,7 +101,7 @@ function createMenu(items, options = {}) {
         itemHeight: 50,
         fontSize: "30px",
         fontColor: "#000",
-        bgColor: "#fff",
+        bgColor: "#f00",
         padding: 20
     };
     const opts = { ...defaultOptions, ...options };
@@ -129,17 +131,141 @@ function drawMenu() {
 
 function draw() {
     // fundo
-    drawRect(0, 0, width, height, "#ff0000");
-    // player 1
-    drawRect(p1X, p1_y, p_width, p_height);
-    // player 2
-    drawRect(p2X, p2_y, p_width, p_height);
-    // barra lateral
-    drawRect(width / 2 - 5, 0, 5, height);
+	if (skin_map == 'map2'){
+		drawBasketballCourt();
+	}
+	else if (skin_map == 'map3'){
+		drawSoccerField();
+	}
+	else {
+		drawRect(0, 0, width, height, "#000");
+		// player 1
+	}
+	drawRect(p1X, p1_y, p_width, p_height);
+	// player 2
+	drawRect(p2X, p2_y, p_width, p_height);
+	// barra lateral
+	drawRect(width / 2 - 5, 0, 5, height);
 	// bola
 	drawRect(ball_x, ball_y, 10, 10);
 	// pontuação
 	writePoints();
+}
+
+function drawSoccerField() {
+    // Cor do fundo do campo
+    ctx.fillStyle = "#0b9b3e";
+    ctx.fillRect(0, 0, width, height);
+
+    // Desenhar as linhas brancas do campo
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 2;
+
+    // Linhas de fundo
+    ctx.strokeRect(0, 0, width, height);
+
+    // Linha central
+    ctx.beginPath();
+    ctx.moveTo(width / 2, 0);
+    ctx.lineTo(width / 2, height);
+    ctx.stroke();
+
+    // Círculo central
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, 70, 0, 2 * Math.PI); // raio arbitrário
+    ctx.stroke();
+
+    // Ponto central
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, 3, 0, 2 * Math.PI); // raio pequeno para o ponto central
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.stroke();
+
+    // Área do gol esquerdo
+    ctx.strokeRect(0, height / 2 - 100, 100, 200); // valores arbitrários para largura e altura da área do gol
+
+    // Área do gol direito
+    ctx.strokeRect(width - 100, height / 2 - 100, 100, 200); // valores arbitrários para largura e altura da área do gol
+
+    // Círculos pequenos nas áreas do gol
+    ctx.beginPath();
+    ctx.arc(70, height / 2, 3, 0, 2 * Math.PI); // círculo pequeno na área do gol esquerdo
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(width - 70, height / 2, 3, 0, 2 * Math.PI); // círculo pequeno na área do gol direito
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.stroke();
+}
+
+function drawBasketballCourt() {
+    // Cor do fundo do campo
+    ctx.fillStyle = "#D2691E"; // cor laranja
+    ctx.fillRect(0, 0, width, height);
+
+    // Desenhar as linhas brancas do campo
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 2;
+
+    // Linhas de fundo
+    ctx.strokeRect(0, 0, width, height);
+
+    // Linha central
+    ctx.beginPath();
+    ctx.moveTo(width / 2, 0);
+    ctx.lineTo(width / 2, height);
+    ctx.stroke();
+
+    // Círculo central
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, 60, 0, 2 * Math.PI); // raio arbitrário
+    ctx.stroke();
+
+    // Área do garrafão esquerdo
+    ctx.beginPath();
+    ctx.rect(0, height / 2 - 140, 190, 280); // valores arbitrários para largura e altura do garrafão
+    ctx.stroke();
+
+    // Área do garrafão direito
+    ctx.beginPath();
+    ctx.rect(width - 190, height / 2 - 140, 190, 280); // valores arbitrários para largura e altura do garrafão
+    ctx.stroke();
+
+    // Semicírculo do garrafão esquerdo
+    ctx.beginPath();
+    ctx.arc(190, height / 2, 60, 1.5 * Math.PI, 0.5 * Math.PI); // semicírculo esquerdo
+    ctx.stroke();
+
+    // Semicírculo do garrafão direito
+    ctx.beginPath();
+    ctx.arc(width - 190, height / 2, 60, 1.5 * Math.PI, 0.5 * Math.PI, true); // semicírculo direito
+    ctx.stroke();
+
+    // Círculo do lance livre esquerdo
+    ctx.beginPath();
+    ctx.arc(130, height / 2, 60, 0, 2 * Math.PI); // círculo esquerdo
+    ctx.setLineDash([5, 5]); // linha tracejada
+    ctx.stroke();
+
+    // Círculo do lance livre direito
+    ctx.beginPath();
+    ctx.arc(width - 130, height / 2, 60, 0, 2 * Math.PI); // círculo direito
+    ctx.setLineDash([5, 5]); // linha tracejada
+    ctx.stroke();
+
+    // Ponto central
+    ctx.beginPath();
+    ctx.arc(width / 2, height / 2, 3, 0, 2 * Math.PI); // raio pequeno para o ponto central
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+    ctx.stroke();
+
+    // Restaurar a linha contínua
+    ctx.setLineDash([]);
 }
 
 function writePoints() {
