@@ -93,15 +93,35 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label for="teamName">Team Name:</label>
-                        <input type="text" class="form-control bg-dark text-white mb-2" id="teamName" name="teamName" required>
+                    <div class="form-row d-flex align-items-center justify-content-around gap-3">
+                        <div class="form-group col-5">
+                            <label for="playerOneName">Player 1 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" value="{{ username }}" readonly>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="playerTwoName">Player 2 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName" required>
+                        </div>
+                    </div>
+                    <div class="form-row d-flex align-items-center justify-content-around gap-3">
+                        <div class="form-group col-5">
+                            <label for="playerThreeName">Player 3 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerThreeName" name="playerThreeName" required>
+                        </div>
+                        <div class="form-group col-5">
+                            <label for="playerFourName">Player 4 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerFourName" name="playerFourName" required>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="numberOfTeams">Number of Teams:</label>
-                        <input type="number" class="form-control bg-dark text-white mb-4" id="numberOfTeams" name="numberOfTeams" required>
+                        <label for="skin">{% trans "Choose Map Skin:" %}</label>
+                        <select class="form-control bg-dark text-white mb-4" id="skin" name="skin">
+                            <option value="map1">{% trans "Map 1" %}</option>
+                            <option value="map2">{% trans "Map 2" %}</option>
+                            <option value="map3">{% trans "Map 3" %}</option>
+                        </select>
                     </div>
-                    <button id="submitTournament" type="button" class="btn btn-outline-light" data-dismiss="modal">{% trans "Start Tournament" %}</button>
+                    <button id="submitTournament" type="button" class="btn btn-outline-light buttonTournament" data-dismiss="modal">{% trans "Start Tournament" %}</button>
                 </form>
             </div>
         </div>
