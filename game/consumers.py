@@ -44,7 +44,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             user_id = data.get('user_id')
             self.user = await self.get_user(user_id)
             update_event(event, state, self.send_game_state)
-        elif event == 'isPaused' or event == 'ai':
+        elif event == 'isPaused' or event == 'ai' or event == 'guest':
             update_event(event, state, self.send_game_state)
         else:
             update_event(event, state)
@@ -66,5 +66,5 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def send_game_state(self, game_state):
         if game_state.get('game_ended'):
             if self.user:
-                await database_sync_to_async(save_db)(self.user)   
+                await database_sync_to_async(save_db)(self.user)
         await self.send(text_data=json.dumps({"game_state": game_state}))

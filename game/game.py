@@ -23,6 +23,8 @@ class Game:
 	start_time = 0
 	ended = False
 
+	
+
 def setup():
 	global player_1, player_2, game, ball
 	player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
@@ -89,7 +91,7 @@ def collision():
 		player_2.score += 1
 		ball.reset()
 
-def update_event(event: str, state: bool, send_game_state=None):
+def update_event(event: str, state, send_game_state=None):
 	if event == 'p1_up':
 		player_1.go_up = state
 	elif event == 'p1_down':
@@ -105,6 +107,8 @@ def update_event(event: str, state: bool, send_game_state=None):
 			asyncio.create_task(start_game(send_game_state))
 	if (event == 'ai'):
 		game.ai = state
+	if (event == 'guest'):
+		player_2.alias = state
 
 def predict_ball():
 	future_x = ball.x_pos
@@ -148,7 +152,7 @@ def save_db(user):
     end_time = time.time()
     duration = timedelta(microseconds=end_time - game.start_time)
 
-    player2_name = "AI" if game.ai else "Guest"
+    player2_name = "AI" if game.ai else player_2.alias
 
     game_instance = GameDB(
         player1=user,

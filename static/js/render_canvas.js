@@ -66,12 +66,16 @@ function setup() {
         gameType = 'tournament';
     }
     if (gameData) {
-		socket.send(JSON.stringify({ event: 'guest', name: gameData.playerTwoName }));
+		socket.send(JSON.stringify({ event: 'guest', state: gameData.playerTwoName }));
         if (gameType === 'single') {
 			if (gameData.mode === 'PVP') {
 				ai = false
 				socket.send(JSON.stringify({ event: 'ai', state: false }));
 			} 
+		}
+		if (gameType === 'tournament') {
+			ai = false
+			socket.send(JSON.stringify({ event: 'ai', state: false }));
 		}
     }
 	canvas.addEventListener('click', function(event) {
