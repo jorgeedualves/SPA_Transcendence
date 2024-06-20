@@ -5,13 +5,15 @@ let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown;
 let ball_x, ball_y;
 let p1_points, p2_points;
 let p1X, p2X, p1_y, p2_y;
-let isPaused, game_started, ev_timer = false, game_ended;
+let isPaused, game_started, ev_timer = false, game_ended, tournament = false;
 let skin_map = null;
-let ai = true;
+let ai;
 let start_draw = false;
 let menuItems = [];
 let gameData = null;
 let gameType = '';
+let TourMatch = [];
+let playerNames = [];
 
 socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
@@ -24,6 +26,9 @@ socket.onmessage = function(e) {
         p_height = static_data.p_height;
         p1X = static_data.p1_x;
         p2X = static_data.p2_x;
+		if (tournament) {
+			
+		}
     }
     if (data.game_state) {
         const game_state = data.game_state;
@@ -36,48 +41,81 @@ socket.onmessage = function(e) {
         isPaused = game_state.isPaused;
         game_started = game_state.game_started;
         game_ended = game_state.game_ended;
-        if (!isPaused && start_draw) {
-            draw();
+		tournament = game_state.tournament;
+        if (!isPaused && start_draw && game_started) {
+			draw();
         }
         if (game_ended) {
-            createMenu([{
-                text: 'Back Home', action: () => {
-                    window.location.href = '/';
+			createMenu([{
+				text: 'Back Home', action: () => {
+					window.location.href = '/';
                 }
             }]);
             drawMenu();
         }
     }
+	if (data.game_tour){
+		TourMatch[0] = game_tour.TourPlayer_1;
+		TourMatch[1] = game_tour.TourPlayer_2;
+		if (tournament) {
+			drawPlayerNames();
+		}
+	}
 };
 
-function setup() {
-	canvas = document.getElementById('canvas');
-	ctx = canvas.getContext('2d');
+function drawPlayerNames () {
 	const singleGameData = sessionStorage.getItem('singleGameData');
     const tournamentData = sessionStorage.getItem('TournamentData');
-
+	
     if (singleGameData) {
-        gameData = JSON.parse(singleGameData);
+		gameData = JSON.parse(singleGameData);
 		console.log(gameData)
         gameType = 'single';
-		skin_map = gameData.skin;
     } else if (tournamentData) {
-        gameData = JSON.parse(tournamentData);
+		gameData = JSON.parse(tournamentData);
         gameType = 'tournament';
     }
+	skin_map = gameData.skin;
     if (gameData) {
 		socket.send(JSON.stringify({ event: 'guest', state: gameData.playerTwoName }));
         if (gameType === 'single') {
 			if (gameData.mode === 'PVP') {
-				ai = false
 				socket.send(JSON.stringify({ event: 'ai', state: false }));
 			} 
 		}
 		if (gameType === 'tournament') {
-			ai = false
-			socket.send(JSON.stringify({ event: 'ai', state: false }));
+			socket.send(JSON.stringify({ event: 'tournament', state: true }));
+			playerNames = [gameData.playerOneName, gameData.playerTwoName, gameData.playerThreeName, gameData.playerFourName];
+			document.getElementById('PlayerOne').innerHTML = playerNames[TourMatch[0]];
+			document.getElementById('PlayerTwo').innerHTML = playerNames[TourMatch[1]];
 		}
     }
+}
+
+export async function initAll() {
+    const userId = await fetchUserId();
+    setup(userId);
+}
+
+function setup() {
+	canvas = document.getElementById('canvas');
+	ctx = canvas.getContext('2d');
+	
+	drawPlayerNames();
+	draw();
+	if (userId) {
+		if (game_started == false) {
+			createMenu([{
+				text: 'Start Game', action: () => {
+					countdown(3, () => {
+						start_draw = true;
+						socket.send(JSON.stringify({ event: 'game_started', state: true, user_id: userId }));
+					});
+				}
+			}]);
+			drawMenu();
+		}
+	}
 	canvas.addEventListener('click', function(event) {
 		if (isPaused || game_started == false) {
 			const rect = canvas.getBoundingClientRect();
@@ -360,53 +398,6 @@ document.addEventListener('keyup', function(event) {
 	else if (event.key == 'ArrowDown') {
 		socket.send(JSON.stringify({ event: 'p2_down', state: false }));
 	}
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const targetNode = document.getElementById('content');
-    if (!targetNode) {
-        console.error('Target node #content not found');
-        return;
-    }
-
-    const observerOptions = {
-        childList: true,
-        subtree: true
-    };
-
-    const observer = new MutationObserver((mutationsList, observer) => {
-        mutationsList.forEach(async mutation => {
-            if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(async node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        if (node.querySelector('#canvas')) {
-                            const userId = await fetchUserId();
-                            if (userId) {
-                                setup();
-                                draw();
-                                if (game_started == false) {
-                                    createMenu([{
-                                        text: 'Start Game', action: () => {
-                                            countdown(3, () => {
-                                                start_draw = true;
-                                                socket.send(JSON.stringify({ event: 'game_started', state: true, user_id: userId }));
-                                            });
-                                        }
-                                    }]);
-                                    drawMenu();
-                                }
-                            } else {
-                                console.error('User not authenticated');
-                            }
-                            observer.disconnect();
-                        }
-                    }
-                });
-            }
-        });
-    });
-
-    observer.observe(targetNode, observerOptions);
 });
 
 async function fetchUserId() {

@@ -36,7 +36,13 @@ def tournament(request):
     language = request.headers.get('Content-Language', 'en')
     translation.activate(language)
     if request.headers.get('X-Requested-With') == 'Fetch':
-        return render(request, 'tournament.html')
+        body = json.loads(request.body.decode('utf-8'))
+        context = {
+            'playerOneName': body.get('playerOneName'),
+            'playerTwoName': body.get('playerTwoName'),
+            'skin': body.get('skin'),
+        }
+        return render(request, 'tournament.html', context)
     return render(request, 'index.html')
 
 @login_required

@@ -4,7 +4,7 @@ import asyncio
 import time
 from datetime import timedelta
 from game.models import GameDB
-import random
+from .tournament import Tournament
 from django.utils import timezone
 
 CAN_WIDTH = 1300
@@ -17,20 +17,31 @@ class Game:
 	HEIGHT = CAN_HEIGHT
 	paused = False
 	started = False
-	ai = True
+	ai = False
+	ended = False
+	tournament = False
 	last_ai_prediction = 0
 	predicted_y = 0
 	start_time = 0
-	ended = False
 
-	
+	def reset(self):
+		self.started = False
+		self.paused = False
+		self.ai = False
+		self.ended = False
+		self.tournament = False
+		self.last_ai_prediction = 0
+		self.predicted_y = 0
+		self.start_time = 0
+		player_1.reset(10)
+		player_2.reset(CAN_WIDTH - Player.WIDTH - 10)
+		ball.reset()
 
-def setup():
-	global player_1, player_2, game, ball
-	player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
-	player_2 = Player(CAN_WIDTH - Player.WIDTH - 10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
-	game = Game()
-	ball = Ball(CAN_WIDTH / 2 - Ball.SIZE, CAN_HEIGHT / 2 - Ball.SIZE)
+player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
+player_2 = Player(CAN_WIDTH - Player.WIDTH - 10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
+game = Game()
+tournament = Tournament()
+ball = Ball(CAN_WIDTH / 2 - Ball.SIZE, CAN_HEIGHT / 2 - Ball.SIZE)
 
 async def game_loop_logic(send_game_state):
 	frame_duration = 1 / FPS
@@ -39,19 +50,30 @@ async def game_loop_logic(send_game_state):
 		if not game.paused:
 			collision()
 			player_1.move()
-			if not game.ai:
+			if not game.ai or game.tournament:
 				player_2.move()
 			else:
-				player_2.y_pos = ai_move(0.1, player_2.y_pos)
-
+				player_2.y_pos = ai_move(0.1, player_2.y_pos)		
 			ball.x_pos += ball.ball_speed * ball.ball_orientation[0]
-			ball.y_pos += ball.ball_speed * ball.ball_orientation[1]
-
-			if player_1.score == WIN_GAME or player_2.score == WIN_GAME:
+			ball.y_pos += ball.ball_speed * ball.ball_orientation[1]		
+			if game.tournament:
+				if player_1.score == WIN_GAME or player_2.score == WIN_GAME:
+					if player_1.score == WIN_GAME:
+						tournament.record_winner(0)
+					elif player_2.score == WIN_GAME:
+						tournament.record_winner(1)
+					tour_match = tournament.start_next_match()
+					await send_game_state(tour_match, 'game_tour')
+					game.reset()
+				if tournament.over:
+					game.started = False
+					game.ended = True
+			elif player_1.score == WIN_GAME or player_2.score == WIN_GAME:
 				game.started = False
 				game.ended = True
-		game_state = get_game_data()
-		await send_game_state(game_state)
+			game_state = get_game_data()
+			await send_game_state(game_state)
+
 		# Dormir pelo tempo restante do frame
 		next_frame_time += frame_duration
 		sleep_time = next_frame_time - time.perf_counter()
@@ -91,25 +113,6 @@ def collision():
 		player_2.score += 1
 		ball.reset()
 
-def update_event(event: str, state, send_game_state=None):
-	if event == 'p1_up':
-		player_1.go_up = state
-	elif event == 'p1_down':
-		player_1.go_down = state
-	elif event == 'p2_up':
-		player_2.go_up = state
-	elif event == 'p2_down':
-		player_2.go_down = state
-	if event == 'isPaused':
-		game.paused = state
-	if event == 'game_started':
-		if (send_game_state):
-			asyncio.create_task(start_game(send_game_state))
-	if (event == 'ai'):
-		game.ai = state
-	if (event == 'guest'):
-		player_2.alias = state
-
 def predict_ball():
 	future_x = ball.x_pos
 	future_y = ball.y_pos
@@ -148,9 +151,12 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 
 	return paddle_y
 
+def send_event(event, state, update_event):
+	update_event(event, state)
+
 def save_db(user):
     end_time = time.time()
-    duration = timedelta(microseconds=end_time - game.start_time)
+    duration = timedelta(seconds=end_time - game.start_time)
 
     player2_name = "AI" if game.ai else player_2.alias
 
@@ -179,6 +185,7 @@ def get_game_data():
 		'p1_hits': player_1.hits,
 		'ai': game.ai,
 		'start_time': game.start_time,
+		'tournament': game.tournament
     }
 	return game_state
 

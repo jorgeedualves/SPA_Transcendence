@@ -59,16 +59,16 @@
 						<div>&#9</div>
                     </div>
                     <div class="form-group">
-                        <label for="playerOneName">{% trans "Player 1:" %}</label>
-                        <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" required>
+                        <label for="playerOneNamePvp">{% trans "Player 1:" %}</label>
+                        <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneNamePvp" name="playerOneNamePvp" required>
                     </div>
                     <div class="form-group" id="playerTwoNameContainer" style="display: none;">
-                        <label for="playerTwoName">{% trans "Player 2:" %}</label>
-                        <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName">
+                        <label for="playerTwoNamePvp">{% trans "Player 2:" %}</label>
+                        <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoNamePvp" name="playerTwoNamePvp">
                     </div>
                     <div class="form-group">
-                        <label for="skin">{% trans "Choose Map Skin:" %}</label>
-                        <select class="form-control bg-dark text-white mb-4" id="skin" name="skin">
+                        <label for="skinPvp">{% trans "Choose Map Skin:" %}</label>
+                        <select class="form-control bg-dark text-white mb-4" id="skinPvp" name="skinPvp">
                             <option value="map1">{% trans "Map 1" %}</option>
                             <option value="map2">{% trans "Map 2" %}</option>
                             <option value="map3">{% trans "Map 3" %}</option>
@@ -95,27 +95,27 @@
                 <form>
                     <div class="form-row d-flex align-items-center justify-content-around gap-3">
                         <div class="form-group col-5">
-                            <label for="playerOneName">Player 1 Name:</label>
-                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" value="{{ username }}" readonly>
+                            <label for="playerOneNameTour">Player 1 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneNameTour" name="playerOneNameTour" value="{{ username }}" readonly>
                         </div>
                         <div class="form-group col-5">
-                            <label for="playerTwoName">Player 2 Name:</label>
-                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName" required>
+                            <label for="playerTwoNameTour">Player 2 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoNameTour" name="playerTwoNameTour" required>
                         </div>
                     </div>
                     <div class="form-row d-flex align-items-center justify-content-around gap-3">
                         <div class="form-group col-5">
-                            <label for="playerThreeName">Player 3 Name:</label>
-                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerThreeName" name="playerThreeName" required>
+                            <label for="playerThreeNameTour">Player 3 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerThreeNameTour" name="playerThreeNameTour" required>
                         </div>
                         <div class="form-group col-5">
-                            <label for="playerFourName">Player 4 Name:</label>
-                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerFourName" name="playerFourName" required>
+                            <label for="playerFourNameTour">Player 4 Name:</label>
+                            <input type="text" class="form-control bg-dark text-white mb-2" id="playerFourNameTour" name="playerFourNameTour" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="skin">{% trans "Choose Map Skin:" %}</label>
-                        <select class="form-control bg-dark text-white mb-4" id="skin" name="skin">
+                        <label for="skinTour">{% trans "Choose Map Skin:" %}</label>
+                        <select class="form-control bg-dark text-white mb-4" id="skinTour" name="skinTour">
                             <option value="map1">{% trans "Map 1" %}</option>
                             <option value="map2">{% trans "Map 2" %}</option>
                             <option value="map3">{% trans "Map 3" %}</option>

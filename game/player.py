@@ -19,4 +19,10 @@ class Player:
 		if self.go_up and self.y_pos > 0:
 			self.y_pos -= self.vel
 		if self.go_down and self.y_pos + self.HEIGHT < CAN_HEIGHT:
-		    self.y_pos += self.vel
+			self.y_pos += self.vel
+
+	def reset(self, x_pos):
+		self.y_pos = CAN_HEIGHT / 2 - self.HEIGHT / 2
+		self.x_pos = x_pos
+		self.score = 0
+		self.hits = 0
