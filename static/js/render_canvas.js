@@ -50,12 +50,31 @@ socket.onmessage = function(e) {
     }
 };
 
-function setup() {
+export async function initAll() {
+    const userId = await fetchUserId();
+    setup(userId);
+}
+
+function setup(userId) {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	const singleGameData = sessionStorage.getItem('singleGameData');
     const tournamentData = sessionStorage.getItem('TournamentData');
 
+		if (userId) {
+			draw();
+			if (game_started == false) {
+				createMenu([{
+					text: 'Start Game', action: () => {
+						countdown(3, () => {
+							start_draw = true;
+							socket.send(JSON.stringify({ event: 'game_started', state: true, user_id: userId }));
+						});
+					}
+				}]);
+				drawMenu();
+		}
+	}
     if (singleGameData) {
         gameData = JSON.parse(singleGameData);
 		console.log(gameData)
@@ -64,6 +83,7 @@ function setup() {
     } else if (tournamentData) {
         gameData = JSON.parse(tournamentData);
         gameType = 'tournament';
+		console.log(gameData)
     }
     if (gameData) {
 		socket.send(JSON.stringify({ event: 'guest', name: gameData.playerTwoName }));
@@ -356,53 +376,6 @@ document.addEventListener('keyup', function(event) {
 	else if (event.key == 'ArrowDown') {
 		socket.send(JSON.stringify({ event: 'p2_down', state: false }));
 	}
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-    const targetNode = document.getElementById('content');
-    if (!targetNode) {
-        console.error('Target node #content not found');
-        return;
-    }
-
-    const observerOptions = {
-        childList: true,
-        subtree: true
-    };
-
-    const observer = new MutationObserver((mutationsList, observer) => {
-        mutationsList.forEach(async mutation => {
-            if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(async node => {
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        if (node.querySelector('#canvas')) {
-                            const userId = await fetchUserId();
-                            if (userId) {
-                                setup();
-                                draw();
-                                if (game_started == false) {
-                                    createMenu([{
-                                        text: 'Start Game', action: () => {
-                                            countdown(3, () => {
-                                                start_draw = true;
-                                                socket.send(JSON.stringify({ event: 'game_started', state: true, user_id: userId }));
-                                            });
-                                        }
-                                    }]);
-                                    drawMenu();
-                                }
-                            } else {
-                                console.error('User not authenticated');
-                            }
-                            observer.disconnect();
-                        }
-                    }
-                });
-            }
-        });
-    });
-
-    observer.observe(targetNode, observerOptions);
 });
 
 async function fetchUserId() {

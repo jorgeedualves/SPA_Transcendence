@@ -1,4 +1,5 @@
 import { loadContent } from './spa-utils.js';
+import {initAll} from './render_canvas.js';
 
 document.addEventListener('DOMContentLoaded', function() {
     document.body.addEventListener('click', function(event) {
@@ -8,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
             handleTournamentSubmit(event);
         }
     });
-
     // Function to attach event listeners to radio buttons
     function attachEventListeners() {
         const pvpRadio = document.getElementById('pvp');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('singleGameData', JSON.stringify(data)); // Store data with a unique key
         const eventPlayer = new CustomEvent('playerDataReady', { detail: 'singleGameData' });
         document.dispatchEvent(eventPlayer);
-        loadContent('/game/pong/', data);
+        loadContent('/game/pong/', data, false, initAll);
     }
 
     function handleTournamentSubmit(event) {
@@ -92,8 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.setItem('TournamentData', JSON.stringify(data));
         const eventPlayer = new CustomEvent('playerDataReady', { detail: 'TournamentData' });
         document.dispatchEvent(eventPlayer);
-
-        loadContent('/game/tournament/', data);
+        loadContent('/game/tournament/', data, false, initAll);
     }
 
     // MutationObserver to detect when the modal is added to the DOM
@@ -103,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const singleGameModal = document.getElementById('singleGameModal');
                 if (singleGameModal) {
                     attachEventListeners();
-                    togglePlayerTwoInput(); // Initial call to set the correct state of player two input field
+                    togglePlayerTwoInput();
                 }
             }
         });

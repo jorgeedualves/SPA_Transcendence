@@ -34,9 +34,14 @@
 	overflow: hidden;
 }
 
-#loginButton a{
+.loginTextContainer a {
 	text-decoration: none;
 	color: white;
+}
+#loginButton {
+	width: 100%;
+	padding-right: 1rem;
+	padding-left: 1rem;
 }
 
 .languageSetter {

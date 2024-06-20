@@ -1,16 +1,17 @@
 .wrapperMain {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .customContainer {
     padding: 20px;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-	justify-content: center;
 }
 
 .customTitle {
@@ -20,39 +21,38 @@
 }
 
 .customCircle {
-    width: 20vh; /* Adjusted size */
-    height: 20vh; /* Adjusted size */
+    width: 20vh;
+    height: 20vh;
     border-radius: 50%;
-    overflow: hidden; /* Ensures the image does not overflow the container */
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover; /* Ensures the image covers the container without distortion */
-    background-position: center; /* Centers the image within the container */
-    background-repeat: no-repeat; /* Ensures the image does not repeat */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-bottom: 20px;
 }
 
 .greenCircle {
-    background-color: #004d00; /* Green color */
+    background-color: #004d00;
 }
 
-
 .buttonCircle {
-    width: 12vh; /* Size of the small circles */
-    height: 12vh; /* Size of the small circles */
+    width: 12vh;
+    height: 12vh;
     border-radius: 50%;
-    background-color: #444; /* Gray color */
+    background-color: #444;
 }
 
 .customNotifications {
     text-align: right;
     color: white;
-    margin-top: 20px; /* Added margin */
+    margin-top: 20px;
 }
 
 .customStatistics {
-    flex: 1;
-    background-color: rgba(0, 0, 0, 0.7); /* Black color */
+    background-color: rgba(0, 0, 0, 0.7);
     padding: 20px;
     border-radius: 10px;
     color: white;
@@ -61,14 +61,107 @@
     flex-direction: column;
     justify-content: center;
     height: 60vh;
-	width: 35vw;
+    width: 35vw;
     margin: 10px;
+    overflow-y: auto;
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.statLabel {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.statValue {
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.statValueVic {
+	font-size: 1.2em;
+    color: #00ff00;
+}
+
+.statValueLos {
+	font-size: 1.2em;
+    color: #ff0000;
 }
 
 .customStatistics a {
-	color: rgb(200, 200, 200);
+    color: #00ff00;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+/* Hide scrollbar but allow scrolling */
+.customHistory {
+    background-color: #3b3b3b;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 60vh;
+    width: 20vw;
+    margin: 10px;
+    overflow-y: auto;
+}
+
+.customHistory::-webkit-scrollbar {
+    display: none;
+}
+
+.customHistory {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.customStatistics a, .customHistory a {
+    color: white;
+    text-decoration: none;
+    color: rgb(200, 200, 200);
 }
 
 h2 {
     color: white;
+}
+
+.matchEntry {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly lighter background */
+    border-radius: 10px; /* Rounded corners */
+    padding: 10px; /* Padding inside the card */
+    margin-bottom: 10px; /* Space between cards */
+    color: white;
+}
+
+.matchEntry p {
+    margin: 0; /* Remove default margin */
+	
+}
+
+.matchEntry p.date {
+    font-weight: bold; /* Bold date */
+    margin-bottom: 5px; /* Space below date */
+}
+
+.matchEntry span.player {
+    margin-bottom: 5px; /* Space below player details */
+	font-weight: bold;
 }
