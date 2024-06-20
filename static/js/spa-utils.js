@@ -2,7 +2,7 @@ import { debounce } from './debounce.js';
 
 var game_data = null;
 
-export function loadContent(url, data = null, replaceState = false) {
+export function loadContent(url, data = null, replaceState = false, callback=null) {
     // Ensure URL ends with a slash
     if (!url.endsWith('/')) {
         url += '/';
@@ -45,6 +45,9 @@ export function loadContent(url, data = null, replaceState = false) {
             }
             setupNavigationLinks();
             observeLanguageDropdown();
+			if (callback && typeof callback === 'function') {
+                callback();
+            }
         })
         .catch(error => console.error('Error loading content:', error));
 }

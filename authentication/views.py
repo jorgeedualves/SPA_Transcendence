@@ -7,6 +7,7 @@ from .services import exchange_code, generate_jwt_token
 from .auth import IntraAuthenticationBackend
 import os
 from django.utils import translation
+from game.views import options
 
 @ensure_csrf_cookie
 def index(request):
@@ -14,20 +15,13 @@ def index(request):
 
 @ensure_csrf_cookie
 def initial_content(request):
-    language = request.headers.get('Content-Language', 'en')
-    translation.activate(language)
     if request.headers.get('X-Requested-With') == 'Fetch':
         is_authenticated = request.user.is_authenticated
-        template = 'account.html' if is_authenticated else 'login.html'
+        
         if is_authenticated:
-            user = request.user
-            profile_picture_url = user.profile_picture_url if user.profile_picture_url else '/static/images/default_picture.png'
-            context = {
-                'profile_picture_url': profile_picture_url,
-            }
+            return options(request)
         else:
-            context = {}
-        return render(request, template, context)
+            return login_view(request)
     return render(request, 'index.html')
 
 def login_view(request):

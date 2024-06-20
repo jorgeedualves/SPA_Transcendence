@@ -4,13 +4,12 @@
     <header>
         <nav class="navBar">
             <ul class="navList">
-                <div class="language-selector">
-                    <select class="language-dropdown">
+                <div class="languageSelector">
+                    <select class="languageDropdown">
                         <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
                         <option value="br" {% if language == 'br' %}selected{% endif %}>Português</option>
                         <option value="es" {% if language == 'es' %}selected{% endif %}>Español</option>
                         <option value="fr" {% if language == 'fr' %}selected{% endif %}>Français</option>
-                        <!-- More languages here -->
                     </select>
                 </div>
                 <li class="navItem"><a href="/game/options" data-template="options.html">{% trans "Play" %}</a></li>
@@ -19,18 +18,62 @@
         </nav>
     </header>
     <div class="wrapperMain">
-        <div class="container customContainer">
-                <div class="col-4 d-flex align-items-center justify-content-center">
-                    <div class="customCircle" style="background-image: url('{{ profile_picture_url }}');">
-					<!--Image-->
+        <div class="customContainer">
+            <div class="customCircle" style="background-image: url('{{ profile_picture_url }}');">
+            </div>
+            <div style="display: flex; flex-direction: row; justify-content: center; width: 100%;">
+                <div class="customHistory">
+                    <h2>{% trans "Match History" %}</h2>
+                    {% for game in games %}
+                        <div class="matchEntry">
+							<p><span class="player">{{ game.player1 }}</span>  {{game.score_player1}} x {{game.score_player2}}  <span class="player">{{ game.player2 }}</span></p><span class="date">{{ game.date }}</span>
+                        </div>
+                    {% endfor %}
+                    <a href="#">{% trans "See More" %}</a>
+                </div>
+                <div class="customStatistics">
+					<h2>{% trans "Statistics" %}</h2>
+					<div class="statsGrid">
+						<div class="statItem">
+							<span class="statLabel">{% trans "Total Games" %}</span>
+							<span class="statValue">{{ statistics.total_games }}</span>
+						</div>
+						<div class="statItem">
+							<span class="statLabel">{% trans "Victories" %}</span>
+							<span class="statValueVic">{{ statistics.victories }}</span>
+						</div>
+						<div class="statItem">
+							<span class="statLabel">{% trans "Losses" %}</span>
+							<span class="statValueLos">{{ statistics.losses }}</span>
+						</div>
+						{% if statistics.win_rate > 50 %}
+							<div class="statItem">
+								<span class="statLabel">{% trans "Win Rate" %}</span>
+								<span class="statValueVic">{{ statistics.win_rate|floatformat:2 }}%</span>
+							</div>
+						{% elif statistics.win_rate < 50 %}
+							<div class="statItem">
+								<span class="statLabel">{% trans "Win Rate" %}</span>
+								<span class="statValueLos">{{ statistics.win_rate|floatformat:2 }}%</span>
+							</div>
+						{% else %}
+							<div class="statItem">
+								<span class="statLabel">{% trans "Win Rate" %}</span>
+								<span class="statValue">{{ statistics.win_rate|floatformat:2 }}%</span>
+							</div>
+						{% endif %}
+						<div class="statItem">
+							<span class="statLabel">{% trans "Average Duration" %}</span>
+							<span class="statValue">{{ statistics.average_duration|floatformat:2 }} seconds</span>
+						</div>
+						<div class="statItem">
+							<span class="statLabel">{% trans "Average Hits" %}</span>
+							<span class="statValue">{{ statistics.average_hits|floatformat:2 }}</span>
+						</div>
 					</div>
-                </div>
-                <div class="col-12 d-flex align-items-center justify-content-center mt-2">
-                    <div class="customStatistics">
-                        <h2>{% trans "Statistics" %}</h2>
-                        <a href="#">{% trans "See More" %}</a>
-                    </div>
-                </div>
+					<a href="#">{% trans "See More" %}</a>
+				</div>
+            </div>
         </div>
     </div>
     <footer>{% trans "Made by pong" %}</footer>
