@@ -1,7 +1,6 @@
 let ctx, canvas;
 const socket = new WebSocket('ws://127.0.0.1:8000/ws/test/');
 let height, width, p_width, p_height;
-let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown;
 let ball_x, ball_y;
 let p1_points, p2_points;
 let p1X, p2X, p1_y, p2_y;
@@ -57,9 +56,7 @@ socket.onmessage = function(e) {
 	if (data.game_tour){
 		TourMatch[0] = game_tour.TourPlayer_1;
 		TourMatch[1] = game_tour.TourPlayer_2;
-		if (tournament) {
-			drawPlayerNames();
-		}
+		drawPlayerNames();
 	}
 };
 
@@ -93,17 +90,16 @@ function drawPlayerNames () {
 }
 
 export async function initAll() {
-    const userId = await fetchUserId();
+	const userId = await fetchUserId();
     setup(userId);
 }
 
-function setup() {
+function setup(userId) {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
-	
-	drawPlayerNames();
-	draw();
+
 	if (userId) {
+		draw();
 		if (game_started == false) {
 			createMenu([{
 				text: 'Start Game', action: () => {

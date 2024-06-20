@@ -37,24 +37,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleSingleGameSubmit(event) {
-        event.preventDefault();
-
+		event.preventDefault();
+		
         let playerOneName = document.getElementById('playerOneNamePvp').value.trim();
         let playerTwoName = document.getElementById('playerTwoNamePvp').value.trim();
         let skin = document.getElementById('skinPvp').value;
         const gameMode = document.querySelector('input[name="gameMode"]:checked').value;
-
+		
         if (!playerOneName || (gameMode === 'PVP' && !playerTwoName)) {
-            alert('Player Name cannot be empty.');
+			alert('Player Name cannot be empty.');
             return;
         }
-
+		
         // Clear previous data
         sessionStorage.removeItem('singleGameData');
         sessionStorage.removeItem('TournamentData');
-
+		
         let data = {
-            playerOneName: playerOneName,
+			playerOneName: playerOneName,
             playerTwoName: gameMode === 'PVP' ? playerTwoName : null,
             skin: skin,
             mode: gameMode
