@@ -43,7 +43,7 @@ def account(request):
         'average_hits': games.aggregate(Avg('hits_player1'))['hits_player1__avg'] if total_games > 0 else 0,
         'average_time_to_point': games.filter(hits_player1__gt=0).aggregate(Avg('duration'))['duration__avg'].total_seconds() if games.filter(hits_player1__gt=0).count() > 0 else 0,
         'games_against_ai': (games_against_ai / total_games * 100) if total_games > 0 else 0,
-        'games_against_others': (games_against_others / total_games * 100) if total_games > 0 else 0
+        'games_against_others': (games_against_others / total_games * 100) if total_games > 0 else 0,
     }
     
     context = {

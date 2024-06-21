@@ -17,6 +17,27 @@ function drawPieChart() {
         return;
     }
 
+	const totalGames = parseInt(statisticsElement.dataset.totalGames);
+	if (!totalGames) {
+		//logic for drawing pie chart when there are no games played
+		const data = [
+			{ label: 'No Games Played', value: 100, color: '#181818' }
+		];
+		const totalValue = data.reduce((sum, item) => sum + item.value, 0);
+		let startAngle = 0;
+		data.forEach((item) => {
+			const sliceAngle = (item.value / totalValue) * 2 * Math.PI;
+			ctx.beginPath();
+			ctx.moveTo(canvas.width / 2, canvas.height / 2);
+			ctx.arc(canvas.width / 2, canvas.height / 2, Math.min(canvas.width / 2, canvas.height / 2), startAngle, startAngle + sliceAngle);
+			ctx.closePath();
+			ctx.fillStyle = item.color;
+			ctx.fill();
+			startAngle += sliceAngle;
+		}
+		);
+        return;
+    }
     const winRate = parseFloat(statisticsElement.dataset.winRate);
     const lossRate = 100 - winRate;
 
@@ -66,8 +87,6 @@ const initialObserver = new MutationObserver((mutations, obs) => {
         mutation.addedNodes.forEach((node) => {
             if (node.nodeType === 1 && node.id === 'placeCanvas') {
                 drawPieChart();
-            } else {
-                console.log('Node added but not placeCanvas:', node);
             }
         });
     });

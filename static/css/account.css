@@ -160,8 +160,8 @@ h2 {
 	
 }
 
-.matchEntry p.date {
-    font-weight: bold; /* Bold date */
+.matchEntry span.date {
+    color:#c1c0c0;
     margin-bottom: 5px; /* Space below date */
 }
 

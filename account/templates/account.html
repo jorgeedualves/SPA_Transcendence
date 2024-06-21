@@ -30,7 +30,7 @@
                         </div>
                     {% endfor %}
                 </div>
-                <div class="customStatistics" data-win-rate="{{ statistics.win_rate|floatformat:2 }}">
+                <div class="customStatistics" data-win-rate="{{ statistics.win_rate|floatformat:2 }}" data-total-games="{{statistics.total_games}}">
 					<h2>{% trans "Statistics" %}</h2>
 					<div class="statsGrid">
 						<div class="statItem">
