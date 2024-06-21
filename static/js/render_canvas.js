@@ -12,6 +12,7 @@ let menuItems = [];
 let gameData = null;
 let gameType = '';
 let TourMatch = [];
+let matchOver = false;
 let playerNames = [];
 
 socket.onmessage = function(e) {
@@ -25,9 +26,6 @@ socket.onmessage = function(e) {
         p_height = static_data.p_height;
         p1X = static_data.p1_x;
         p2X = static_data.p2_x;
-		if (tournament) {
-			
-		}
     }
     if (data.game_state) {
         const game_state = data.game_state;
@@ -38,25 +36,39 @@ socket.onmessage = function(e) {
         p1_points = game_state.p1_score;
         p2_points = game_state.p2_score;
         isPaused = game_state.isPaused;
+		ai = game_state.ai;
         game_started = game_state.game_started;
         game_ended = game_state.game_ended;
 		tournament = game_state.tournament;
-        if (!isPaused && start_draw && game_started) {
+		if (!isPaused && start_draw && game_started) {
 			draw();
-        }
-        if (game_ended) {
+		}
+		if (game_ended) {
 			createMenu([{
 				text: 'Back Home', action: () => {
 					window.location.href = '/';
-                }
-            }]);
-            drawMenu();
-        }
+				}
+			}]);
+			drawMenu();
+		}
     }
 	if (data.game_tour){
-		TourMatch[0] = game_tour.TourPlayer_1;
-		TourMatch[1] = game_tour.TourPlayer_2;
-		drawPlayerNames();
+		const game_tour = data.game_tour;
+		TourMatch[0] = game_tour.tourPlayer_1;
+		TourMatch[1] = game_tour.tourPlayer_2;
+		matchOver = game_tour.matchOver;
+		document.getElementById('PlayerOne').innerHTML = playerNames[TourMatch[0]];
+		document.getElementById('PlayerTwo').innerHTML = playerNames[TourMatch[1]];
+		if (matchOver) {
+			console.log(game_started);
+			draw();
+			createMenu([{
+				text: 'Next Match', action: () => {
+					socket.send(JSON.stringify({ event: 'game_started', state: true }));
+				}
+			}]);
+			drawMenu();
+		}
 	}
 };
 
@@ -66,7 +78,6 @@ function drawPlayerNames () {
 	
     if (singleGameData) {
 		gameData = JSON.parse(singleGameData);
-		console.log(gameData)
         gameType = 'single';
     } else if (tournamentData) {
 		gameData = JSON.parse(tournamentData);
@@ -79,12 +90,13 @@ function drawPlayerNames () {
 			if (gameData.mode === 'PVP') {
 				socket.send(JSON.stringify({ event: 'ai', state: false }));
 			} 
+			else {
+				socket.send(JSON.stringify({ event: 'ai', state: true }));
+			}
 		}
 		if (gameType === 'tournament') {
 			socket.send(JSON.stringify({ event: 'tournament', state: true }));
 			playerNames = [gameData.playerOneName, gameData.playerTwoName, gameData.playerThreeName, gameData.playerFourName];
-			document.getElementById('PlayerOne').innerHTML = playerNames[TourMatch[0]];
-			document.getElementById('PlayerTwo').innerHTML = playerNames[TourMatch[1]];
 		}
     }
 }
@@ -112,6 +124,7 @@ function setup(userId) {
 			drawMenu();
 		}
 	}
+	drawPlayerNames();
 	canvas.addEventListener('click', function(event) {
 		if (isPaused || game_started == false) {
 			const rect = canvas.getBoundingClientRect();

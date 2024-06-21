@@ -62,8 +62,11 @@ async def game_loop_logic(send_game_state):
 						tournament.record_winner(0)
 					elif player_2.score == WIN_GAME:
 						tournament.record_winner(1)
-					tour_match = tournament.start_next_match()
+					tour_match = tournament.send_current_match()
 					await send_game_state(tour_match, 'game_tour')
+					game_state = get_game_data()
+					await send_game_state(game_state)
+					tournament.start_next_match()
 					game.reset()
 				if tournament.over:
 					game.started = False
@@ -150,9 +153,6 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 		paddle_y = new_y
 
 	return paddle_y
-
-def send_event(event, state, update_event):
-	update_event(event, state)
 
 def save_db(user):
     end_time = time.time()
