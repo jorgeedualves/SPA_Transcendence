@@ -31,16 +31,9 @@ if not all([SECRET_KEY, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, AUTH_URL_INTRA])
     raise ValueError("One or more environment variables are not set.")
 
 
-
-# Veja https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# AVISO DE SEGURANÇA: mantenha a chave secreta usada em produção em segredo!
-SECRET_KEY = 'django-insecure-abyqy2^-=wja(v8it%7u)47b!(go7g7+_1odx*7lmz=-7yb#=8'
-
-
 DEBUG = True
 
-ALLOWED_HOSTS = []  # Lista de hosts/nomes de domínio permitidos
+ALLOWED_HOSTS = ['*']
 
 # Definição da aplicação
 
@@ -94,10 +87,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Configuração do banco de dados
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',  # Caminho para o banco de dados SQLite
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 

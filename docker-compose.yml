@@ -1,0 +1,49 @@
+services:
+  postgres-transcendence:
+    image: postgres:16-alpine
+    container_name: postgres-transcendence
+    env_file: .env
+    restart: always
+    ports:
+        - '${POSTGRES_PORT}:5432'
+    networks:
+      - ft_transcendence
+    volumes:
+      - postgres-vol:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  django-transcendence:
+    image: django
+    container_name: django-transcendence
+    build: ./
+    ports:
+      - '8000:8000'
+    restart: always
+    networks:
+      - ft_transcendence
+    depends_on:
+      - postgres-transcendence
+    volumes:
+      - django-vol:/ft_transcendence/media
+
+networks:
+  ft_transcendence:
+    driver: bridge
+    name: ft_transcendence
+
+volumes:
+  django-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '~/goinfre/ft_transcendence/django'
+  postgres-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '~/goinfre/ft_transcendence/postgres'
