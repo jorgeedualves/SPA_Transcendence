@@ -30,13 +30,20 @@ def account(request):
         'duration': game.duration.total_seconds()
     } for game in games]
     
+    total_games = games.count()
+    games_against_ai = games.filter(player2='AI').count()
+    games_against_others = total_games - games_against_ai
+    
     statistics = {
-        'total_games': games.count(),
+        'total_games': total_games,
         'victories': games.filter(score_player1__gt=F('score_player2')).count(),
         'losses': games.filter(score_player1__lt=F('score_player2')).count(),
-        'win_rate': (games.filter(score_player1__gt=F('score_player2')).count() / games.count() * 100) if games.count() > 0 else 0,
-        'average_duration': games.aggregate(Avg('duration'))['duration__avg'].total_seconds() if games.count() > 0 else 0,
-        'average_hits': games.aggregate(Avg('hits_player1'))['hits_player1__avg'] if games.count() > 0 else 0
+        'win_rate': (games.filter(score_player1__gt=F('score_player2')).count() / total_games * 100) if total_games > 0 else 0,
+        'average_duration': games.aggregate(Avg('duration'))['duration__avg'].total_seconds() if total_games > 0 else 0,
+        'average_hits': games.aggregate(Avg('hits_player1'))['hits_player1__avg'] if total_games > 0 else 0,
+        'average_time_to_point': games.filter(hits_player1__gt=0).aggregate(Avg('duration'))['duration__avg'].total_seconds() if games.filter(hits_player1__gt=0).count() > 0 else 0,
+        'games_against_ai': (games_against_ai / total_games * 100) if total_games > 0 else 0,
+        'games_against_others': (games_against_others / total_games * 100) if total_games > 0 else 0
     }
     
     context = {
