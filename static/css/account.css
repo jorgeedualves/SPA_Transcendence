@@ -60,10 +60,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 60vh;
-    width: 35vw;
+    height: 62vh;
+    width: 50vw;
     margin: 10px;
     overflow-y: auto;
+	font-size: large;
 }
 
 .statsGrid {
@@ -79,7 +80,7 @@
     align-items: center;
     background-color: rgba(255, 255, 255, 0.1);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .statLabel {
@@ -94,12 +95,14 @@
 
 .statValueVic {
 	font-size: 1.2em;
-    color: #00ff00;
+    color: #75ff75;
+	font-weight: bold;
 }
 
 .statValueLos {
 	font-size: 1.2em;
-    color: #ff0000;
+    color: #ff4040;
+	font-weight: bold;
 }
 
 .customStatistics a {
@@ -118,10 +121,11 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 60vh;
+    height: 62vh;
     width: 20vw;
     margin: 10px;
     overflow-y: auto;
+	font-size: large;
 }
 
 .customHistory::-webkit-scrollbar {
@@ -164,4 +168,81 @@ h2 {
 .matchEntry span.player {
     margin-bottom: 5px; /* Space below player details */
 	font-weight: bold;
+}
+
+.wrapperAccount {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+}
+
+.canvasChart {
+    display: block;
+	margin: 0 5px;
+    border-radius: 10px;
+	width: 50%;
+}
+
+.legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.colorSquare {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin: 0 4px;
+    border: 1px solid #000; /* Optional: border for better visibility */
+    vertical-align: middle; /* Aligns the squares with the text */
+}
+
+.canvasChart label {
+	font-weight: bold;
+}
+
+.barChartContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1px;
+}
+
+.barChart {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 50%;
+    height: 10vw;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 1px;
+}
+
+.bar {
+    width: 20%;
+    margin: 0 10px;
+    background-color: #007bff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 5px;
+    position: relative;
+}
+
+.barLabel {
+    position: absolute;
+    bottom: -25px;
+    font-size: 30px;
+}
+
+#aiBar {
+    background-color: #318b87; /* Green for AI */
+}
+
+#othersBar {
+    background-color: #c1c36f; /* Red for Others */
 }
