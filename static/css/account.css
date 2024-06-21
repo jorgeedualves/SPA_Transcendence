@@ -12,6 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+	height: auto;
 }
 
 .customTitle {
@@ -21,8 +22,8 @@
 }
 
 .customCircle {
-    width: 20vh;
-    height: 20vh;
+    width: 17vh;
+    height: 17vh;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -60,7 +61,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 62vh;
+    height: 63vh;
     width: 50vw;
     margin: 10px;
     overflow-y: auto;
@@ -121,7 +122,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 62vh;
+    height: 63vh;
     width: 20vw;
     margin: 10px;
     overflow-y: auto;
@@ -175,6 +176,7 @@ h2 {
 	flex-direction: row;
 	justify-content: center;
 	width: 100%;
+	height: auto;
 }
 
 .canvasChart {
