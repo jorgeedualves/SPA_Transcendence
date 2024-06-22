@@ -9,14 +9,14 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 Para a lista completa de configurações e seus valores, veja
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
-from pathlib import Path
 import os
+from datetime import timedelta
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 # Construindo caminhos dentro do projeto como: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 load_dotenv()
 
@@ -30,13 +30,10 @@ AUTH_URL_INTRA = os.environ.get('AUTH_URL_INTRA')
 if not all([SECRET_KEY, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, AUTH_URL_INTRA]):
     raise ValueError("One or more environment variables are not set.")
 
-
-
 # Veja https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # AVISO DE SEGURANÇA: mantenha a chave secreta usada em produção em segredo!
 SECRET_KEY = 'django-insecure-abyqy2^-=wja(v8it%7u)47b!(go7g7+_1odx*7lmz=-7yb#=8'
-
 
 DEBUG = True
 
@@ -47,12 +44,16 @@ ALLOWED_HOSTS = []  # Lista de hosts/nomes de domínio permitidos
 INSTALLED_APPS = [
     # Aplicações Django incluídas por padrão
     'daphne',
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'authentication',
     'game',
     'account'
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -160,7 +162,6 @@ LOGIN_URL = 'authentication:login'
 LOGIN_REDIRECT_URL = 'authentication:account'
 LOGOUT_REDIRECT_URL = 'authentication:login'
 
-
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'authentication.auth.IntraAuthenticationBackend',  # Adjust this if needed
@@ -176,3 +177,25 @@ LANGUAGES = [
     ('br', 'Portuguese (Brazil)'),
     ('fr', 'French'),
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=3),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'ALGORITHM': 'HS256',
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
+}

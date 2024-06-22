@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
+
 class UserManager(BaseUserManager):
     def create_new_intra_user(self, user_intra):
         try:
@@ -12,6 +13,7 @@ class UserManager(BaseUserManager):
                 profile_picture_url=user_intra['image']['versions']['medium']
             )
         return user
+
 
 class CustomUser(AbstractUser):
     profile_picture_url = models.URLField(max_length=200, blank=True, null=True)
@@ -37,4 +39,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
-
