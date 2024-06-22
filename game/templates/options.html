@@ -57,11 +57,11 @@
 						<div>&#9</div>
                     </div>
                     <div class="form-group">
-                        <label for="playerOneName">{% trans "Player 1:" %}</label>
+                        <label for="playerOneName">{% trans "Player 1 Name:" %}</label>
                         <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" required>
                     </div>
                     <div class="form-group" id="playerTwoNameContainer" style="display: none;">
-                        <label for="playerTwoName">{% trans "Player 2:" %}</label>
+                        <label for="playerTwoName">{% trans "Player 2 Name:" %}</label>
                         <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName">
                     </div>
                     <div class="form-group">
@@ -93,21 +93,21 @@
                 <form>
                     <div class="form-row d-flex align-items-center justify-content-around gap-3">
                         <div class="form-group col-5">
-                            <label for="playerOneName">Player 1 Name:</label>
+                            <label for="playerOneName">{% trans "Player 1 Name:" %}</label>
                             <input type="text" class="form-control bg-dark text-white mb-2" id="playerOneName" name="playerOneName" value="{{ username }}" readonly>
                         </div>
                         <div class="form-group col-5">
-                            <label for="playerTwoName">Player 2 Name:</label>
+                            <label for="playerTwoName">{% trans "Player 2 Name:" %}</label>
                             <input type="text" class="form-control bg-dark text-white mb-2" id="playerTwoName" name="playerTwoName" required>
                         </div>
                     </div>
                     <div class="form-row d-flex align-items-center justify-content-around gap-3">
                         <div class="form-group col-5">
-                            <label for="playerThreeName">Player 3 Name:</label>
+                            <label for="playerThreeName">{% trans "Player 3 Name:" %}</label>
                             <input type="text" class="form-control bg-dark text-white mb-2" id="playerThreeName" name="playerThreeName" required>
                         </div>
                         <div class="form-group col-5">
-                            <label for="playerFourName">Player 4 Name:</label>
+                            <label for="playerFourName">{% trans "Player 4 Name:" %}</label>
                             <input type="text" class="form-control bg-dark text-white mb-2" id="playerFourName" name="playerFourName" required>
                         </div>
                     </div>

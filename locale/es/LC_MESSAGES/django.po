@@ -102,11 +102,11 @@ msgstr "Modo de Juego:"
 msgid "Tournament Configuration"
 msgstr "Configuración del Torneo"
 
-#: game/templates/options.html:96
+#: game/templates/options.html:60 game/templates/options.html:96
 msgid "Player 1 Name:"
 msgstr "Nombre del Jugador 1:"
 
-#: game/templates/options.html:100
+#: game/templates/options.html:64 game/templates/options.html:100
 msgid "Player 2 Name:"
 msgstr "Nombre del Jugador 2:"
 
