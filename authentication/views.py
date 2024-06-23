@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from django.contrib.auth import login #, logout
+from urllib.parse import urlencode
+from django.contrib.auth import login, authenticate #, logout
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.decorators import login_required
 from .services import exchange_code, generate_jwt_token
@@ -8,6 +9,11 @@ from .auth import IntraAuthenticationBackend
 import os
 from django.utils import translation
 from game.views import options
+from django_otp.plugins.otp_totp.models import TOTPDevice
+from rest_framework_simplejwt.tokens import RefreshToken
+from .auth import IntraAuthenticationBackend
+from .forms import CreateUserForm, LoginForm
+from .services import exchange_code, generate_jwt_token
 
 @ensure_csrf_cookie
 def index(request):
@@ -72,3 +78,53 @@ def intra_login_redirect(request):
 #         response.delete_cookie(cookie)
 
 #     return response
+
+def register(request):
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
+    form = CreateUserForm()
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        context = {'form': form}
+        return render(request, 'register.html', context)
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            device = TOTPDevice.objects.create(user=user, name='default')
+            totp_url = device.config_url + '&' + urlencode({'issuer': 'ft_transcendence', 'label': user.email})
+            context = {'totp_url': totp_url}
+            return render(request, 'otp_setup.html', context)
+    return render(request, 'index.html')
+
+
+def std_login_view(request):
+    print("ENNTO+ROUUUUUUUUUUU")
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
+
+    form = LoginForm()
+    language = request.headers.get('Content-Language', 'en')
+    translation.activate(language)
+    if request.headers.get('X-Requested-With') == 'Fetch':
+        return render(request, 'std_login.html', {'form': form})
+    if request.method == 'POST':
+        print("POSSSTTAAAA")
+        form = LoginForm(request, data=request.POST)
+        if form.is_valid():
+            print("tudo certo VAALID")
+            user = authenticate(username=form.cleaned_data.get('username'),
+                                password=form.cleaned_data.get('password'))
+            if user:
+                login(request, user)
+
+                refresh = RefreshToken.for_user(user)
+                access_token = str(refresh.access_token)
+                refresh_token = str(refresh)
+
+                response = redirect("authentication:initial_content")
+                response.set_cookie("access_token", access_token, httponly=True)
+                response.set_cookie("refresh_token", refresh_token, httponly=True)
+                return response
+        else:
+            print(form.errors)
+    return render(request, 'index.html')

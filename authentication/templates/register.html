@@ -1,0 +1,22 @@
+{% load static %}
+{% load i18n %}
+<div class="wrapperRegister">
+    <form method="post" action="/register/">
+        {% csrf_token %}
+        {% for field in form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+        {% endfor %}
+		<button class="btn btn-outline-light" type="submit">Register</button>
+    </form>
+	<div class="login">
+		<a href="/std_login" data-template="std_login.html">
+			<button type="button" class="btn btn-outline-success">{% trans "Already have an account?" %}</button>
+		</a>
+	</div>
+</div>

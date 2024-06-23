@@ -1,0 +1,23 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<title>Document</title>
+</head>
+<body>
+<div class="wrapperOtp">
+	<h1>OTP Setup</h1>
+	<p>Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy, andOTP).</p>
+	<img src="https://api.qrserver.com/v1/create-qr-code/?data={{ totp_url|urlencode }}&amp;size=200x200" alt="QR Code">
+	<p>Alternatively, you can enter the following key manually:</p>
+	<p>{{ totp_url }}</p>
+	<a href="/std_login" data-template="std_login.html">
+		<button type="button" class="btn btn-outline-light" id="registerButton">{% trans "Go back to login" %}</button>
+	</a>
+</div>
+</body>
+</html>

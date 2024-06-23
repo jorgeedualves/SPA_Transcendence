@@ -17,11 +17,23 @@
 	margin-bottom: 0.2rem;
 }
 
+.loginTextContainer form {
+	font-size: 2.5rem;
+	margin-bottom: 0.2rem;
+	width: 80%;
+
+}
+
+#id_otp_token {
+	margin-bottom: 2rem;
+}
+
 .loginTextContainer button {
 	font-size: 2rem;
-	width: 47%;
+	width: 20vw;
 	border-radius: 0.7rem;
-	padding: 0.1rem;
+	padding: 0.2rem 1rem;
+	margin-bottom: 2rem;
 }
 
 .internalLoginText {
@@ -38,7 +50,8 @@
 	text-decoration: none;
 	color: white;
 }
-#loginButton {
+
+.loginButton {
 	width: 100%;
 	padding-right: 1rem;
 	padding-left: 1rem;

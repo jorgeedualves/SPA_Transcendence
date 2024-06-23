@@ -3,6 +3,7 @@
 @import url("options.css");
 @import url("pong.css");
 @import url("account.css");
+@import url("register.css");
 
 body {
     background-color: #181818;

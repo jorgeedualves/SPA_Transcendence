@@ -1,0 +1,42 @@
+.wrapperRegister {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	align-self: center;
+	height: 100vh;
+	font-size: 2.5rem;
+}
+
+.wrapperRegister button {
+	font-size: 3rem;
+	border-radius: 0.7rem;
+    padding: 0.2rem 1rem;
+    margin-top: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.wrapperRegister input {
+	border-radius: 0.7rem;
+}
+
+.wrapperOtp {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 1.5rem;
+}
+
+.wrapperOtp button {
+	font-size: 3rem;
+	border-radius: 0.7rem;
+    padding: 0.2rem 1rem;
+    margin-top: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.wrapperOtp input {
+	border-radius: 0.7rem;
+}
