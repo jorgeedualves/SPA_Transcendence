@@ -24,12 +24,12 @@ class Game:
 	predicted_y = 0
 	start_time = 0
 
-	def reset(self):
+	def reset(self, tournament=False, ai=False):
 		self.started = False
 		self.paused = False
-		self.ai = False
+		self.ai = ai
 		self.ended = False
-		self.tournament = False
+		self.tournament = tournament
 		self.last_ai_prediction = 0
 		self.predicted_y = 0
 		self.start_time = 0
@@ -64,13 +64,10 @@ async def game_loop_logic(send_game_state):
 						tournament.record_winner(1)
 					tour_match = tournament.send_current_match()
 					await send_game_state(tour_match, 'game_tour')
-					game_state = get_game_data()
-					await send_game_state(game_state)
-					tournament.start_next_match()
-					game.reset()
+					tournament.match_over = False
+					game.reset(True)
 				if tournament.over:
 					game.started = False
-					game.ended = True
 			elif player_1.score == WIN_GAME or player_2.score == WIN_GAME:
 				game.started = False
 				game.ended = True
@@ -185,7 +182,8 @@ def get_game_data():
 		'p1_hits': player_1.hits,
 		'ai': game.ai,
 		'start_time': game.start_time,
-		'tournament': game.tournament
+		'tournament': game.tournament,
+		'restart': True
     }
 	return game_state
 

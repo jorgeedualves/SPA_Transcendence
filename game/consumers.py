@@ -38,10 +38,11 @@ class PongConsumer(AsyncWebsocketConsumer):
 		state = data.get('state')
 
 		if event in {'game_started'}:
+			asyncio.create_task(start_game(self.send_game_state))
+		elif event in {'user_id'}:
 			user_id = data.get('user_id')
 			self.user = await self.get_user(user_id)
-			asyncio.create_task(start_game(self.send_game_state))
-		elif event in {'isPaused', 'ai', 'guest', 'tournament'}:
+		elif event in {'isPaused', 'ai', 'guest', 'tournament', 'restart'}:
 			await self.update_event(event, state)
 		else:
 			self.update_key(event, state)
@@ -88,5 +89,10 @@ class PongConsumer(AsyncWebsocketConsumer):
 			await self.send_game_state(get_game_data())
 		elif (event == 'tournament'):
 			game.tournament = state
+			tournament.reset()
 			await self.send(text_data=json.dumps({"game_tour": tournament.send_current_match()}))
 			await self.send_game_state(get_game_data())
+		elif (event == 'restart'):
+			game.reset(game.tournament, game.ai)
+			await self.send_game_state(get_game_data())
+			await self.send(text_data=json.dumps({"game_restart": True}))

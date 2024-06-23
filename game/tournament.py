@@ -10,7 +10,6 @@ class Tournament:
 		self.match_over = False
 
 	def start_next_match(self):
-		self.match_over = False
 		if self.current_match == 2:
 			self.match = [2, 3]
 		if self.current_match == 3:
@@ -25,15 +24,24 @@ class Tournament:
 		elif self.current_match == 3:
 			self.tour_winner = self.match[winner_index]
 			self.over = True
-			return self.tour_winner
+			return
 		self.current_match += 1
+		self.start_next_match()
 
 	def send_current_match(self):
 		players = {
 			'tourPlayer_1': self.match[0],
 			'tourPlayer_2': self.match[1],
-			'matchOver': self.match_over
+			'matchOver': self.match_over,
+			'tourWinner': self.tour_winner,
+			'tourOver': self.over
 		}
 		return players
-		
-			
+
+	def reset(self):
+		self.match = [0, 1]
+		self.winners = [None, None]
+		self.current_match = 1
+		self.tour_winner = None
+		self.over = False
+		self.match_over = False
