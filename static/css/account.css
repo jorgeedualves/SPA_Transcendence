@@ -12,7 +12,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-	height: auto;
 }
 
 .customTitle {
@@ -22,8 +21,8 @@
 }
 
 .customCircle {
-    width: 17vh;
-    height: 17vh;
+    width: 18vh;
+    height: 18vh;
     border-radius: 50%;
     overflow: hidden;
     display: flex;
@@ -32,7 +31,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .greenCircle {
@@ -61,7 +60,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 63vh;
+    height: 65vh;
     width: 50vw;
     margin: 10px;
     overflow-y: auto;
@@ -122,7 +121,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 63vh;
+    height: 65vh;
     width: 20vw;
     margin: 10px;
     overflow-y: auto;
@@ -176,7 +175,6 @@ h2 {
 	flex-direction: row;
 	justify-content: center;
 	width: 100%;
-	height: auto;
 }
 
 .canvasChart {
@@ -215,7 +213,6 @@ h2 {
 .barChart {
     display: flex;
     justify-content: center;
-    align-items: flex-end;
     width: 50%;
     height: 10vw;
     background-color: rgba(0, 0, 0, 0.1);
@@ -247,4 +244,8 @@ h2 {
 
 #othersBar {
     background-color: #c1c36f; /* Red for Others */
+}
+
+.wrapperPlots {
+	max-height: 39%;
 }
