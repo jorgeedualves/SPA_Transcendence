@@ -45,7 +45,6 @@ def account(request):
         'games_against_ai': (games_against_ai / total_games * 100) if total_games > 0 else 0,
         'games_against_others': (games_against_others / total_games * 100) if total_games > 0 else 0,
     }
-    print(statistics)
     context = {
         'profile_picture_url': profile_picture_url,
         'games': game_data,

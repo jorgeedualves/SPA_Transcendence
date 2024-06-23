@@ -46,7 +46,7 @@
 						</div>
 						<div class="statItem">
 							<span class="statLabel">{% trans "Average time to score" %}</span>
-							<span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }}</span>
+							<span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }} seconds</span>
 						</div>
 						<div class="statItem">
 							<span class="statLabel">{% trans "Average Duration" %}</span>
@@ -89,17 +89,3 @@
     </div>
     <footer>{% trans "Made by pong" %}</footer>
 </div>
-
-
-<!-- 
-	<div class="canvasChart d-flex flex-column justify-content-center align-items-between">
-							<div class="legend d-flex justify-content-center align-items-center mt-3">
-								<span>{% trans "Win" %}</span>
-								<span class="colorSquare" style="background-color: #00ff00;"></span>
-								<span> / {% trans "Loss" %}</span>
-								<span class="colorSquare" style="background-color: #ff0000;"></span>
-								<span>  {% trans " Rate" %}</span>
-							</div>
-							<canvas id="winRateChart"></canvas>
-						</div>
--->
