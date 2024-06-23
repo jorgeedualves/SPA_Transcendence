@@ -41,7 +41,7 @@ rm-volumes:
 	docker volume rm -f spa_transcendence_postgres-vol
 
 clean-postgres-data:
-	sudo rm -rf ~/goinfre/ft_transcendence/postgres/*
+	sudo rm -rf ~/goinfre/ft_transcendence/postgres
 
 re: fclean all
 
