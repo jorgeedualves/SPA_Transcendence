@@ -13,8 +13,13 @@
 	<h1>OTP Setup</h1>
 	<p>Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy, andOTP).</p>
 	<img src="https://api.qrserver.com/v1/create-qr-code/?data={{ totp_url|urlencode }}&amp;size=200x200" alt="QR Code">
-	<p>Alternatively, you can enter the following key manually:</p>
-	<p>{{ totp_url }}</p>
+    <p>Alternatively, you can enter the following key manually:</p>
+    <ul>
+        <li><strong>Secret:</strong> {{ secret }}</li>
+        <li><strong>Algorithm:</strong> {{ algorithm }}</li>
+        <li><strong>Issuer:</strong> {{ issuer }}</li>
+        <li><strong>User:</strong> {{ user }}</li>
+    </ul>
 	<a href="/std_login" data-template="std_login.html">
 		<button type="button" class="btn btn-outline-light" id="registerButton">{% trans "Go back to login" %}</button>
 	</a>
