@@ -34,6 +34,10 @@ msgstr "Total de Juegos"
 msgid "Average time to score"
 msgstr "Tiempo promedio para anotar"
 
+#: account/templates/account.html:49 account/templates/account.html:53
+msgid "seconds"
+msgstr "segundos"
+
 #: account/templates/account.html:52
 msgid "Average Duration"
 msgstr "Duración Promedio"

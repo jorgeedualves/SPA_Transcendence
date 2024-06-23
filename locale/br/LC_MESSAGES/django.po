@@ -50,6 +50,10 @@ msgstr "Tempo médio para pontuar"
 msgid "Average Duration"
 msgstr "Duração Média"
 
+#: account/templates/account.html:49 account/templates/account.html:53
+msgid "seconds"
+msgstr "segundos"
+
 #: account/templates/account.html:56
 msgid "Average Hits"
 msgstr "Média de Acertos"

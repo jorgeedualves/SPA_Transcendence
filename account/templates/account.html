@@ -46,11 +46,11 @@
 						</div>
 						<div class="statItem">
 							<span class="statLabel">{% trans "Average time to score" %}</span>
-							<span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }} seconds</span>
+							<span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }}{% trans " seconds" %}</span>
 						</div>
 						<div class="statItem">
 							<span class="statLabel">{% trans "Average Duration" %}</span>
-							<span class="statValue">{{ statistics.average_duration|floatformat:2 }} seconds</span>
+							<span class="statValue">{{ statistics.average_duration|floatformat:2 }}{% trans " seconds" %}</span>
 						</div>
 						<div class="statItem">
 							<span class="statLabel">{% trans "Average Hits" %}</span>
