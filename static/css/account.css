@@ -60,10 +60,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 65vh;
+    height: 67vh;
     width: 50vw;
     margin: 10px;
-    overflow-y: hidden;
+    overflow-y: auto;
 	font-size: large;
 }
 
@@ -121,7 +121,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 65vh;
+    height: 67vh;
     width: 20vw;
     margin: 10px;
     overflow-y: auto;
@@ -220,13 +220,6 @@ h2 {
     border-radius: 10px;
     padding: 1px;
 }
-
-/* Targeting Firefox */
-@-moz-document url-prefix() {
-	.barChart {
-	  align-items: normal;
-	}
-  }
 
 
 .bar {

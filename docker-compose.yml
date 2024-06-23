@@ -26,8 +26,6 @@ services:
       - ft_transcendence
     depends_on:
       - postgres-transcendence
-    volumes:
-      - django-vol:/ft_transcendence/media
 
 networks:
   ft_transcendence:
@@ -35,12 +33,6 @@ networks:
     name: ft_transcendence
 
 volumes:
-  django-vol:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '~/goinfre/ft_transcendence/django'
   postgres-vol:
     driver: local
     driver_opts:
