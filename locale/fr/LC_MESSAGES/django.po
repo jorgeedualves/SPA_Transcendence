@@ -90,6 +90,22 @@ msgstr "Aventure inoubliable!"
 msgid "Login 42"
 msgstr "Connexion 42"
 
+#: authentication/templates/otp_setup.html:24 authentication/templates/std_login.html:21
+msgid "Go back to login"
+msgstr "Revenir à la connexion"
+
+#: authentication/templates/register.html:19
+msgid "Already have an account?"
+msgstr "Vous avez déjà un compte?"
+
+#: authentication/templates/std_login.html:19
+msgid "Don't have an account? Register"
+msgstr "Vous n'avez pas de compte ? Registre"
+
+#: authentication/templates/std_login.html:19
+msgid "Login with username and password"
+msgstr "Connectez-vous avec nom d'utilisateur et mot de passe"
+
 #: game/templates/options.html:15
 msgid "Profile"
 msgstr "Profil"

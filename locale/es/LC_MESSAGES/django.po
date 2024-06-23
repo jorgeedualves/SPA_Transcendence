@@ -78,9 +78,25 @@ msgstr "Embárcate en una"
 msgid "Unforgettable Adventure!"
 msgstr "Aventura Inolvidable!"
 
-#: authentication/templates/login.html:24
+#: authentication/templates/login.html:24 authentication/templates/std_login.html:21
 msgid "Login 42"
 msgstr "Iniciar Sesión 42"
+
+#: authentication/templates/otp_setup.html:24
+msgid "Go back to login"
+msgstr "Volver a iniciar sesión"
+
+#: authentication/templates/register.html:19
+msgid "Already have an account?"
+msgstr "Ya tienes una cuenta?"
+
+#: authentication/templates/std_login.html:19
+msgid "Don't have an account? Register"
+msgstr "No tienes una cuenta? Registro"
+
+#: authentication/templates/std_login.html:19
+msgid "Login with username and password"
+msgstr "Iniciar sesión con usuario y contraseña"
 
 #: game/templates/options.html:15
 msgid "Profile"
