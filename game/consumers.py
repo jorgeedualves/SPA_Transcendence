@@ -90,6 +90,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 		elif (event == 'tournament'):
 			game.tournament = state
 			if (state == True):
+				game.ai = False
 				tournament.reset()
 				await self.send(text_data=json.dumps({"game_tour": tournament.send_current_match()}))
 				await self.send_game_state(get_game_data())
