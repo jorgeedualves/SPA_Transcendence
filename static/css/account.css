@@ -4,6 +4,8 @@
     align-items: flex-start;
     flex-grow: 1;
     width: 100%;
+    height: calc(100vh - 100px);
+    overflow: hidden;
 }
 
 .customContainer {
@@ -12,6 +14,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+	overflow: auto;
 }
 
 .customTitle {
@@ -57,12 +60,9 @@
     border-radius: 10px;
     color: white;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 67vh;
-    width: 50vw;
+    height: 64vh;
     margin: 10px;
+	width: 70vw;
     overflow-y: auto;
 	font-size: large;
 }
@@ -121,7 +121,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 67vh;
+    height: 64vh;
     width: 20vw;
     margin: 10px;
     overflow-y: auto;
@@ -129,14 +129,14 @@
 }
 
 /* Chrome */
-.customHistory::-webkit-scrollbar {
+.customStatistics::-webkit-scrollbar, .customHistory::-webkit-scrollbar {
     display: none;
 }
-
-.customHistory {
+.customHistory, .customStatistics {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
 
 .customStatistics a, .customHistory a {
     color: white;
@@ -172,10 +172,11 @@ h2 {
 }
 
 .wrapperAccount {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap; /* Ensure items wrap on smaller screens */
 }
 
 .canvasChart {
