@@ -208,43 +208,30 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1px;
+    margin-top: 10px;
 }
 
 .barChart {
     display: flex;
-    justify-content: center;
-	align-items: flex-end;
-    width: 50%;
-    height: 9vw;
+    justify-content: space-around;
+    align-items: flex-end;
+    width: 100%;
+    height: 200px;
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 1px;
+    padding: 10px;
 }
-
 
 .bar {
-    width: 20%;
-    margin: 0 10px;
-    background-color: #007bff;
+    width: 15%; /* Adjust this value to make the bars thinner */
+    background-color: #318b87;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-end;
     border-radius: 5px;
-    position: relative;
-}
-
-.barLabel {
-    position: absolute;
-    bottom: -25px;
-    font-size: 30px;
-}
-
-#aiBar {
-    background-color: #318b87; /* Green for AI */
+    transition: height 0.3s ease-in-out;
 }
 
 #othersBar {
-    background-color: #c1c36f; /* Red for Others */
+    background-color: #c1c36f;
 }

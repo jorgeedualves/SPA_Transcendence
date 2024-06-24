@@ -18,72 +18,68 @@
     </header>
     <div class="wrapperMain">
         <div class="customContainer">
-            <div class="customCircle" style="background-image: url('{{ profile_picture_url }}');">
-            </div>
+            <div class="customCircle" style="background-image: url('{{ profile_picture_url }}');"></div>
             <div class="wrapperAccount">
                 <div class="customHistory">
                     <h2>{% trans "Match History" %}</h2>
                     {% for game in games %}
                         <div class="matchEntry">
-							<p><span class="player">{{ game.player1 }}</span>  {{game.score_player1}} x {{game.score_player2}}  <span class="player">{{ game.player2 }}</span></p><span class="date">{{ game.date }}</span>
+                            <p><span class="player">{{ game.player1 }}</span>  {{game.score_player1}} x {{game.score_player2}}  <span class="player">{{ game.player2 }}</span></p>
+                            <span class="date">{{ game.date }}</span>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="customStatistics" data-win-rate="{{ statistics.win_rate|floatformat:2 }}" data-total-games="{{statistics.total_games}}">
-					<h2>{% trans "Statistics" %}</h2>
-					<div class="statsGrid">
-						<div class="statItem">
-							<span class="statLabel">{% trans "Victories" %}</span>
-							<span class="statValueVic">{{ statistics.victories }}</span>
-						</div>
-						<div class="statItem">
-							<span class="statLabel">{% trans "Losses" %}</span>
-							<span class="statValueLos">{{ statistics.losses }}</span>
-						</div>
-						<div class="statItem">
-							<span class="statLabel">{% trans "Total Games" %}</span>
-							<span class="statValue">{{ statistics.total_games }}</span>
-						</div>
-						<div class="statItem">
-							<span class="statLabel">{% trans "Average time to score" %}</span>
-							<span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }}{% trans " seconds" %}</span>
-						</div>
-						<div class="statItem">
-							<span class="statLabel">{% trans "Average Duration" %}</span>
-							<span class="statValue">{{ statistics.average_duration|floatformat:2 }}{% trans " seconds" %}</span>
-						</div>
-						<div class="statItem">
-							<span class="statLabel">{% trans "Average Hits" %}</span>
-							<span class="statValue">{{ statistics.average_hits|floatformat:2 }}</span>
-						</div>
-					</div>
-					<div class="d-flex justify-content-end align-items-center wrapperPlots">
-						<div class="barChartContainer">
-							<div class="barChart">
-								<div class="bar" id="aiBar" style="height: {{ statistics.games_against_ai }}%">
-									<span class="barLabel">🤖</span>
-								</div>
-								<div class="bar" id="othersBar" style="height: {{ statistics.games_against_others }}%">
-									<span class="barLabel">🫂</span>
-								</div>
-							</div>
-							<div class="legend">
-								<div class="legendItem">
-									<span class="colorSquare" style="background-color: #318b87;"></span>
-									<span>{% trans "Games Against AI" %}</span>
-									<span class="colorSquare" style="background-color: #c1c36f;"></span>
-								</div>
-								<div class="legendItem">
-									<span>{% trans "Games Against Others" %}</span>
-								</div>
-							</div>
-						</div>
-						<div class="canvasChart d-flex flex-column justify-content-center align-items-between">
-							<label for="winRateChart">{% trans "Win/Loss Rate" %}</label>
-							<canvas id="winRateChart"></canvas>
-						</div>
-					</div>
-				</div>				
+                <div class="customStatistics" data-win-rate="{{ statistics.win_rate|floatformat:2 }}" data-total-games="{{statistics.total_games}}" data-games-against-ai="{{ statistics.games_against_ai }}" data-games-against-others="{{ statistics.games_against_others }}">
+                    <h2>{% trans "Statistics" %}</h2>
+                    <div class="statsGrid">
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Victories" %}</span>
+                            <span class="statValueVic">{{ statistics.victories }}</span>
+                        </div>
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Losses" %}</span>
+                            <span class="statValueLos">{{ statistics.losses }}</span>
+                        </div>
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Total Games" %}</span>
+                            <span class="statValue">{{ statistics.total_games }}</span>
+                        </div>
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Average time to score" %}</span>
+                            <span class="statValue">{{ statistics.average_time_to_point|floatformat:2 }}{% trans " seconds" %}</span>
+                        </div>
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Average Duration" %}</span>
+                            <span class="statValue">{{ statistics.average_duration|floatformat:2 }}{% trans " seconds" %}</span>
+                        </div>
+                        <div class="statItem">
+                            <span class="statLabel">{% trans "Average Hits" %}</span>
+                            <span class="statValue">{{ statistics.average_hits|floatformat:2 }}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center wrapperPlots">
+                        <div class="barChartContainer">
+                            <div class="barChart">
+                                <div class="bar" id="aiBar"></div>
+                                <div class="bar" id="othersBar"></div>
+                            </div>
+                            <div class="legend">
+                                <div class="legendItem">
+                                    <span class="colorSquare" style="background-color: #318b87;"></span>
+                                    <span>{% trans "Games Against AI" %}</span>
+                                    <span class="colorSquare" style="background-color: #c1c36f;"></span>
+                                </div>
+                                <div class="legendItem">
+                                    <span>{% trans "Games Against Others" %}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="canvasChart d-flex flex-column justify-content-center align-items-between">
+                            <label for="winRateChart">{% trans "Win/Loss Rate" %}</label>
+                            <canvas id="winRateChart"></canvas>
+                        </div>
+                    </div>
+                </div>              
             </div>
         </div>
     </div>

@@ -82,11 +82,34 @@ function drawPieChart() {
 
 }
 
+function drawBarChart() {
+    const statisticsElement = document.querySelector('.customStatistics');
+    if (!statisticsElement) {
+        console.error('Statistics element not found');
+        return;
+    }
+
+    const gamesAgainstAI = parseFloat(statisticsElement.dataset.gamesAgainstAi) || 0;
+    const gamesAgainstOthers = parseFloat(statisticsElement.dataset.gamesAgainstOthers) || 0;
+
+    const aiBar = document.getElementById('aiBar');
+    const othersBar = document.getElementById('othersBar');
+
+    if (aiBar && othersBar) {
+        aiBar.style.height = `${gamesAgainstAI}%`;
+        othersBar.style.height = `${gamesAgainstOthers}%`;
+    } else {
+        console.error('Bar elements not found');
+    }
+}
+
+
 const initialObserver = new MutationObserver((mutations, obs) => {
     mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {
             if (node.nodeType === 1 && node.id === 'placeCanvas') {
                 drawPieChart();
+				drawBarChart();
             }
         });
     });
