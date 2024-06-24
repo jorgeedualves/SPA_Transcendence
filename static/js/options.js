@@ -37,24 +37,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleSingleGameSubmit(event) {
-        event.preventDefault();
-
-        let playerOneName = document.getElementById('playerOneName').value.trim();
-        let playerTwoName = document.getElementById('playerTwoName').value.trim();
-        let skin = document.getElementById('skin').value;
+		event.preventDefault();
+		
+        let playerOneName = document.getElementById('playerOneNamePvp').value.trim();
+        let playerTwoName = document.getElementById('playerTwoNamePvp').value.trim();
+        let skin = document.getElementById('skinPvp').value;
         const gameMode = document.querySelector('input[name="gameMode"]:checked').value;
-
+		
         if (!playerOneName || (gameMode === 'PVP' && !playerTwoName)) {
-            alert('Player Name cannot be empty.');
+			alert('Player Name cannot be empty.');
             return;
         }
-
+		
         // Clear previous data
         sessionStorage.removeItem('singleGameData');
         sessionStorage.removeItem('TournamentData');
-
+		
         let data = {
-            playerOneName: playerOneName,
+			playerOneName: playerOneName,
             playerTwoName: gameMode === 'PVP' ? playerTwoName : null,
             skin: skin,
             mode: gameMode
@@ -68,15 +68,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleTournamentSubmit(event) {
         event.preventDefault();
 
-        let teamName = document.getElementById('teamName').value.trim();
-        let numberOfTeams = document.getElementById('numberOfTeams').value.trim();
+        let playerOneName = document.getElementById('playerOneNameTour').value;
+		let playerTwoName = document.getElementById('playerTwoNameTour').value;
+		let playerThreeName = document.getElementById('playerThreeNameTour').value.trim();
+		let playerFourName = document.getElementById('playerFourNameTour').value.trim();
+		let skin = document.getElementById('skinTour').value;
 
-        if (!teamName) {
-            alert('Team Name cannot be empty.');
-            return;
-        }
-        if (!numberOfTeams || isNaN(numberOfTeams) || numberOfTeams <= 0) {
-            alert('Number of Teams must be a positive number.');
+		console.log(playerOneName, playerTwoName, playerThreeName, playerFourName);
+        if (!playerOneName || !playerTwoName || !playerThreeName || !playerFourName) {
+			alert('Players Name cannot be empty.');
             return;
         }
 
@@ -84,15 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
         sessionStorage.removeItem('singleGameData');
         sessionStorage.removeItem('TournamentData');
 
-        let data = {
-            teamName: teamName,
-            numberOfTeams: numberOfTeams
+        let TourData = {
+            playerOneName: playerOneName,
+			playerTwoName: playerTwoName,
+			playerThreeName: playerThreeName,
+			playerFourName: playerFourName,
+			skin: skin
         };
 
-        sessionStorage.setItem('TournamentData', JSON.stringify(data));
+        sessionStorage.setItem('TournamentData', JSON.stringify(TourData));
         const eventPlayer = new CustomEvent('playerDataReady', { detail: 'TournamentData' });
         document.dispatchEvent(eventPlayer);
-        loadContent('/game/tournament/', data, false, initAll);
+        loadContent('/game/tournament/', TourData, false, initAll);
     }
 
     // MutationObserver to detect when the modal is added to the DOM
