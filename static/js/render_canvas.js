@@ -55,6 +55,7 @@ socket.onmessage = function(e) {
 		}
     }
 	if (data.game_tour){
+		console.log('Entrou no game_tour');
 		const game_tour = data.game_tour;
 		TourMatch[0] = game_tour.tourPlayer_1;
 		TourMatch[1] = game_tour.tourPlayer_2;
@@ -127,8 +128,12 @@ function GameMode() {
 			}
 		}
 		if (gameType === 'tournament') {
+			console.log('Tournament Mode');
 			socket.send(JSON.stringify({ event: 'tournament', state: true }));
 			playerNames = [gameData.playerOneName, gameData.playerTwoName, gameData.playerThreeName, gameData.playerFourName];
+		}
+		else {
+			socket.send(JSON.stringify({ event: 'tournament', state: false }));	
 		}
     }
 }

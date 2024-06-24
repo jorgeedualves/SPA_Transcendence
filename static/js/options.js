@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		let playerFourName = document.getElementById('playerFourNameTour').value.trim();
 		let skin = document.getElementById('skinTour').value;
 
-		console.log(playerOneName, playerTwoName, playerThreeName, playerFourName);
         if (!playerOneName || !playerTwoName || !playerThreeName || !playerFourName) {
 			alert('Players Name cannot be empty.');
             return;
