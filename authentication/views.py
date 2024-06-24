@@ -111,7 +111,6 @@ def register(request):
 
 
 def std_login_view(request):
-    print("ENNTO+ROUUUUUUUUUUU")
     language = request.headers.get('Content-Language', 'en')
     translation.activate(language)
 
@@ -121,19 +120,15 @@ def std_login_view(request):
     if request.headers.get('X-Requested-With') == 'Fetch':
         return render(request, 'std_login.html', {'form': form})
     if request.method == 'POST':
-        print("POSSSTTAAAA")
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
-            print("tudo certo VAALID")
             user = authenticate(username=form.cleaned_data.get('username'),
                                 password=form.cleaned_data.get('password'))
             if user:
                 login(request, user)
-
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
                 refresh_token = str(refresh)
-
                 response = redirect("authentication:initial_content")
                 response.set_cookie("access_token", access_token, httponly=True)
                 response.set_cookie("refresh_token", refresh_token, httponly=True)
