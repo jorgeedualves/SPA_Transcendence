@@ -2,8 +2,12 @@
 
 sleep 15
 
+python manage.py collectstatic --noinput
+
 echo "Apply database migrations"
 python manage.py migrate
 
+export DJANGO_SETTINGS_MODULE=core.settings
+
 echo "Starting server"
-python manage.py runserver_plus --cert-file cert.pem --key-file key.pem 0.0.0.0:8000
+daphne -e ssl:443:privateKey=/etc/ssl/private/key.pem:certKey=/etc/ssl/certs/cert.pem core.asgi:application

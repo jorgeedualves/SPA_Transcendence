@@ -18,7 +18,6 @@ from dotenv import load_dotenv
 # Construindo caminhos dentro do projeto como: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 load_dotenv()
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -43,17 +42,19 @@ INSTALLED_APPS = [
     'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django_extensions',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'sslserver',
     'rest_framework',
     'rest_framework_simplejwt',
     'authentication',
     'game',
-    'account'
+    'account',
 ]
 
 ASGI_APPLICATION = 'core.asgi.application'
@@ -93,23 +94,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Configuração do banco de dados
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.getenv('POSTGRES_DB'),
-#         'USER': os.getenv('POSTGRES_USER'),
-#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-#         'HOST': os.getenv('POSTGRES_HOST'),
-#         'PORT': os.getenv('POSTGRES_PORT'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
+    }
+}
 
 # Validação de senha
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -158,6 +159,7 @@ USE_TZ = True  # Habilita suporte a timezone
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Diretórios de arquivos estáticos
 STATIC_URL = 'static/'  # URL para servir arquivos estáticos
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Tipo de campo de chave primária padrão
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -197,3 +199,7 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
     'JTI_CLAIM': 'jti',
 }
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

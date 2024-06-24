@@ -1,5 +1,5 @@
 let ctx, canvas;
-const socket = new WebSocket('ws://127.0.0.1:8000/ws/test/');
+const socket = new WebSocket('wss://127.0.0.1/ws/test/');
 let height, width, p_width, p_height;
 let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown;
 let ball_x, ball_y;
