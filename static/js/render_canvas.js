@@ -129,6 +129,8 @@ function GameMode() {
 		if (gameType === 'tournament') {
 			socket.send(JSON.stringify({ event: 'tournament', state: true }));
 			playerNames = [gameData.playerOneName, gameData.playerTwoName, gameData.playerThreeName, gameData.playerFourName];
+		}else {
+			socket.send(JSON.stringify({ event: 'tournament', state: false }));
 		}
     }
 }
