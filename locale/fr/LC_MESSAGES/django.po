@@ -54,9 +54,9 @@ msgstr "Durée Moyenne"
 msgid "Average Hits"
 msgstr "Coups Moyens"
 
-#: account/templates/account.html:73
-msgid "Games Against AI"
-msgstr "Jeux Contre l'IA"
+#: account/templates/account.html:69
+msgid "Games Against AI "
+msgstr "Jeux Contre l'IA "
 
 #: account/templates/account.html:77
 msgid "Games Against Others"

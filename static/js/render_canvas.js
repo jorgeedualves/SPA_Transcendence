@@ -55,7 +55,6 @@ socket.onmessage = function(e) {
 		}
     }
 	if (data.game_tour){
-		console.log('Entrou no game_tour');
 		const game_tour = data.game_tour;
 		TourMatch[0] = game_tour.tourPlayer_1;
 		TourMatch[1] = game_tour.tourPlayer_2;
@@ -128,7 +127,6 @@ function GameMode() {
 			}
 		}
 		if (gameType === 'tournament') {
-			console.log('Tournament Mode');
 			socket.send(JSON.stringify({ event: 'tournament', state: true }));
 			playerNames = [gameData.playerOneName, gameData.playerTwoName, gameData.playerThreeName, gameData.playerFourName];
 		}
@@ -148,7 +146,7 @@ function setup(userId) {
 	ctx = canvas.getContext('2d');
 
 	GameMode();
-	socket.send(JSON.stringify({ event: 'user_id', userId: userId}));
+	socket.send(JSON.stringify({ event: 'user_id', user_id: userId}));
 	socket.send(JSON.stringify({ event: 'restart' }));
 	canvas.addEventListener('click', function(event) {
 		if (isPaused || game_started == false) {
