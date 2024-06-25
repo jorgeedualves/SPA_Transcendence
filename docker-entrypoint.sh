@@ -1,7 +1,5 @@
 #!/bin/sh
 
-sleep 15
-
 python manage.py collectstatic --noinput
 
 echo "Apply database migrations"

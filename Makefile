@@ -4,7 +4,6 @@ APP_SERVICE_NAME = django-transcendence
 DOCKER_SCRIPTS = $(addprefix _compose_scripts/,conditional-delete-container.sh conditional-delete-image.sh conditional-stop-container.sh)
 
 all: .env volumes docker-compose.yml
-	docker-compose build --no-cache
 	docker-compose up --build --detach --force-recreate
 
 stop:
@@ -14,7 +13,7 @@ restart: stop start
 
 clean: clean-db clean-app
 
-fclean: fclean-db fclean-app rm-volumes clean-postgres-data
+fclean: fclean-db fclean-app
 
 clean-db: chmod-scripts
 	@./_compose_scripts/conditional-stop-container.sh $(DB_SERVICE_NAME)
@@ -40,7 +39,7 @@ volumes:
 rm-volumes:
 	docker volume rm -f spa_transcendence_postgres-vol
 
-clean-postgres-data:
+clean-postgres-data: rm-volumes
 	sudo rm -rf ~/goinfre/ft_transcendence/postgres
 
 re: fclean all
