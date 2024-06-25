@@ -58,7 +58,7 @@ msgstr "Coups Moyens"
 msgid "Games Against AI "
 msgstr "Jeux Contre l'IA "
 
-#: account/templates/account.html:77
+#: account/templates/account.html:73
 msgid "Games Against Others"
 msgstr "Jeux Contre les Autres"
 

@@ -50,7 +50,7 @@ msgstr "Golpes Promedio"
 msgid "Games Against AI "
 msgstr "Juegos Contra IA "
 
-#: account/templates/account.html:77
+#: account/templates/account.html:73
 msgid "Games Against Others"
 msgstr "Juegos Contra Otros"
 
@@ -161,4 +161,3 @@ msgstr "Comenzar Juego"
 #: game/templates/options.html:104
 msgid "Start Tournament"
 msgstr "Comenzar Torneo"
-
