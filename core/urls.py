@@ -8,6 +8,3 @@ urlpatterns = [
 	path('account/', include('account.urls')),
 	path('game/', include('game.urls')),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
