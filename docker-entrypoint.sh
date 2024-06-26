@@ -8,4 +8,4 @@ python manage.py migrate
 export DJANGO_SETTINGS_MODULE=core.settings
 
 echo "Starting server"
-daphne -e ssl:443:privateKey=/etc/ssl/private/key.pem:certKey=/etc/ssl/certs/cert.pem core.asgi:application
+daphne -b 0.0.0.0 -p 8000 core.asgi:application

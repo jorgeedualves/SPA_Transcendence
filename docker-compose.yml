@@ -19,13 +19,28 @@ services:
     image: django
     container_name: django-transcendence
     build: ./
-    ports:
-      - '443:443'
     restart: always
     networks:
       - ft_transcendence
     depends_on:
       - postgres-transcendence
+    volumes:
+      - static-vol:/ft_transcendence/staticfiles
+
+  nginx-transcendence:
+    image: nginx:alpine
+    container_name: nginx-transcendence
+    ports:
+      - '443:443'
+    restart: always
+    networks:
+      - ft_transcendence
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - static-vol:/static
+    depends_on:
+      - django-transcendence
+    command: /bin/sh -c "apk add --no-cache openssl && mkdir -p /etc/ssl/private /etc/ssl/certs && openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/key.pem -x509 -days 365 -out /etc/ssl/certs/cert.pem -subj '/C=BR/ST=SP/L=SãoPaulo/O=42sp/CN=pong.42' && nginx -g 'daemon off;'"
 
 networks:
   ft_transcendence:
@@ -39,3 +54,9 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '~/goinfre/ft_transcendence/postgres'
+  static-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '~/goinfre/ft_transcendence/static'
