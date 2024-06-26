@@ -59,9 +59,10 @@ class PongConsumer(AsyncWebsocketConsumer):
 			return None
 
 	async def send_game_state(self, game_state, state_name=None):
-		if game_state.get('game_ended'):
+		if state_name == 'game_ended':
 			if self.user:
 				await database_sync_to_async(save_db)(self.user)
+				await self.send(text_data=json.dumps({"game_state": game_state}))
 		if state_name:
 			await self.send(text_data=json.dumps({state_name: game_state}))
 		else:
