@@ -17,7 +17,7 @@ WORKDIR $TRANSCENDENCE_DIR
 
 COPY . $TRANSCENDENCE_DIR
 
-RUN openssl req -newkey rsa:2048 -nodes -keyout /etc/ssl/private/key.pem -x509 -days 365 -out /etc/ssl/certs/cert.pem -subj "/C=BR/ST=SP/L=SãoPaulo/O=42sp/CN=pong.42"; sleep 15
+RUN sleep 15
 
 EXPOSE 443
 
