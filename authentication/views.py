@@ -1,6 +1,6 @@
 import os
 from urllib.parse import urlencode, urlparse, parse_qs
-
+from django.contrib.auth import logout
 from django.contrib.auth import login, authenticate  # , logout
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -18,7 +18,6 @@ from .services import exchange_code, generate_jwt_token
 @ensure_csrf_cookie
 def index(request):
     return render(request, 'index.html')
-
 
 @ensure_csrf_cookie
 def initial_content(request):
@@ -71,18 +70,17 @@ def intra_login_redirect(request):
         return JsonResponse({"error": "Authentication failed"}, status=401)
 
 
-# def logout_view(request):
-#     logout(request)
-#     response = redirect('login')
-#     response.delete_cookie('jwt_token')
-#     response.delete_cookie('sessionid')
-#     request.session.flush()
-
-#     cookies_to_delete = ['_intra_42_session_production', '_mkra_stck', 'intra', 'locale', 'user.id']
-#     for cookie in cookies_to_delete:
-#         response.delete_cookie(cookie)
-
-#     return response
+@ensure_csrf_cookie
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        response = redirect('authentication:login')
+        response.delete_cookie("jwt_token")
+        response.delete_cookie("access_token")
+        response.delete_cookie("refresh_token")
+        return response
+    else:
+        return JsonResponse({"error": "User is not authenticated"}, status=401)
 
 def register(request):
     language = request.headers.get('Content-Language', 'en')
