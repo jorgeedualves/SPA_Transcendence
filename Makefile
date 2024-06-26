@@ -14,7 +14,7 @@ restart: stop start
 
 clean: clean-db clean-app clean-proxy
 
-fclean: fclean-db fclean-app fclean-proxy clean-postgres-data
+fclean: fclean-db fclean-app fclean-proxy rm-volumes
 
 clean-db: chmod-scripts
 	@./_compose_scripts/conditional-stop-container.sh $(DB_SERVICE_NAME)
@@ -40,18 +40,10 @@ fclean-proxy: clean-proxy
 chmod-scripts: $(DOCKER_SCRIPTS)
 	chmod +x $(DOCKER_SCRIPTS)
 
-volumes:
-	mkdir -p ~/goinfre/ft_transcendence/postgres \
-			 ~/goinfre/ft_transcendence/static
-
 rm-volumes:
 	docker volume rm -f spa_transcendence_postgres-vol
 	docker volume rm -f spa_transcendence_static-vol
 
-clean-postgres-data: rm-volumes
-	sudo rm -rf ~/goinfre/ft_transcendence/postgres \
-				~/goinfre/ft_transcendence/static
-
 re: fclean all
 
-.PHONY: all stop restart clean fclean clean-db fclean-db clean-app fclean-app rm-volumes volumes clean-postgres-data re
+.PHONY: all stop restart clean fclean clean-db fclean-db clean-app fclean-app rm-volumes volumes re

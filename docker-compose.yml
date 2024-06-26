@@ -36,7 +36,7 @@ services:
     networks:
       - ft_transcendence
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - static-vol:/static
     depends_on:
       - django-transcendence
@@ -49,14 +49,4 @@ networks:
 
 volumes:
   postgres-vol:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '~/goinfre/ft_transcendence/postgres'
   static-vol:
-    driver: local
-    driver_opts:
-      type: 'none'
-      o: 'bind'
-      device: '~/goinfre/ft_transcendence/static'
