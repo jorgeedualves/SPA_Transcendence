@@ -130,7 +130,7 @@
     display: none;
 }
 .customHistory, .customStatistics {
-    -ms-overflow-style: none;  /* IE and Edge */
+    -ms-overflow-style: none;  /* Edge */
     scrollbar-width: none;  /* Firefox */
 }
 

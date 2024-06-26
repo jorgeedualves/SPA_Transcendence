@@ -36,6 +36,7 @@ class Game:
 		player_1.reset(10)
 		player_2.reset(CAN_WIDTH - Player.WIDTH - 10)
 		ball.reset()
+		self.start_time = time.time()
 
 player_1 = Player(10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
 player_2 = Player(CAN_WIDTH - Player.WIDTH - 10, (CAN_HEIGHT / 2) - (Player.HEIGHT / 2))
@@ -67,11 +68,12 @@ async def game_loop_logic(send_game_state):
 					tournament.match_over = False
 					game.reset(True)
 				if tournament.over:
-					game.started = False
+					game.reset()
 			elif player_1.score == WIN_GAME or player_2.score == WIN_GAME:
 				game.started = False
 				game.ended = True
 				game_state = get_game_data()
+				game.reset()
 				await send_game_state(game_state, 'game_ended')
 				break
 			game_state = get_game_data()
@@ -154,18 +156,18 @@ def ai_move(smoothing, paddle_y, error_margin=50):
 
 	return paddle_y
 
-def save_db(user):
+def save_db(user, game_data):
     end_time = time.time()
-    duration = timedelta(seconds=end_time - game.start_time)
+    duration = timedelta(seconds=end_time - game_data.get('start_time'))
 
-    player2_name = "AI" if game.ai else player_2.alias
+    player2_name = "AI" if game_data.get('ai') else player_2.alias
 
     game_instance = GameDB(
         player1=user,
         player2=player2_name,
-        score_player1=player_1.score,
-        score_player2=player_2.score,
-        hits_player1=player_1.hits,
+        score_player1=game_data.get('p1_score'),
+        score_player2=game_data.get('p2_score'),
+        hits_player1=game_data.get('p1_hits'),
         duration=duration,
         date=timezone.now()
     )
