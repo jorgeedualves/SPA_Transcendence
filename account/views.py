@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils import translation
-from django.db.models import F, Avg
+from django.db.models import F, Avg, Sum
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from game.models import GameDB
@@ -34,6 +34,11 @@ def account(request):
     games_against_ai = games.filter(player2='AI').count()
     games_against_others = total_games - games_against_ai
     
+    total_duration = games.aggregate(Sum('duration'))['duration__sum']
+    total_points = games.aggregate(Sum('score_player1'))['score_player1__sum']
+
+    average_time_to_point = (total_duration.total_seconds() / total_points) if total_points > 0 else 0
+	
     statistics = {
         'total_games': total_games,
         'victories': games.filter(score_player1__gt=F('score_player2')).count(),
@@ -41,7 +46,7 @@ def account(request):
         'win_rate': (games.filter(score_player1__gt=F('score_player2')).count() / total_games * 100) if total_games > 0 else 0,
         'average_duration': games.aggregate(Avg('duration'))['duration__avg'].total_seconds() if total_games > 0 else 0,
         'average_hits': games.aggregate(Avg('hits_player1'))['hits_player1__avg'] if total_games > 0 else 0,
-        'average_time_to_point': games.filter(hits_player1__gt=0).aggregate(Avg('duration'))['duration__avg'].total_seconds() if games.filter(hits_player1__gt=0).count() > 0 else 0,
+        'average_time_to_point': average_time_to_point,
         'games_against_ai': (games_against_ai / total_games * 100) if total_games > 0 else 0,
         'games_against_others': (games_against_others / total_games * 100) if total_games > 0 else 0,
     }
