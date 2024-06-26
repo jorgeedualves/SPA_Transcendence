@@ -31,9 +31,9 @@ if not all([SECRET_KEY, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, AUTH_URL_INTRA])
     raise ValueError("One or more environment variables are not set.")
 
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Definição da aplicação
 
@@ -192,6 +192,9 @@ SIMPLE_JWT = {
     'JTI_CLAIM': 'jti',
 }
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1']
+USE_X_FORWARDED_HOST = True
