@@ -7,8 +7,8 @@ from game.models import GameDB
 from .tournament import Tournament
 from django.utils import timezone
 
-CAN_WIDTH = 1300
-CAN_HEIGHT = 800
+CAN_WIDTH = 1053
+CAN_HEIGHT = 648
 FPS = 60
 WIN_GAME = 5
 

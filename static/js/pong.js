@@ -4,7 +4,7 @@ let p1_keyUp, p1_keyDown, p2_keyUp, p2_keyDown, p_speed = 10;
 let ev_pause, ev_gameStart, ev_Timer;
 let current_frame = 0, update_interval = 60;
 let ia = true, predict_ball_y = 0, last_predicted_frame = 0;
-const h = 800, w = 1300, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10;
+const h = 648, w = 1053, p_w = 20, p_h = 100, p1_x = 10, p2_x = w - p_w - 10;
 
 // Global variable to store game data
 let gameData = null;

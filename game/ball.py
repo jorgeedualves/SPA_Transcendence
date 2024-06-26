@@ -1,12 +1,12 @@
 import random
 import math
 
-CAN_WIDTH = 1300
-CAN_HEIGHT = 800
+CAN_WIDTH = 1053
+CAN_HEIGHT = 648
 
 class Ball:
 	SIZE = 20
-	ball_speed = 9
+	ball_speed = 6
 	ball_orientation = [math.pow(2, math.floor(random.random() * 2)+1)- 3, 
 						math.pow(2, math.floor(random.random() * 2)+1)- 3]
 

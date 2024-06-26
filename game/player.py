@@ -1,9 +1,9 @@
-CAN_HEIGHT = 800
+CAN_HEIGHT = 648
 
 
 class Player:
 	WIDTH = 10
-	HEIGHT = 100
+	HEIGHT = 80
 	vel = 10
 	go_up = False
 	go_down = False
