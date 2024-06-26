@@ -62,8 +62,10 @@ socket.onmessage = function (e) {
 		matchOver = game_tour.matchOver;
 		tourWinner = game_tour.tourWinner;
 		tourOver = game_tour.tourOver;
-		document.getElementById('PlayerOne').innerHTML = playerNames[TourMatch[0]];
-		document.getElementById('PlayerTwo').innerHTML = playerNames[TourMatch[1]];
+		if (document.getElementById('PlayerOne'))
+			document.getElementById('PlayerOne').innerHTML = playerNames[TourMatch[0]];
+		if (document.getElementById('PlayerTwo'))
+			document.getElementById('PlayerTwo').innerHTML = playerNames[TourMatch[1]];
 		if (matchOver && !tourOver) {
 			draw();
 			createMenu([{

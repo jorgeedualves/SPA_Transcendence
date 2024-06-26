@@ -34,8 +34,8 @@ def account(request):
     games_against_ai = games.filter(player2='AI').count()
     games_against_others = total_games - games_against_ai
     
-    total_duration = games.aggregate(Sum('duration'))['duration__sum']
-    total_points = games.aggregate(Sum('score_player1'))['score_player1__sum']
+    total_duration = games.aggregate(Sum('duration'))['duration__sum'] or 0
+    total_points = games.aggregate(Sum('score_player1'))['score_player1__sum'] or 0
 
     average_time_to_point = (total_duration.total_seconds() / total_points) if total_points > 0 else 0
 	
