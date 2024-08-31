@@ -11,7 +11,7 @@ Indice
 <!--ts-->
    * [Sobre](#Sobre)
      * [O minimo](#o-minimo)
-     * [Modulos](#mudulos)
+     * [Modulos](#modulos)
      * [Apresentação Final](#apresentação-final)
 <!--te-->
 
