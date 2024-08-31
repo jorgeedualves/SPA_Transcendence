@@ -32,8 +32,9 @@ restriçoes que o projeto implica, como não utilizar frameworks ou bibliotecas 
       e outros jogadores compartilhando o mesmo teclado, deve ter um sistema de torneio com matchmaking, um sistena de registro para cada jogador colocar um apelido antes de jogar e 
       algumas preocupações de segurança como, o banco de dados ser hashed, proteçao contra SQL injection, HTTPS.
   ## Modulos
-   - Os modulos são dividios em diversas categorias como segurança, user management etc, por ser muita coisas vou apresentar so um print com os modulos que decidimos fazer
-    ![Screenshot_20240831_184134](https://github.com/user-attachments/assets/ae3e2d2b-59c4-43e2-8808-98a0d883af8b)
+   - Os modulos são dividios em diversas categorias como segurança, user management etc, por ser muita coisas vou apresentar so um print com os modulos que decidimos fazer e explicar algumas coisinhas,
+   o framework utilizado foi django, a ferramenta de front foi Bootstrap toolkit, banco de dados foi o PostgreSQL.
+   ![Screenshot_20240831_184134](https://github.com/user-attachments/assets/ae3e2d2b-59c4-43e2-8808-98a0d883af8b)
   ## Apresentação Final
    - E assim ficou o projeto
     
