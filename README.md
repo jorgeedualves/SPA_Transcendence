@@ -13,8 +13,6 @@ Indice
      * [O minimo](#o-minimo)
      * [Modulos](#mudulos)
      * [Apresentação Final](#apresentação-final)
-   * [Instalação](#instalacao)
-   * [Como usar](#como-usar)
 <!--te-->
 
 <h4 align="center"> 
